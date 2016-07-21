@@ -1,0 +1,35 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  week_id: 
+  user_id: 
+  points: 1
+  is_home_team: false
+  spread: 1
+  home_team_id: 1
+  away_team_id: 1
+  home_team_pref_pick: 1
+  away_team_pref_pick: 1
+  home_team_spread_pick: false
+  away_team_spread_pick: false
+  home_team_covered_spread: false
+  away_team_covered_spread: false
+  tie_game: false
+  game_selected_by_admin: false
+
+two:
+  week_id: 
+  user_id: 
+  points: 1
+  is_home_team: false
+  spread: 1
+  home_team_id: 1
+  away_team_id: 1
+  home_team_pref_pick: 1
+  away_team_pref_pick: 1
+  home_team_spread_pick: false
+  away_team_spread_pick: false
+  home_team_covered_spread: false
+  away_team_covered_spread: false
+  tie_game: false
+  game_selected_by_admin: false
