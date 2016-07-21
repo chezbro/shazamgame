@@ -1,0 +1,2 @@
+json.extract! game, :id, :week_id, :user_id, :points, :is_home_team, :spread, :home_team_id, :away_team_id, :home_team_pref_pick, :away_team_pref_pick, :home_team_spread_pick, :away_team_spread_pick, :home_team_covered_spread, :away_team_covered_spread, :tie_game, :game_selected_by_admin, :created_at, :updated_at
+json.url game_url(game, format: :json)

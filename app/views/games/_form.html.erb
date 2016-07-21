@@ -1,0 +1,25 @@
+<%= simple_form_for(@game) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.association :week %>
+    <%= f.association :user %>
+    <%= f.input :points %>
+    <%= f.input :is_home_team %>
+    <%= f.input :spread %>
+    <%= f.input :home_team_id %>
+    <%= f.input :away_team_id %>
+    <%= f.input :home_team_pref_pick %>
+    <%= f.input :away_team_pref_pick %>
+    <%= f.input :home_team_spread_pick %>
+    <%= f.input :away_team_spread_pick %>
+    <%= f.input :home_team_covered_spread %>
+    <%= f.input :away_team_covered_spread %>
+    <%= f.input :tie_game %>
+    <%= f.input :game_selected_by_admin %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

@@ -1,0 +1,53 @@
+<h1>Listing games</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Week</th>
+      <th>User</th>
+      <th>Points</th>
+      <th>Is home team</th>
+      <th>Spread</th>
+      <th>Home team</th>
+      <th>Away team</th>
+      <th>Home team pref pick</th>
+      <th>Away team pref pick</th>
+      <th>Home team spread pick</th>
+      <th>Away team spread pick</th>
+      <th>Home team covered spread</th>
+      <th>Away team covered spread</th>
+      <th>Tie game</th>
+      <th>Game selected by admin</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @games.each do |game| %>
+      <tr>
+        <td><%= game.week %></td>
+        <td><%= game.user %></td>
+        <td><%= game.points %></td>
+        <td><%= game.is_home_team %></td>
+        <td><%= game.spread %></td>
+        <td><%= game.home_team_id %></td>
+        <td><%= game.away_team_id %></td>
+        <td><%= game.home_team_pref_pick %></td>
+        <td><%= game.away_team_pref_pick %></td>
+        <td><%= game.home_team_spread_pick %></td>
+        <td><%= game.away_team_spread_pick %></td>
+        <td><%= game.home_team_covered_spread %></td>
+        <td><%= game.away_team_covered_spread %></td>
+        <td><%= game.tie_game %></td>
+        <td><%= game.game_selected_by_admin %></td>
+        <td><%= link_to 'Show', game %></td>
+        <td><%= link_to 'Edit', edit_game_path(game) %></td>
+        <td><%= link_to 'Destroy', game, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Game', new_game_path %>

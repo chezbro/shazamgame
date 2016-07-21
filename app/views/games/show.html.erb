@@ -1,0 +1,79 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Week:</strong>
+  <%= @game.week %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @game.user %>
+</p>
+
+<p>
+  <strong>Points:</strong>
+  <%= @game.points %>
+</p>
+
+<p>
+  <strong>Is home team:</strong>
+  <%= @game.is_home_team %>
+</p>
+
+<p>
+  <strong>Spread:</strong>
+  <%= @game.spread %>
+</p>
+
+<p>
+  <strong>Home team:</strong>
+  <%= @game.home_team_id %>
+</p>
+
+<p>
+  <strong>Away team:</strong>
+  <%= @game.away_team_id %>
+</p>
+
+<p>
+  <strong>Home team pref pick:</strong>
+  <%= @game.home_team_pref_pick %>
+</p>
+
+<p>
+  <strong>Away team pref pick:</strong>
+  <%= @game.away_team_pref_pick %>
+</p>
+
+<p>
+  <strong>Home team spread pick:</strong>
+  <%= @game.home_team_spread_pick %>
+</p>
+
+<p>
+  <strong>Away team spread pick:</strong>
+  <%= @game.away_team_spread_pick %>
+</p>
+
+<p>
+  <strong>Home team covered spread:</strong>
+  <%= @game.home_team_covered_spread %>
+</p>
+
+<p>
+  <strong>Away team covered spread:</strong>
+  <%= @game.away_team_covered_spread %>
+</p>
+
+<p>
+  <strong>Tie game:</strong>
+  <%= @game.tie_game %>
+</p>
+
+<p>
+  <strong>Game selected by admin:</strong>
+  <%= @game.game_selected_by_admin %>
+</p>
+
+<%= link_to 'Edit', edit_game_path(@game) %> |
+<%= link_to 'Back', games_path %>
