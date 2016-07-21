@@ -5,6 +5,11 @@ class ApplicationController < ActionController::Base
 
   before_filter :configure_permitted_parameters, if: :devise_controller?
 
+  
+  def disable_navbar
+    @disable_navbar = true
+  end
+
   protected
 
   #->Prelang (user_login:devise)

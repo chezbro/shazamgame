@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
-  resources :selections
+
   get 'landings/index'
+  
+  resources :selections
 
   resources :weeks
 
@@ -15,7 +17,6 @@ Rails.application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  root 'landings#index'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
@@ -77,5 +78,15 @@ Rails.application.routes.draw do
     put    "signup"  => "users/registrations#update", as: :update_user_registration
     get    "account" => "users/registrations#edit",   as: :edit_user_registration
   end
+
+
+
+# If Logged In, go to Game/index, if not go to Landings/Index
+  authenticated :user do
+    root to: 'games#index', as: :authenticated_root
+  end
+  
+  root to: 'landings#index'
+
 
 end

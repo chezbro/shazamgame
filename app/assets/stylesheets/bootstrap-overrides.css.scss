@@ -1,7 +1,15 @@
+// Remove Space between Navbar and Image
+.navbar{
+  margin-bottom: 0px;
+  border-radius: 0px;
+  border:0px;
+}
+
 // Orange Navbar
 .navbar-default {
-  background-color: #F77700;
-  border-color: #e7e7e7;
+  background: #ff4b1f; /* fallback for old browsers */
+  background: -webkit-linear-gradient(to left, #ff4b1f , #ff9068); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to left, #ff4b1f , #ff9068); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
 
