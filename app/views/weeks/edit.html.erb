@@ -1,6 +1,5 @@
-<h1>Editing week</h1>
-
-<%= render 'form' %>
-
-<%= link_to 'Show', @week %> |
-<%= link_to 'Back', weeks_path %>
+<%- model_class = Week -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => [:'helpers.titles.edit', 'Edit %{model}'], :model => Week %></h1>
+</div>
+<%= render :partial => 'form' %>

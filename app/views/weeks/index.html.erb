@@ -1,29 +1,40 @@
-<h1>Listing weeks</h1>
-
-<table>
+<%- model_class = Week -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => Week %></h1>
+</div>
+<table class="table table-striped">
   <thead>
     <tr>
-      <th>Week number</th>
-      <th>Year</th>
-      <th>Year in datetime</th>
-      <th colspan="3"></th>
+      <th>ID</th>
+      <th><%= model_class.human_attribute_name(:week_number) %></th>
+      <th><%= model_class.human_attribute_name(:year) %></th>
+      <th><%= model_class.human_attribute_name(:year_in_datetime) %></th>
+      <th><%= model_class.human_attribute_name(:created_at) %></th>
+      <th><%=t '.actions', :default => t("helpers.actions") %></th>
     </tr>
   </thead>
-
   <tbody>
     <% @weeks.each do |week| %>
       <tr>
+        <td><%= week.id %></td>
         <td><%= week.week_number %></td>
         <td><%= week.year %></td>
         <td><%= week.year_in_datetime %></td>
-        <td><%= link_to 'Show', week %></td>
-        <td><%= link_to 'Edit', edit_week_path(week) %></td>
-        <td><%= link_to 'Destroy', week, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%=l week.created_at, format: :long %></td>
+        <td>
+          <%= link_to week_path(week), :class => 'btn btn-xs', :title => "#{ t('.show', :default => t('helpers.links.show')) }" do %>
+            <%= glyph 'info-sign' %>
+            <%= glyph 'pencil' %>
+          <%- end -%>
+          <%= link_to week_path(week), :method => :delete, :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-xs', :title => "#{ t('.destroy', :default => t('helpers.links.destroy')) }" do %>
+            <%= glyph 'remove' %>
+          <%- end -%>
+        </td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
-<br>
-
-<%= link_to 'New Week', new_week_path %>
+<%= link_to t('.new', :default => t("helpers.links.new")),
+            new_week_path,
+            :class => 'btn btn-primary' %>
