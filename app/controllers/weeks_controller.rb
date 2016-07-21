@@ -24,17 +24,24 @@ class WeeksController < ApplicationController
   # POST /weeks
   # POST /weeks.json
   def create
-    @week = Week.new(week_params)
-
-    respond_to do |format|
-      if @week.save
-        format.html { redirect_to @week, notice: 'Week was successfully created.' }
-        format.json { render :show, status: :created, location: @week }
-      else
-        format.html { render :new }
-        format.json { render json: @week.errors, status: :unprocessable_entity }
-      end
+    params["games"].each do |game|
+      Game.create(game_params(game))
     end
+    respond_to do |format|
+      format.html { redirect_to weeks_url, notice: 'Article was successfully destroyed.' }
+      format.json { head :no_content }
+    end
+
+    # respond_to do |format|
+    #   if @week.save
+    #     format.html { redirect_to @week, notice: 'Week was successfully created.' }
+    #     format.json { render :show, status: :created, location: @week }
+    #   else
+    #     format.html { render :new }
+    #     format.json { render json: @week.errors, status: :unprocessable_entity }
+    #   end
+    # end
+    
   end
 
   # PATCH/PUT /weeks/1
