@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  tid: 1
+  cid: 1
+  did: 1
+  region: MyString
+  name: MyString
+  abbrev: MyString
+  city: MyString
+  state: MyString
+  latitude: 1.5
+
+two:
+  tid: 1
+  cid: 1
+  did: 1
+  region: MyString
+  name: MyString
+  abbrev: MyString
+  city: MyString
+  state: MyString
+  latitude: 1.5
