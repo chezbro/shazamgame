@@ -1,0 +1,29 @@
+<h1>Listing weeks</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Week number</th>
+      <th>Year</th>
+      <th>Year in datetime</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @weeks.each do |week| %>
+      <tr>
+        <td><%= week.week_number %></td>
+        <td><%= week.year %></td>
+        <td><%= week.year_in_datetime %></td>
+        <td><%= link_to 'Show', week %></td>
+        <td><%= link_to 'Edit', edit_week_path(week) %></td>
+        <td><%= link_to 'Destroy', week, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Week', new_week_path %>
