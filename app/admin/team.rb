@@ -1,4 +1,5 @@
 ActiveAdmin.register Team do
+  permit_params :tid, :cid, :did, :region, :name, :abbrev, :city, :state, :latitude
 
 # See permitted parameters documentation:
 # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
