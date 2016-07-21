@@ -1,5 +1,5 @@
 class Team < ActiveRecord::Base
-
+  has_many :games
 
   def self.import_teams
     file = File.read('teams.json')
@@ -15,5 +15,5 @@ class Team < ActiveRecord::Base
     end
   end
 
-  
+
 end
