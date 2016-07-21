@@ -1,32 +1,32 @@
-<h1>Listing games</h1>
-
-<table>
+<%- model_class = Game -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => Game %></h1>
+</div>
+<table class="table table-striped">
   <thead>
     <tr>
-      <th>Week</th>
-      <th>User</th>
-      <th>Points</th>
-      <th>Is home team</th>
-      <th>Spread</th>
-      <th>Home team</th>
-      <th>Away team</th>
-      <th>Home team pref pick</th>
-      <th>Away team pref pick</th>
-      <th>Home team spread pick</th>
-      <th>Away team spread pick</th>
-      <th>Home team covered spread</th>
-      <th>Away team covered spread</th>
-      <th>Tie game</th>
-      <th>Game selected by admin</th>
-      <th colspan="3"></th>
+      <th>ID</th>
+      <th><%= model_class.human_attribute_name(:points) %></th>
+      <th><%= model_class.human_attribute_name(:is_home_team) %></th>
+      <th><%= model_class.human_attribute_name(:spread) %></th>
+      <th><%= model_class.human_attribute_name(:home_team_id) %></th>
+      <th><%= model_class.human_attribute_name(:away_team_id) %></th>
+      <th><%= model_class.human_attribute_name(:home_team_pref_pick) %></th>
+      <th><%= model_class.human_attribute_name(:away_team_pref_pick) %></th>
+      <th><%= model_class.human_attribute_name(:home_team_spread_pick) %></th>
+      <th><%= model_class.human_attribute_name(:away_team_spread_pick) %></th>
+      <th><%= model_class.human_attribute_name(:home_team_covered_spread) %></th>
+      <th><%= model_class.human_attribute_name(:away_team_covered_spread) %></th>
+      <th><%= model_class.human_attribute_name(:tie_game) %></th>
+      <th><%= model_class.human_attribute_name(:game_selected_by_admin) %></th>
+      <th><%= model_class.human_attribute_name(:created_at) %></th>
+      <th><%=t '.actions', :default => t("helpers.actions") %></th>
     </tr>
   </thead>
-
   <tbody>
     <% @games.each do |game| %>
       <tr>
-        <td><%= game.week %></td>
-        <td><%= game.user %></td>
+        <td><%= game.id %></td>
         <td><%= game.points %></td>
         <td><%= game.is_home_team %></td>
         <td><%= game.spread %></td>
@@ -40,14 +40,21 @@
         <td><%= game.away_team_covered_spread %></td>
         <td><%= game.tie_game %></td>
         <td><%= game.game_selected_by_admin %></td>
-        <td><%= link_to 'Show', game %></td>
-        <td><%= link_to 'Edit', edit_game_path(game) %></td>
-        <td><%= link_to 'Destroy', game, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%=l game.created_at, format: :long %></td>
+        <td>
+          <%= link_to game_path(game), :class => 'btn btn-xs', :title => "#{ t('.show', :default => t('helpers.links.show')) }" do %>
+            <%= glyph 'info-sign' %>
+            <%= glyph 'pencil' %>
+          <%- end -%>
+          <%= link_to game_path(game), :method => :delete, :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-xs', :title => "#{ t('.destroy', :default => t('helpers.links.destroy')) }" do %>
+            <%= glyph 'remove' %>
+          <%- end -%>
+        </td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
-<br>
-
-<%= link_to 'New Game', new_game_path %>
+<%= link_to t('.new', :default => t("helpers.links.new")),
+            new_game_path,
+            :class => 'btn btn-primary' %>

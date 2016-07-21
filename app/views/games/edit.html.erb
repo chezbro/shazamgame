@@ -1,6 +1,5 @@
-<h1>Editing game</h1>
-
-<%= render 'form' %>
-
-<%= link_to 'Show', @game %> |
-<%= link_to 'Back', games_path %>
+<%- model_class = Game -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => [:'helpers.titles.edit', 'Edit %{model}'], :model => Game %></h1>
+</div>
+<%= render :partial => 'form' %>

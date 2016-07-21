@@ -1,79 +1,48 @@
-<p id="notice"><%= notice %></p>
+<%- model_class = Game -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => Game %></h1>
+</div>
 
-<p>
-  <strong>Week:</strong>
-  <%= @game.week %>
-</p>
+<div class="fieldset">
+  <dl>
+      <dt class="label label-default"><%= model_class.human_attribute_name(:points) %></dt>
+      <dd><pre class="prettyprint"><%= @game.points %></pre></dd>
+      <dt class="label label-default"><%= model_class.human_attribute_name(:is_home_team) %></dt>
+      <dd><pre class="prettyprint"><%= @game.is_home_team %></pre></dd>
+      <dt class="label label-default"><%= model_class.human_attribute_name(:spread) %></dt>
+      <dd><pre class="prettyprint"><%= @game.spread %></pre></dd>
+      <dt class="label label-default"><%= model_class.human_attribute_name(:home_team_id) %></dt>
+      <dd><pre class="prettyprint"><%= @game.home_team_id %></pre></dd>
+      <dt class="label label-default"><%= model_class.human_attribute_name(:away_team_id) %></dt>
+      <dd><pre class="prettyprint"><%= @game.away_team_id %></pre></dd>
+      <dt class="label label-default"><%= model_class.human_attribute_name(:home_team_pref_pick) %></dt>
+      <dd><pre class="prettyprint"><%= @game.home_team_pref_pick %></pre></dd>
+      <dt class="label label-default"><%= model_class.human_attribute_name(:away_team_pref_pick) %></dt>
+      <dd><pre class="prettyprint"><%= @game.away_team_pref_pick %></pre></dd>
+      <dt class="label label-default"><%= model_class.human_attribute_name(:home_team_spread_pick) %></dt>
+      <dd><pre class="prettyprint"><%= @game.home_team_spread_pick %></pre></dd>
+      <dt class="label label-default"><%= model_class.human_attribute_name(:away_team_spread_pick) %></dt>
+      <dd><pre class="prettyprint"><%= @game.away_team_spread_pick %></pre></dd>
+      <dt class="label label-default"><%= model_class.human_attribute_name(:home_team_covered_spread) %></dt>
+      <dd><pre class="prettyprint"><%= @game.home_team_covered_spread %></pre></dd>
+      <dt class="label label-default"><%= model_class.human_attribute_name(:away_team_covered_spread) %></dt>
+      <dd><pre class="prettyprint"><%= @game.away_team_covered_spread %></pre></dd>
+      <dt class="label label-default"><%= model_class.human_attribute_name(:tie_game) %></dt>
+      <dd><pre class="prettyprint"><%= @game.tie_game %></pre></dd>
+      <dt class="label label-default"><%= model_class.human_attribute_name(:game_selected_by_admin) %></dt>
+      <dd><pre class="prettyprint"><%= @game.game_selected_by_admin %></pre></dd>
+  </dl>
+</div>
 
-<p>
-  <strong>User:</strong>
-  <%= @game.user %>
-</p>
+<div class="form-group">
+  <%= link_to t('.back', :default => t("helpers.links.back")),
+              games_path, :class => 'btn btn-default'  %>
+  <%= link_to t('.edit', :default => t("helpers.links.edit")),
+              edit_game_path(@game), :class => 'btn btn-default' %>
+  <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+              game_path(@game),
+              :method => 'delete',
+              :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+              :class => 'btn btn-danger' %>
+</div>
 
-<p>
-  <strong>Points:</strong>
-  <%= @game.points %>
-</p>
-
-<p>
-  <strong>Is home team:</strong>
-  <%= @game.is_home_team %>
-</p>
-
-<p>
-  <strong>Spread:</strong>
-  <%= @game.spread %>
-</p>
-
-<p>
-  <strong>Home team:</strong>
-  <%= @game.home_team_id %>
-</p>
-
-<p>
-  <strong>Away team:</strong>
-  <%= @game.away_team_id %>
-</p>
-
-<p>
-  <strong>Home team pref pick:</strong>
-  <%= @game.home_team_pref_pick %>
-</p>
-
-<p>
-  <strong>Away team pref pick:</strong>
-  <%= @game.away_team_pref_pick %>
-</p>
-
-<p>
-  <strong>Home team spread pick:</strong>
-  <%= @game.home_team_spread_pick %>
-</p>
-
-<p>
-  <strong>Away team spread pick:</strong>
-  <%= @game.away_team_spread_pick %>
-</p>
-
-<p>
-  <strong>Home team covered spread:</strong>
-  <%= @game.home_team_covered_spread %>
-</p>
-
-<p>
-  <strong>Away team covered spread:</strong>
-  <%= @game.away_team_covered_spread %>
-</p>
-
-<p>
-  <strong>Tie game:</strong>
-  <%= @game.tie_game %>
-</p>
-
-<p>
-  <strong>Game selected by admin:</strong>
-  <%= @game.game_selected_by_admin %>
-</p>
-
-<%= link_to 'Edit', edit_game_path(@game) %> |
-<%= link_to 'Back', games_path %>
