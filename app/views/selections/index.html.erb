@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Selections</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Game</th>
+      <th>User</th>
+      <th>Correct</th>
+      <th>Admin</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @selections.each do |selection| %>
+      <tr>
+        <td><%= selection.game_id %></td>
+        <td><%= selection.user_id %></td>
+        <td><%= selection.correct %></td>
+        <td><%= selection.admin %></td>
+        <td><%= link_to 'Show', selection %></td>
+        <td><%= link_to 'Edit', edit_selection_path(selection) %></td>
+        <td><%= link_to 'Destroy', selection, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Selection', new_selection_path %>
