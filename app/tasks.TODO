@@ -1,0 +1,4 @@
+ ☐ # Games should be read only info, i.e. the Teams playing, the spread
+ ☐ # Selections should be inputs (on Games)
+   ☐ # s.new s.game s.spread_pick, s.preference_pick 
+   ☐ # s.spread_pick = g.home_team_id

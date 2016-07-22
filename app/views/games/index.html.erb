@@ -1,45 +1,33 @@
 <%- model_class = Game -%>
+
 <div class="page-header">
   <h1><%=t '.title', :default => Game %></h1>
 </div>
 <table class="table table-striped">
   <thead>
     <tr>
-      <th>ID</th>
-      <th><%= model_class.human_attribute_name(:points) %></th>
-      <th><%= model_class.human_attribute_name(:is_home_team) %></th>
-      <th><%= model_class.human_attribute_name(:spread) %></th>
       <th><%= model_class.human_attribute_name(:home_team_id) %></th>
       <th><%= model_class.human_attribute_name(:away_team_id) %></th>
+      <th><%= model_class.human_attribute_name(:spread) %></th>
       <th><%= model_class.human_attribute_name(:home_team_pref_pick) %></th>
       <th><%= model_class.human_attribute_name(:away_team_pref_pick) %></th>
       <th><%= model_class.human_attribute_name(:home_team_spread_pick) %></th>
       <th><%= model_class.human_attribute_name(:away_team_spread_pick) %></th>
-      <th><%= model_class.human_attribute_name(:home_team_covered_spread) %></th>
-      <th><%= model_class.human_attribute_name(:away_team_covered_spread) %></th>
-      <th><%= model_class.human_attribute_name(:tie_game) %></th>
-      <th><%= model_class.human_attribute_name(:game_selected_by_admin) %></th>
-      <th><%= model_class.human_attribute_name(:created_at) %></th>
       <th><%=t '.actions', :default => t("helpers.actions") %></th>
     </tr>
   </thead>
   <tbody>
+   
     <% @games.each do |game| %>
       <tr>
-        <td><%= game.id %></td>
-        <td><%= game.points %></td>
-        <td><%= game.is_home_team %></td>
+        <td><%= game.home_team.region + " " + game.home_team.name %></td>
+        <td><%= game.away_team.region + " " + game.away_team.name %></td>
         <td><%= game.spread %></td>
-        <td><%= game.home_team_id %></td>
-        <td><%= game.away_team_id %></td>
+        
         <td><%= game.home_team_pref_pick %></td>
         <td><%= game.away_team_pref_pick %></td>
         <td><%= game.home_team_spread_pick %></td>
         <td><%= game.away_team_spread_pick %></td>
-        <td><%= game.home_team_covered_spread %></td>
-        <td><%= game.away_team_covered_spread %></td>
-        <td><%= game.tie_game %></td>
-        <td><%= game.game_selected_by_admin %></td>
         <td><%=l game.created_at, format: :long %></td>
         <td>
           <%= link_to game_path(game), :class => 'btn btn-xs', :title => "#{ t('.show', :default => t('helpers.links.show')) }" do %>
@@ -52,9 +40,9 @@
         </td>
       </tr>
     <% end %>
+    
   </tbody>
 </table>
 
 <%= link_to t('.new', :default => t("helpers.links.new")),
-            new_game_path,
-            :class => 'btn btn-primary' %>
+            new_game_path, :class => 'btn btn-primary' %>

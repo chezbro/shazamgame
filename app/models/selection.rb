@@ -1,4 +1,6 @@
-class Selection < ActiveRecord::Base
+  class Selection < ActiveRecord::Base
   belongs_to :user
   belongs_to :game
 end
+
+

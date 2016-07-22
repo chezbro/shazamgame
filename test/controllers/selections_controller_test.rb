@@ -18,7 +18,7 @@ class SelectionsControllerTest < ActionController::TestCase
 
   test "should create selection" do
     assert_difference('Selection.count') do
-      post :create, selection: { admin: @selection.admin, correct: @selection.correct, game_id: @selection.game_id, user_id: @selection.user_id }
+      post :create, selection: {  }
     end
 
     assert_redirected_to selection_path(assigns(:selection))
@@ -35,7 +35,7 @@ class SelectionsControllerTest < ActionController::TestCase
   end
 
   test "should update selection" do
-    patch :update, id: @selection, selection: { admin: @selection.admin, correct: @selection.correct, game_id: @selection.game_id, user_id: @selection.user_id }
+    patch :update, id: @selection, selection: {  }
     assert_redirected_to selection_path(assigns(:selection))
   end
 

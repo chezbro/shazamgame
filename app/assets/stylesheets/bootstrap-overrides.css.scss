@@ -1,3 +1,11 @@
+// All Buttons are Orange
+
+.btn-primary {
+  color: #fff;
+  background-color: #FF5A2F;
+  border-color: #fafafa;
+}
+
 // Remove Space between Navbar and Image
 .navbar{
   margin-bottom: 0px;
@@ -22,3 +30,9 @@
 .navbar-default .navbar-brand {
   color: #fff;
 }
+
+// Give the links a little room to breathe dawg
+.navbar-default .navbar-nav {
+  margin: 0px 3px;
+}
+

@@ -1,24 +1,5 @@
+
 <p id="notice"><%= notice %></p>
-
-<p>
-  <strong>Game:</strong>
-  <%= @selection.game_id %>
-</p>
-
-<p>
-  <strong>User:</strong>
-  <%= @selection.user_id %>
-</p>
-
-<p>
-  <strong>Correct:</strong>
-  <%= @selection.correct %>
-</p>
-
-<p>
-  <strong>Admin:</strong>
-  <%= @selection.admin %>
-</p>
 
 <%= link_to 'Edit', edit_selection_path(@selection) %> |
 <%= link_to 'Back', selections_path %>
