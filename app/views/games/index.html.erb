@@ -1,5 +1,61 @@
 <div class="row">
-  <div class="col-xs-4 col-md-4">Announcements</div>
-  <div class="col-xs-4 col-md-4">Top Scores for the Week</div>
-  <div class="col-xs-4 col-md-4">Top Scores for the Season (Cumulative)</div>
+  <div class="position-relative">
+    <div class="text-align-center text-underline col-xs-4 col-md-4"><h4>Announcements</h4>
+    
+    </div>
+    <div class="text-align-center text-underline col-xs-4 col-md-4"><h4>Top Scores for the Week</h4></div>
+    <div class="text-align-center text-underline col-xs-4 col-md-4"><h4>Top Scores for the Season (Cumulative)</h4></div>
+  </div>
+</div>
+
+<div class="col-md-10 col-md-offset-1">
+  <table class="table table-bordered table-striped table-responsive">
+    <thead>
+      <tr>
+        <th>
+          Home Team
+        </th>
+        <th>
+          Away Team
+        </th>
+        <th>
+          Spread
+        </th>
+        <th>
+          Preference Pick
+        </th>
+        <th>
+          Spread Pick
+        </th>
+        <th>
+          Points
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @selections.each do |s| %>
+      <tr>
+        <td>
+          <%= s.game.home_team.region + " " + s.game.home_team.name %>
+        </td>
+        <td>
+          <%= s.game.away_team.region + " " + s.game.away_team.name %>
+        </td>
+        <td>
+          <%= s.game.spread %>
+        </td>
+        <td>
+          <strong><%= s.pref_pick_int %></strong>
+          <%= Team.find(s.pref_pick_team).name + " " + Team.find(s.pref_pick_team).region %>
+        </td>
+        <td>
+          <%= Team.find(s.spread_pick_team).name + " " + Team.find(s.spread_pick_team).region %>
+        </td>
+        <td>
+          <%= s.points %>
+        </td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
 </div>
