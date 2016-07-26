@@ -1,14 +1,21 @@
 <div class="row">
   <div class="position-relative">
-    <div class="text-align-center text-underline col-xs-4 col-md-4"><h4>Announcements</h4>
-    
+    <div class="text-align-center text-underline col-xs-4 col-md-4">
+      <h4><%= announce Announcement.newest, :format => "bootstrap", hide_message: "" %></h4>
     </div>
     <div class="text-align-center text-underline col-xs-4 col-md-4"><h4>Top Scores for the Week</h4></div>
     <div class="text-align-center text-underline col-xs-4 col-md-4"><h4>Top Scores for the Season (Cumulative)</h4></div>
   </div>
 </div>
 
-<div class="col-md-10 col-md-offset-1">
+
+
+
+
+
+<!-- User Selections Table, No Forms inside table yet-->
+<!-- Still Need to include Admin Chosen Games -->
+<div class="top-50 position-relative col-md-10 col-md-offset-1">
   <table class="table table-bordered table-striped table-responsive">
     <thead>
       <tr>
@@ -30,6 +37,9 @@
         <th>
           Points
         </th>
+        <th>
+          Edit
+        </th>
       </tr>
     </thead>
     <tbody>
@@ -45,14 +55,25 @@
           <%= s.game.spread %>
         </td>
         <td>
-          <strong><%= s.pref_pick_int %></strong>
-          <%= Team.find(s.pref_pick_team).name + " " + Team.find(s.pref_pick_team).region %>
+          <strong><%= s.pref_pick_int %></strong> points on:
+          <!-- via helper -->
+          <%= pref_pick(s) %>
         </td>
         <td>
-          <%= Team.find(s.spread_pick_team).name + " " + Team.find(s.spread_pick_team).region %>
+          <!-- via helper -->
+          <%= spread_pick(s) %>
         </td>
         <td>
           <%= s.points %>
+        </td>
+        <td>
+          <%= link_to selection_path(s), :class => 'btn btn-xs', :title => "#{ t('.show', :default => t('helpers.links.show')) }" do %>
+            <%= glyph 'info-sign' %>
+            <%= glyph 'pencil' %>
+          <%- end -%>
+          <%= link_to selection_path(s), :method => :delete, :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-xs', :title => "#{ t('.destroy', :default => t('helpers.links.destroy')) }" do %>
+            <%= glyph 'remove' %>
+          <%- end -%>
         </td>
       </tr>
       <% end %>
