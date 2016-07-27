@@ -8,8 +8,9 @@ class GamesController < ApplicationController
   # GET /games
   # GET /games.json
   def index
+    @selection = Selection.new
     @selections = Selection.where(user_id: current_user)
-    @games = Game.where(week_id: 1).where(game_selected_by_admin: true)
+    @games = Game.where(week_id: 1)
   end
 
   # GET /games/1

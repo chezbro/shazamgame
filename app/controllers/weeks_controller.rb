@@ -15,6 +15,12 @@ class WeeksController < ApplicationController
   # GET /weeks/new
   def new
     @week = Week.new
+    # Build 13 games
+    13.times do 
+      games = @week.games.build
+    end
+
+
   end
 
   # GET /weeks/1/edit
