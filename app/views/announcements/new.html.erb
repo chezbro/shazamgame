@@ -4,11 +4,11 @@
     <%= f.error_notification %>
 
     <div class="form-inputs">
-      <%= f.input :body %>
+      <%= f.input :body, placeholder: "Please Enter Your New Announcement Here", label: false %>
     </div>
 
     <div class="form-actions">
-      <%= f.button :submit, data: { confirm: 'Are you sure you want to update the Announcement' }  %>
+      <%= f.button :submit, data: { confirm: 'Are you sure you want to update the Announcement' }, class: "btn btn-primary"  %>
     </div>
   <% end %>
 </div>

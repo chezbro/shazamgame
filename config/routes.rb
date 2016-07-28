@@ -12,6 +12,8 @@ Rails.application.routes.draw do
 
   get    "instructions"   => "landings#instructions",         as: :instructions
 
+  get    "leaderboard"   => "landings#leaderboard",         as: :leaderboard
+
   devise_for :users, controllers: {registrations: "users/registrations", sessions: "users/sessions", passwords: "users/passwords"}, skip: [:sessions, :registrations]
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)

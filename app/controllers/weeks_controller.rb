@@ -30,6 +30,7 @@ class WeeksController < ApplicationController
   # POST /weeks
   # POST /weeks.json
   def create
+    
     params["games"].each do |game|
       Game.create(game_params(game))
     end

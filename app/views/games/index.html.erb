@@ -1,18 +1,22 @@
-<div class="row">
+<div class="top-50 position-relative row">
   <div class="col-md-10 col-md-offset-1">
     <div class="position-relative">
       <div class="text-align-center col-xs-4 col-md-4">
         <h4 class="text-underline">Announcements</h4>
         <p><%= announce Announcement.newest, hide_message: "" %></p>
       </div>
-      <div class="text-align-center col-xs-4 col-md-4"><h4 class="text-underline">Top Scores for the Week</h4></div>
-      <div class="text-align-center col-xs-4 col-md-4"><h4 class="text-underline">Top Scores for the Season (Cumulative)</h4></div>
+      <div class="text-align-center col-xs-4 col-md-4"><h4 class="text-underline">Top Scores for the Week</h4>
+        <%= render partial: "layouts/weekly_leaderboard" %>
+      </div>
+      <div class="text-align-center col-xs-4 col-md-4"><h4 class="text-underline">Top Scores for the Season (Cumulative)</h4>
+        <%= render partial: "layouts/cumulative_leaderboard" %>
+      </div>
     </div>
   </div>
 </div>
 
-<div class="col-md-10 col-md-offset-1">
-
+<div class="top-100 position-relative col-md-10 col-md-offset-1">
+  <h3>Make Selections for Week 1</h3>
   <div class="divTable">
   <div class="divTableBody">
   <div class="divTableRow">
@@ -20,27 +24,33 @@
   <div class="divTableCell"><h4 class="text-align-center">Home Team</h4></div>
   <div class="divTableCell"><h4 class="text-align-center">Away Team</h4></div>
   <div class="divTableCell"><h4 class="text-align-center">Spread</h4></div>
-  <div class="divTableCell"><h4 class="">Spread Pick | Preference Pick | Points Awarded</h4></div>
+  <div class="divTableCell"><h4 class="">Spread Pick</h4></div>
+  <div class="divTableCell"><h4 class="">Preference Amount</h4></div>
+  <div class="divTableCell"><h4 class="">Preference Pick</h4></div>
   </div>
   
   <% @games.each do |game| %>
   <div class="divTableRow">
-  <div class="divTableCell"><%= game.home_team.region %></div>
-  <div class="divTableCell"><%= game.away_team.region %></div>
+  <div class="divTableCell"><%= home_team_name(game) %></div>
+  <div class="divTableCell"><%= away_team_name(game) %></div>
   <div class="divTableCell"><%= game.home_team.region + " -" + game.spread.to_s %></div>
-    <%= simple_form_for @selection do |f| %>
       <div class="divTableCell">
-          <%= f.select :spread_pick_team, [['Home Team',1],['Away Team',2]] %>
+      <%= simple_form_for @selection do |f| %>
+          <%= f.select :spread_pick_team, [[home_team_name(game), game.home_team_id],[away_team_name(game), game.away_team_id]], :prompt => 'Team To Cover' %>
       </div>
       <div class="divTableCell">
-          <%= f.select :pref_pick_int,  pref_pick_integers, :prompt => 'Choose A Value' %>
+          <%= f.select :pref_pick_int,  pref_pick_integers, :prompt => 'Wager Points' %>
       </div>
-      <div class="divTableCell">
-          <%= f.text_field :points, readonly: true, label: false, placeholder: "Points Awarded" %>  
+        <div class="divTableCell">
+          <%= f.select :pref_pick_team, [[home_team_name(game), game.home_team_id],[away_team_name(game), game.away_team_id]], :prompt => 'Preference Pick' %>
       </div>
-    <% end %>
+<!--       <div class="divTableCell">
+          <%#= f.text_field :points, readonly: true, label: false, placeholder: "Points Awarded" %>  
+      </div> -->
   </div>
+    <% end %>
   <% end %>
+  <%= submit_tag "Submit Selections", class: "btn btn-primary" %>
 
   </div>
   </div>
