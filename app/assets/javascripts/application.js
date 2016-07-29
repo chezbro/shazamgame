@@ -19,6 +19,3 @@
 
 
 //= require_tree .
-$("#save").on("click", function() {
-    $("form").submit(); // we'll have to define the form to submit
-});

@@ -17,9 +17,8 @@
   <div class="divTableCell"><%= home_team_name(game) %></div>
   <div class="divTableCell"><%= away_team_name(game) %></div>
   <div class="divTableCell"><%= game.home_team.region + " -" + game.spread.to_s %></div>
-  <%= simple_form_for @game
-  <div class="divTableCell"><%= text_field_tag :home_team_score %></div>
-  <div class="divTableCell"><%= text_field_tag :away_team_score %></div>
+  <div class="divTableCell"><%= text_field_tag :home_team_score, nil, placeholder: "Home Team Score" %></div>
+  <div class="divTableCell"><%= text_field_tag :away_team_score, nil, placeholder: "Away Twam Score" %></div>
 
   </div>
 

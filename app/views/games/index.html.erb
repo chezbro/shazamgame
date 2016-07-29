@@ -25,8 +25,8 @@
   <div class="divTableCell"><h4 class="text-align-center">Away Team</h4></div>
   <div class="divTableCell"><h4 class="text-align-center">Spread</h4></div>
   <div class="divTableCell"><h4 class="">Spread Pick</h4></div>
-  <div class="divTableCell"><h4 class="">Preference Amount</h4></div>
   <div class="divTableCell"><h4 class="">Preference Pick</h4></div>
+  <div class="divTableCell"><h4 class="">Preference Amount</h4></div>
 
 <!--   <div class="divTableCell"><h4 class="">Home Team Score</h4></div>
   <div class="divTableCell"><h4 class="">Away Team Score</h4></div> -->
@@ -43,10 +43,10 @@
       <%= f.select :spread_pick_team, [[home_team_name(game), game.home_team_id],[away_team_name(game), game.away_team_id]], {prompt: "Team To Cover Spread"}, { class: "selectpicker"}  %>
       </div>
       <div class="divTableCell">
-          <%= f.select :pref_pick_int,  pref_pick_integers, {:prompt => 'Wager Points'}, {class: "selectpicker"} %>
+        <%= f.select :pref_pick_team, [[home_team_name(game), game.home_team_id],[away_team_name(game), game.away_team_id]], {:prompt => 'Preference Pick'}, {class: "selectpicker"} %>
       </div>
-        <div class="divTableCell">
-          <%= f.select :pref_pick_team, [[home_team_name(game), game.home_team_id],[away_team_name(game), game.away_team_id]], {:prompt => 'Preference Pick'}, {class: "selectpicker"} %>
+      <div class="divTableCell">
+          <%= f.select :pref_pick_int,  pref_pick_integers, {:prompt => 'Wager Points'}, {class: "selectpicker"} %>
       </div>
 
 
@@ -66,8 +66,7 @@
   </div>
     <% end %>
   <% end %>
-  <%= submit_tag "Submit Selections", class: "btn btn-primary" %>
-
+  <%= submit_tag "Submit Selections", id: "submit-picks", class: "btn btn-primary" %>
   </div>
   </div>
 </div>

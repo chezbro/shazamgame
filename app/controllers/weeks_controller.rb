@@ -5,8 +5,9 @@ class WeeksController < ApplicationController
   # GET /weeks.json
   def index
     @week = Week.new
-    @games = Game.where(week_id: 1).where(game_selected_by_admin: true)
     @weeks = Week.all
+    @game = Game.new
+    @games = Game.where(week_id: 1).where(game_selected_by_admin: true)
   end
 
   # GET /weeks/1
@@ -34,12 +35,8 @@ class WeeksController < ApplicationController
   # POST /weeks
   # POST /weeks.json
   def create
-
-    params["games"].each do |game|
-      Game.create(game_params(game))
-    end
     respond_to do |format|
-      format.html { redirect_to weeks_url, notice: 'Article was successfully destroyed.' }
+      format.html { redirect_to root_url, notice: "New Week successfully created" }
       format.json { head :no_content }
     end
 
