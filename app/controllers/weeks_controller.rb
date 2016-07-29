@@ -4,12 +4,16 @@ class WeeksController < ApplicationController
   # GET /weeks
   # GET /weeks.json
   def index
+    @week = Week.new
+    @games = Game.where(week_id: 1).where(game_selected_by_admin: true)
     @weeks = Week.all
   end
 
   # GET /weeks/1
   # GET /weeks/1.json
   def show
+    @week = Week.find(params[:id])
+    @games = Game.where(week_id: 1).where(game_selected_by_admin: true)
   end
 
   # GET /weeks/new
@@ -30,7 +34,7 @@ class WeeksController < ApplicationController
   # POST /weeks
   # POST /weeks.json
   def create
-    
+
     params["games"].each do |game|
       Game.create(game_params(game))
     end

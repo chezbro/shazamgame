@@ -15,6 +15,8 @@
 //= require announcements
 //= require turbolinks
 //= require bootstrap
+//= require bootstrap-select
+
 
 //= require_tree .
 $("#save").on("click", function() {

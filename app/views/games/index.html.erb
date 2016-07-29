@@ -27,6 +27,10 @@
   <div class="divTableCell"><h4 class="">Spread Pick</h4></div>
   <div class="divTableCell"><h4 class="">Preference Amount</h4></div>
   <div class="divTableCell"><h4 class="">Preference Pick</h4></div>
+
+<!--   <div class="divTableCell"><h4 class="">Home Team Score</h4></div>
+  <div class="divTableCell"><h4 class="">Away Team Score</h4></div> -->
+  
   </div>
   
   <% @games.each do |game| %>
@@ -34,16 +38,28 @@
   <div class="divTableCell"><%= home_team_name(game) %></div>
   <div class="divTableCell"><%= away_team_name(game) %></div>
   <div class="divTableCell"><%= game.home_team.region + " -" + game.spread.to_s %></div>
-      <div class="divTableCell">
-      <%= simple_form_for @selection do |f| %>
-          <%= f.select :spread_pick_team, [[home_team_name(game), game.home_team_id],[away_team_name(game), game.away_team_id]], :prompt => 'Team To Cover' %>
+  <div class="divTableCell">
+    <%= simple_form_for @selection do |f| %>
+      <%= f.select :spread_pick_team, [[home_team_name(game), game.home_team_id],[away_team_name(game), game.away_team_id]], {prompt: "Team To Cover Spread"}, { class: "selectpicker"}  %>
       </div>
       <div class="divTableCell">
-          <%= f.select :pref_pick_int,  pref_pick_integers, :prompt => 'Wager Points' %>
+          <%= f.select :pref_pick_int,  pref_pick_integers, {:prompt => 'Wager Points'}, {class: "selectpicker"} %>
       </div>
         <div class="divTableCell">
-          <%= f.select :pref_pick_team, [[home_team_name(game), game.home_team_id],[away_team_name(game), game.away_team_id]], :prompt => 'Preference Pick' %>
+          <%= f.select :pref_pick_team, [[home_team_name(game), game.home_team_id],[away_team_name(game), game.away_team_id]], {:prompt => 'Preference Pick'}, {class: "selectpicker"} %>
       </div>
+
+
+<!--       <div class="divTableCell">
+        <%#= game.home_team_score %>
+      </div>
+      <div class="divTableCell">
+        <%#= game.away_team_score %>
+      </div> -->
+
+
+
+
 <!--       <div class="divTableCell">
           <%#= f.text_field :points, readonly: true, label: false, placeholder: "Points Awarded" %>  
       </div> -->

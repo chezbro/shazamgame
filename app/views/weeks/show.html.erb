@@ -1,28 +1,30 @@
-<%- model_class = Week -%>
-<div class="page-header">
-  <h1><%=t '.title', :default => Week %></h1>
-</div>
+<div class="top-100 position-relative col-md-10 col-md-offset-1">
+  <h3>Choose Winners for Week 1</h3>
+  <div class="divTable">
+  <div class="divTableBody">
+  <div class="divTableRow">
 
-<div class="fieldset">
-  <dl>
-      <dt class="label label-default"><%= model_class.human_attribute_name(:week_number) %></dt>
-      <dd><pre class="prettyprint"><%= @week.week_number %></pre></dd>
-      <dt class="label label-default"><%= model_class.human_attribute_name(:year) %></dt>
-      <dd><pre class="prettyprint"><%= @week.year %></pre></dd>
-      <dt class="label label-default"><%= model_class.human_attribute_name(:year_in_datetime) %></dt>
-      <dd><pre class="prettyprint"><%= @week.year_in_datetime %></pre></dd>
-  </dl>
-</div>
+  <div class="divTableCell"><h4 class="text-align-center">Home Team</h4></div>
+  <div class="divTableCell"><h4 class="text-align-center">Away Team</h4></div>
+  <div class="divTableCell"><h4 class="text-align-center">Spread</h4></div>
+  <div class="divTableCell"><h4 class="">Home Team Score</h4></div>
+  <div class="divTableCell"><h4 class="">Away Team Score</h4></div>
+  
+  </div>
+  
+  <% @games.each do |game| %>
+  <div class="divTableRow">
+  <div class="divTableCell"><%= home_team_name(game) %></div>
+  <div class="divTableCell"><%= away_team_name(game) %></div>
+  <div class="divTableCell"><%= game.home_team.region + " -" + game.spread.to_s %></div>
+  <div class="divTableCell"><%= game.home_team_score %></div>
+  <div class="divTableCell"><%= game.away_team_score %></div>
+    
+  
+  
+  </div>
+  <% end %>
 
-<div class="form-group">
-  <%= link_to t('.back', :default => t("helpers.links.back")),
-              weeks_path, :class => 'btn btn-default'  %>
-  <%= link_to t('.edit', :default => t("helpers.links.edit")),
-              edit_week_path(@week), :class => 'btn btn-default' %>
-  <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
-              week_path(@week),
-              :method => 'delete',
-              :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
-              :class => 'btn btn-danger' %>
+  </div>
+  </div>
 </div>
-

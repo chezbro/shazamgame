@@ -10,7 +10,7 @@ class GamesController < ApplicationController
   def index
     @selection = Selection.new
     @selections = Selection.where(user_id: current_user)
-    @games = Game.where(week_id: 1)
+    @games = Game.where(week_id: 1).where(game_selected_by_admin: true)
   end
 
   # GET /games/1

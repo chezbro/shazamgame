@@ -1,40 +1,31 @@
-<%- model_class = Week -%>
-<div class="page-header">
-  <h1><%=t '.title', :default => Week %></h1>
-</div>
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th><%= model_class.human_attribute_name(:week_number) %></th>
-      <th><%= model_class.human_attribute_name(:year) %></th>
-      <th><%= model_class.human_attribute_name(:year_in_datetime) %></th>
-      <th><%= model_class.human_attribute_name(:created_at) %></th>
-      <th><%=t '.actions', :default => t("helpers.actions") %></th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @weeks.each do |week| %>
-      <tr>
-        <td><%= week.id %></td>
-        <td><%= week.week_number %></td>
-        <td><%= week.year %></td>
-        <td><%= week.year_in_datetime %></td>
-        <td><%=l week.created_at, format: :long %></td>
-        <td>
-          <%= link_to week_path(week), :class => 'btn btn-xs', :title => "#{ t('.show', :default => t('helpers.links.show')) }" do %>
-            <%= glyph 'info-sign' %>
-            <%= glyph 'pencil' %>
-          <%- end -%>
-          <%= link_to week_path(week), :method => :delete, :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-xs', :title => "#{ t('.destroy', :default => t('helpers.links.destroy')) }" do %>
-            <%= glyph 'remove' %>
-          <%- end -%>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<div class="top-100 position-relative col-md-10 col-md-offset-1">
+  <h3>Choose Winners for Week 1</h3>
+  <div class="divTable">
+  <div class="divTableBody">
+  <div class="divTableRow">
 
-<%= link_to t('.new', :default => t("helpers.links.new")),
-            new_week_path,
-            :class => 'btn btn-primary' %>
+  <div class="divTableCell"><h4 class="text-align-center">Home Team</h4></div>
+  <div class="divTableCell"><h4 class="text-align-center">Away Team</h4></div>
+  <div class="divTableCell"><h4 class="text-align-center">Spread</h4></div>
+  <div class="divTableCell"><h4 class="">Home Team Score</h4></div>
+  <div class="divTableCell"><h4 class="">Away Team Score</h4></div>
+  
+  </div>
+  
+  <% @games.each do |game| %>
+  <div class="divTableRow">
+  <div class="divTableCell"><%= home_team_name(game) %></div>
+  <div class="divTableCell"><%= away_team_name(game) %></div>
+  <div class="divTableCell"><%= game.home_team.region + " -" + game.spread.to_s %></div>
+  <%= simple_form_for @game
+  <div class="divTableCell"><%= text_field_tag :home_team_score %></div>
+  <div class="divTableCell"><%= text_field_tag :away_team_score %></div>
+
+  </div>
+
+  <% end %>
+  <%= submit_tag "Submit Selections", class: "btn btn-primary" %>
+
+  </div>
+  </div>
+</div>
