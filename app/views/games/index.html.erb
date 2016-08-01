@@ -1,22 +1,6 @@
-<div class="top-50 position-relative row">
-  <div class="col-md-10 col-md-offset-1">
-    <div class="position-relative">
-      <div class="text-align-center col-xs-4 col-md-4">
-        <h4 class="text-underline">Announcements</h4>
-        <p><%= announce Announcement.newest, hide_message: "" %></p>
-      </div>
-      <div class="text-align-center col-xs-4 col-md-4"><h4 class="text-underline">Top Scores for the Week</h4>
-        <%= render partial: "layouts/weekly_leaderboard" %>
-      </div>
-      <div class="text-align-center col-xs-4 col-md-4"><h4 class="text-underline">Top Scores for the Season (Cumulative)</h4>
-        <%= render partial: "layouts/cumulative_leaderboard" %>
-      </div>
-    </div>
-  </div>
-</div>
-
 <div class="top-100 position-relative col-md-10 col-md-offset-1">
   <h3>Make Selections for Week 1</h3>
+  <div class="display-data"></div>
   <div class="divTable">
   <div class="divTableBody">
   <div class="divTableRow">
@@ -28,45 +12,37 @@
   <div class="divTableCell"><h4 class="">Preference Pick</h4></div>
   <div class="divTableCell"><h4 class="">Preference Amount</h4></div>
 
-<!--   <div class="divTableCell"><h4 class="">Home Team Score</h4></div>
-  <div class="divTableCell"><h4 class="">Away Team Score</h4></div> -->
-  
   </div>
   
   <% @games.each do |game| %>
-  <div class="divTableRow">
-  <div class="divTableCell"><%= home_team_name(game) %></div>
-  <div class="divTableCell"><%= away_team_name(game) %></div>
-  <div class="divTableCell"><%= game.home_team.region + " -" + game.spread.to_s %></div>
-  <div class="divTableCell">
-    <%= simple_form_for @selection do |f| %>
-      <%= f.select :spread_pick_team, [[home_team_name(game), game.home_team_id],[away_team_name(game), game.away_team_id]], {prompt: "Team To Cover Spread"}, { class: "selectpicker"}  %>
-      </div>
-      <div class="divTableCell">
-        <%= f.select :pref_pick_team, [[home_team_name(game), game.home_team_id],[away_team_name(game), game.away_team_id]], {:prompt => 'Preference Pick'}, {class: "selectpicker"} %>
-      </div>
-      <div class="divTableCell">
-          <%= f.select :pref_pick_int,  pref_pick_integers, {:prompt => 'Wager Points'}, {class: "selectpicker"} %>
-      </div>
+    <div class="divTableRow">
+    <div class="divTableCell"><%= home_team_name(game) %></div>
+    <div class="divTableCell"><%= away_team_name(game) %></div>
+    <div class="divTableCell"><%= game.home_team.region + " -" + game.spread.to_s %></div>
 
+    <div class="divTableCell">
+    <%= simple_form_for @selection, remote: true do |f| %>
+      <%= f.input_field :spread_pick_team, as: :radio_buttons, collection: [[home_team_name(game), game.home_team_id],[away_team_name(game), game.away_team_id]], :item_wrapper_class => 'inline', :checked => false, class: "selection-radio-button" %>
+    </div>
 
-<!--       <div class="divTableCell">
-        <%#= game.home_team_score %>
-      </div>
-      <div class="divTableCell">
-        <%#= game.away_team_score %>
-      </div> -->
+    <div class="divTableCell">
+      <%= f.input_field :pref_pick_team, as: :radio_buttons, collection: [[home_team_name(game), game.home_team_id],[away_team_name(game), game.away_team_id]], :item_wrapper_class => 'inline', :checked => false, class: "selection-radio-button" %>
+    </div>
 
+    <div class="divTableCell">
+      <%= f.select :pref_pick_int,  pref_pick_integers, {:prompt => 'Wager Points'}, {class: "selectpicker"} %>
+    </div>
 
+    <div>
+      <%= f.hidden_field :game_id,  value: game.id %>
+      <%= f.hidden_field :user_id,  value: current_user.id %>
+    </div>
 
-
-<!--       <div class="divTableCell">
-          <%#= f.text_field :points, readonly: true, label: false, placeholder: "Points Awarded" %>  
-      </div> -->
-  </div>
+    </div>
     <% end %>
   <% end %>
-  <%= submit_tag "Submit Selections", id: "submit-picks", class: "btn btn-primary" %>
+  <%#= submit_tag "Submit Selections", id: "submit-picks", class: "btn btn-primary" %>
   </div>
   </div>
 </div>
+

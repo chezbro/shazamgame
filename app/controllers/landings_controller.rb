@@ -3,8 +3,15 @@ class LandingsController < ApplicationController
 
   def index
   end
+
+  def activity
+  end
+
   
   def instructions
+  end
+
+  def real_time_scores
   end
   
 end

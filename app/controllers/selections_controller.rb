@@ -1,10 +1,13 @@
 class SelectionsController < ApplicationController
   before_action :set_selection, only: [:show, :edit, :update, :destroy]
+  skip_before_filter :verify_authenticity_token
 
   # GET /selections
   # GET /selections.json
   def index
-    @selections = Selection.all
+    @selection = Selection.new
+    @selections = Selection.where(user_id: current_user)
+    @games = Game.where(week_id: 1).where(game_selected_by_admin: true)
   end
 
   # GET /selections/1
@@ -25,12 +28,10 @@ class SelectionsController < ApplicationController
   # POST /selections
   # POST /selections.json
   def create
-    @selection = Selection.new(selection_params)
-
+    @selection = Selection.new  (selection_params)
     respond_to do |format|
       if @selection.save
-        format.html { redirect_to @selection, notice: 'Selection was successfully created.' }
-        format.json { render :show, status: :created, location: @selection }
+        format.js
       else
         format.html { render :new }
         format.json { render json: @selection.errors, status: :unprocessable_entity }
@@ -70,6 +71,6 @@ class SelectionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def selection_params
-      params.fetch(:selection, {})
+      params.require(:selection).permit(:id, :game_id, :user_id, :points, :pref_pick_int, :pref_pick_str, :spread_pick, :pref_pick_team, :spread_pick_team)
     end
 end

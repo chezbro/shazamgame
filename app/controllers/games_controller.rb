@@ -1,5 +1,5 @@
 class GamesController < ApplicationController
-
+  skip_before_filter :verify_authenticity_token, :only => [:index, :show]
   #->Prelang (scaffolding:rails/scope_to_user)
   before_filter :require_user_signed_in, only: [:new, :edit, :create, :update, :destroy]
 

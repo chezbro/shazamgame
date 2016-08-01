@@ -1,0 +1,16 @@
+<div class="top-50 position-relative row">
+  <div class="col-md-10 col-md-offset-1">
+    <div class="position-relative">
+      <div class="text-align-center col-xs-4 col-md-4">
+        <h4 class="text-underline">Announcements</h4>
+        <p><%= announce Announcement.newest, hide_message: "" %></p>
+      </div>
+      <div class="text-align-center col-xs-4 col-md-4"><h4 class="text-underline">Top Scores for the Week</h4>
+        <%= render partial: "layouts/weekly_leaderboard" %>
+      </div>
+      <div class="text-align-center col-xs-4 col-md-4"><h4 class="text-underline">Top Scores for the Season (Cumulative)</h4>
+        <%= render partial: "layouts/cumulative_leaderboard" %>
+      </div>
+    </div>
+  </div>
+</div>

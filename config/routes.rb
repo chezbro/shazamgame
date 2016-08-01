@@ -14,6 +14,10 @@ Rails.application.routes.draw do
 
   get    "leaderboard"   => "landings#leaderboard",         as: :leaderboard
 
+  get    "real_time_scores"   => "landings#real_time_scores",         as: :real_time_scores
+
+  get    "activity"   => "landings#activity",         as: :activity
+
   devise_for :users, controllers: {registrations: "users/registrations", sessions: "users/sessions", passwords: "users/passwords"}, skip: [:sessions, :registrations]
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
@@ -87,7 +91,7 @@ Rails.application.routes.draw do
 
 # If Logged In, go to Game/index, if not go to Landings/Index
   authenticated :user do
-    root to: 'games#index', as: :authenticated_root
+    root to: 'landings#activity', as: :authenticated_root
   end
   
   root to: 'landings#index'
