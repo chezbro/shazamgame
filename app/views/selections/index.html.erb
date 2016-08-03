@@ -1,25 +1,26 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Listing Selections</h1>
+<div class="top-100 position-relative col-md-10 col-md-offset-1">
+  <h3>All Selections</h3>
+  <div class="divTable">
+  <div class="divTableBody">
 
-<table>
-  <thead>
-    <tr>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+  <div class="divTableRow">
+    <div class="divTableCell"><h4 class="text-align-center">User</h4></div>
+    <div class="divTableCell"><h4 class="text-align-center">Home Team</h4></div>
+    <div class="divTableCell"><h4 class="text-align-center">Away Team</h4></div>
+    <div class="divTableCell"><h4 class="text-align-center">Edit Selection</h4></div>
+  </div>
 
-  <tbody>
-    <% @selections.each do |selection| %>
-      <tr>
-        <td><%= link_to 'Show', selection %></td>
-        <td><%= link_to 'Edit', edit_selection_path(selection) %></td>
-        <td><%= link_to 'Destroy', selection, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
+  <%@selections.each do |selection| %>
+  <div class="divTableRow">
+      <div class="divTableCell"><%= selection.user.name %></div>
+      <div class="divTableCell"><%= home_team_name(selection) %></div>
+      <div class="divTableCell"><%= away_team_name(selection) %></div>
+      <div class="divTableCell"><%= link_to 'Edit', edit_selection_path(selection) %></div>
+  </div>
     <% end %>
-  </tbody>
-</table>
 
-<br>
-
-<%= link_to 'New Selection', new_selection_path %>
+  </div>
+  </div>
+</div>

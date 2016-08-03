@@ -5,9 +5,7 @@ class SelectionsController < ApplicationController
   # GET /selections
   # GET /selections.json
   def index
-    @selection = Selection.new
-    @selections = Selection.where(user_id: current_user)
-    @games = Game.where(week_id: 1).where(game_selected_by_admin: true)
+    @selections = Selection.all
   end
 
   # GET /selections/1
