@@ -2,7 +2,7 @@
   <h3>Make Selections for Week 1</h3>
   <div class="divTable">
   <div class="divTableBody">
-    
+
   <div class="divTableRow">
     <div class="divTableCell"><h4 class="text-align-center">Home Team</h4></div>
     <div class="divTableCell"><h4 class="text-align-center">Away Team</h4></div>
@@ -14,17 +14,17 @@
   
   <% @games.each do |game| %>
     <div class="divTableRow">
-    <div class="divTableCell"><%= home_team_name(game) %></div>
-    <div class="divTableCell"><%= away_team_name(game) %></div>
+    <div class="divTableCell"><%= game_home_team_name(game) %></div>
+    <div class="divTableCell"><%= game_away_team_name(game) %></div>
     <div class="divTableCell"><%= game.home_team.region + " -" + game.spread.to_s %></div>
 
     <div class="divTableCell">
     <%= simple_form_for @selection, remote: true do |f| %>
-      <%= f.input_field :spread_pick_team, as: :radio_buttons, collection: [["FAV:" + " " + home_team_name(game), game.home_team_id],["DOG:" + " " + away_team_name(game), game.away_team_id]], :item_wrapper_class => 'inline', :checked => false, class: "selection-radio-button" %>
+      <%= f.input_field :spread_pick_team, as: :radio_buttons, collection: [["FAV:" + " " + game_home_team_name(game), game.home_team_id],["DOG:" + " " + game_away_team_name(game), game.away_team_id]], :item_wrapper_class => 'inline', :checked => false, class: "selection-radio-button" %>
     </div>
 
     <div class="divTableCell">
-      <%= f.input_field :pref_pick_team, as: :radio_buttons, collection: [["FAV:" + " " + home_team_name(game), game.home_team_id],["DOG:" + " " + away_team_name(game), game.away_team_id]], :item_wrapper_class => 'inline', :checked => false, class: "selection-radio-button" %>
+      <%= f.input_field :pref_pick_team, as: :radio_buttons, collection: [["FAV:" + " " + game_home_team_name(game), game.home_team_id],["DOG:" + " " + game_away_team_name(game), game.away_team_id]], :item_wrapper_class => 'inline', :checked => false, class: "selection-radio-button" %>
     </div>
 
     <div class="divTableCell">

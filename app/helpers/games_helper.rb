@@ -7,11 +7,11 @@ module GamesHelper
     Team.find(selection.spread_pick_team).region + " " + Team.find(selection.spread_pick_team).name
   end
 
-  def home_team_name(game)
+  def game_home_team_name(game)
     game.home_team.region + " " + game.home_team.name
   end
 
-  def away_team_name(game)
+  def game_away_team_name(game)
     game.away_team.region + " " + game.away_team.name
   end
 

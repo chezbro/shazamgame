@@ -14,7 +14,7 @@
   
   <% @games.each do |game| %>
   <div class="divTableRow">
-  <div class="divTableCell"><%= home_team_name(game) %></div>
+  <div class="divTableCell"><%= selections_home_team_name(game) %></div>
   <div class="divTableCell"><%= away_team_name(game) %></div>
   <div class="divTableCell"><%= game.home_team.region + " -" + game.spread.to_s %></div>
   <div class="divTableCell"><%= game.home_team_score %></div>

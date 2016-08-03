@@ -15,8 +15,8 @@
   <%@selections.each do |selection| %>
   <div class="divTableRow">
       <div class="divTableCell"><%= selection.user.name %></div>
-      <div class="divTableCell"><%= home_team_name(selection) %></div>
-      <div class="divTableCell"><%= away_team_name(selection) %></div>
+      <div class="divTableCell"><%= selections_home_team_name(selection) %></div>
+      <div class="divTableCell"><%= selections_away_team_name(selection) %></div>
       <div class="divTableCell"><%= link_to 'Edit', edit_selection_path(selection) %></div>
   </div>
     <% end %>

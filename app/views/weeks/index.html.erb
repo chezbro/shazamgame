@@ -14,8 +14,8 @@
   
   <% @games.each do |game| %>
   <div class="divTableRow">
-  <div class="divTableCell"><%= home_team_name(game) %></div>
-  <div class="divTableCell"><%= away_team_name(game) %></div>
+  <div class="divTableCell"><%= game_home_team_name(game) %></div>
+  <div class="divTableCell"><%= game_away_team_name(game) %></div>
   <div class="divTableCell"><%= game.home_team.region + " -" + game.spread.to_s %></div>
   <div class="divTableCell"><%= text_field_tag :home_team_score, nil, placeholder: "Home Team Score", required: true%></div>
   <div class="divTableCell"><%= text_field_tag :away_team_score, nil, placeholder: "Away Twam Score", required: true%></div>
