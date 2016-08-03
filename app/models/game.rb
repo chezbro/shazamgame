@@ -1,4 +1,7 @@
 class Game < ActiveRecord::Base
+  
+  after_save :winning_team
+
   belongs_to :week
   # belongs_to :user
 
@@ -8,6 +11,7 @@ class Game < ActiveRecord::Base
   has_many :selections
   has_many :users
   
+  protected
 
   def teams
     [home_team, away_team]

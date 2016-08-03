@@ -13,8 +13,10 @@
 //= require jquery
 //= require jquery_ujs
 //= require announcements
+//= require shared
 //= require bootstrap
 //= require bootstrap-select
+//= require bootstrap-toggle
 
 
 //= require_tree .

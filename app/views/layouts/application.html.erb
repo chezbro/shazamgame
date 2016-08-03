@@ -8,11 +8,13 @@
   <%= csrf_meta_tags %>
 <meta name="viewport" content="width=device-width, initial-scale=1"/></head>
 <body>
-  <div class="col-md-12 col-xs-12 margin-all-0 padding-all-0">
+  <div class="app-border min-height-100 col-md-12 col-xs-12 margin-all-0 padding-all-0">
     <div class="row">
       <%= render partial: "elements/navbar" unless @disable_navbar %>
     </div>
-    <%= bootstrap_flash %>
+    <% flash.each do |key, value| %>
+      <div class="alert alert-<%= key %>"><%= value %></div>
+    <% end %>
     <%= yield %>
   </div>
 </body>

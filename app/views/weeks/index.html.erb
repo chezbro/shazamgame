@@ -1,30 +1,27 @@
-<div class="top-100 position-relative col-md-10 col-md-offset-1">
-  <h3>Choose Winners for Week 1</h3>
+<div class="top-50 position-relative col-md-10 col-md-offset-1">
+  <% if current_user.admin? %>
+    <h3>Please Select Week To Add Scores To:</h3>
+  <% else %>
+    <h3>Please Select Week:</h3>
+  <% end %>
   <div class="divTable">
   <div class="divTableBody">
-  <div class="divTableRow">
 
-  <div class="divTableCell"><h4 class="text-align-center">Home Team</h4></div>
-  <div class="divTableCell"><h4 class="text-align-center">Away Team</h4></div>
-  <div class="divTableCell"><h4 class="text-align-center">Spread</h4></div>
-  <div class="divTableCell"><h4 class="">Home Team Score</h4></div>
-  <div class="divTableCell"><h4 class="">Away Team Score</h4></div>
-  
+  <div class="divTableRow">
+    <div class="divTableCell"><h4 class="text-align-center">Week Number</h4></div>
+    <div class="divTableCell"><h4 class="text-align-center">Add Scores</h4></div>
   </div>
   
-  <% @games.each do |game| %>
-  <div class="divTableRow">
-  <div class="divTableCell"><%= game_home_team_name(game) %></div>
-  <div class="divTableCell"><%= game_away_team_name(game) %></div>
-  <div class="divTableCell"><%= game.home_team.region + " -" + game.spread.to_s %></div>
-  <div class="divTableCell"><%= text_field_tag :home_team_score, nil, placeholder: "Home Team Score", required: true%></div>
-  <div class="divTableCell"><%= text_field_tag :away_team_score, nil, placeholder: "Away Twam Score", required: true%></div>
-
-  </div>
-
+  <% @weeks.each do |week| %>
+    <div class="divTableRow">
+      <div class="divTableCell"><%= "#{week.week_number}" %></div>
+      <% if current_user.admin? %>
+        <div class="divTableCell"><%= link_to "Add Scores for Week #{week.week_number}", week_path(week) %></div>
+      <% else %>
+        <div class="divTableCell"><%= link_to "View Scores for Week #{week.week_number}", week_path(week) %></div>
+      <% end %>
+    </div>
   <% end %>
-  <%= submit_tag "Submit Selections", class: "btn btn-primary" %>
-
-  </div>
-  </div>
+</div>
+</div>
 </div>

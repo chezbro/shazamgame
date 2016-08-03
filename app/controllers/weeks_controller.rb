@@ -4,7 +4,7 @@ class WeeksController < ApplicationController
   # GET /weeks
   # GET /weeks.json
   def index
-    @week = Week.new
+
     @weeks = Week.all
     @game = Game.new
     @games = Game.where(week_id: 1).where(game_selected_by_admin: true)
@@ -14,7 +14,8 @@ class WeeksController < ApplicationController
   # GET /weeks/1.json
   def show
     @week = Week.find(params[:id])
-    @games = Game.where(week_id: 1).where(game_selected_by_admin: true)
+    @game = Game.new
+    @games = Game.where(week_id: params[:id]).where(game_selected_by_admin: true)
   end
 
   # GET /weeks/new

@@ -6,18 +6,24 @@
   <div class="divTableBody">
 
   <div class="divTableRow">
+    <div class="divTableCell"><h4 class="text-align-center">Week</h4></div>
     <div class="divTableCell"><h4 class="text-align-center">User</h4></div>
     <div class="divTableCell"><h4 class="text-align-center">Home Team</h4></div>
     <div class="divTableCell"><h4 class="text-align-center">Away Team</h4></div>
-    <div class="divTableCell"><h4 class="text-align-center">Edit Selection</h4></div>
+    <div class="divTableCell"><h4 class="text-align-center">Spread Pick</h4></div>
+    <div class="divTableCell"><h4 class="text-align-center">Preference Pick</h4></div>
+    <div class="divTableCell"><h4 class="text-align-center">Preference Amount</h4></div>
   </div>
 
   <%@selections.each do |selection| %>
   <div class="divTableRow">
+      <div class="divTableCell"><%= selection.game.week.week_number %></div>
       <div class="divTableCell"><%= selection.user.name %></div>
       <div class="divTableCell"><%= selections_home_team_name(selection) %></div>
       <div class="divTableCell"><%= selections_away_team_name(selection) %></div>
-      <div class="divTableCell"><%= link_to 'Edit', edit_selection_path(selection) %></div>
+      <div class="divTableCell"><%= selection_team(selection.spread_pick_team) %></div>
+      <div class="divTableCell"><%= selection_team(selection.pref_pick_team) %></div>
+      <div class="divTableCell"><%= selection.pref_pick_int %></div>
   </div>
     <% end %>
 

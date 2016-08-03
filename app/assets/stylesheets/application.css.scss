@@ -35,7 +35,21 @@
 
 @import "weeks";
 
+
+
 //->Prelang (ui_framework:twitter_bootstrap)
+
+html, body{
+  height: 100%;
+}
+
+.app-border{
+  // border: 15px solid transparent;
+  //   -moz-border-image: -moz-linear-gradient(left, #FC913A 0%, #FF4E50 100%);
+  //   -webkit-border-image: -webkit-linear-gradient(left, #FC913A 0%, #FF4E50 100%);
+  //   border-image: linear-gradient(to right, #ff8f67 0%, #ff4e22 100%);
+  //   border-image-slice: 1;
+}
 
 // Give everything in 'yield' margin to separate it.
 .yield {

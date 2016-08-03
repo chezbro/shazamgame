@@ -8,4 +8,8 @@ module SelectionsHelper
     s.game.away_team.region + " " + s.game.away_team.name
   end
 
+
+  def selection_team(selection)
+    Team.find_by_id(selection).try(:region)
+  end
 end
