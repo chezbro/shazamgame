@@ -3,6 +3,7 @@ class AnnouncementsController < ApplicationController
 
   def new
     @announcement = Announcement.new
+    @announcements = Announcement.all
   end
   
   def create

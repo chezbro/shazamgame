@@ -11,4 +11,15 @@
       <%= f.button :submit, data: { confirm: 'Are you sure you want to update the Announcement' }, class: "btn btn-primary"  %>
     </div>
   <% end %>
+  <div class="position-relative top-50">
+    <% @announcements.each do |announcement| %>
+    <ul>
+      <li>
+        <strong>Announcement: </strong><%= announcement.body %>
+        <br>
+        <strong> Date of Announcement: </strong><%= announcement.created_at.strftime("%A, %b %d")%>  
+      </li>
+    </ul>
+    <% end %>
+  </div>
 </div>
