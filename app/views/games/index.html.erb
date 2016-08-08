@@ -16,8 +16,10 @@
     <div class="divTableCell"><%= game_home_team_name(game) %></div>
     <div class="divTableCell"><%= game_away_team_name(game) %></div>
     <div class="divTableCell">
-      <%= simple_form_for @selection, remote: true do |f| %>
+      <%= simple_form_for @selection do |f| %>
         <%= f.select :pref_pick_int,  pref_pick_integers, {:prompt => 'Wager Points'}, {class: "selectpicker"} %>
+        <!-- selected needs to be previously selected value, if there is one. -->
+        <!-- f.select :pref_pick_int,  pref_pick_integers, {:prompt => 'Wager Points', selected: HERE}, {class: "selectpicker"} -->
     </div>
     <div class="divTableCell">
       <%= f.input_field :spread_pick_team, as: :radio_buttons, collection: [["FAV:" + " " + game_home_team_name(game), game.home_team_id],["DOG:" + " " + game_away_team_name(game), game.away_team_id]], :item_wrapper_class => 'inline', :checked => false, class: "selection-radio-button" %>
@@ -33,9 +35,9 @@
     </div>
 
     </div>
+    <%= f.submit "Submit Selections", id: "submit-picks", class: "btn btn-primary margin-10-0" %>
     <% end %>
   <% end %>
-  <%#= submit_tag "Submit Selections", id: "submit-picks", class: "btn btn-primary" %>
   </div>
   </div>
 </div>

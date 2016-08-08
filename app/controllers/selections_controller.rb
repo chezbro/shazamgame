@@ -26,10 +26,11 @@ class SelectionsController < ApplicationController
   # POST /selections
   # POST /selections.json
   def create
-    @selection = Selection.new  (selection_params)
+    @selection = Selection.new(selection_params)
     respond_to do |format|
       if @selection.save
-        format.js
+        format.html { redirect_to games_url, notice: "Selection successfully created" }
+        format.json { head :no_content }
       else
         format.html { render :new }
         format.json { render json: @selection.errors, status: :unprocessable_entity }

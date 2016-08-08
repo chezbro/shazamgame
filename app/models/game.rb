@@ -1,6 +1,6 @@
 class Game < ActiveRecord::Base
   
-  after_save :winning_team
+  # after_save :winning_team
 
   belongs_to :week
   # belongs_to :user
@@ -10,8 +10,6 @@ class Game < ActiveRecord::Base
   
   has_many :selections
   has_many :users
-  
-  protected
 
   def teams
     [home_team, away_team]
@@ -31,7 +29,7 @@ class Game < ActiveRecord::Base
     # We want the current user's selection on this Game 
 
     user.selections.each do |selection|
-
+      binding.pry
       # Get User Selection for Game
       if selection.game_id == self.id
         
@@ -58,19 +56,20 @@ class Game < ActiveRecord::Base
       self.home_team_won_straight_up = true
       self.away_team_won_straight_up = false
       self.team_that_won_straight_up  = self.home_team_id
-
+      
     elsif ( self.home_team_score == self.away_team_score )
       
       # Push Game
       self.tie_game = true
       self.home_team_won_straight_up = false
       self.away_team_won_straight_up = false
+
     else 
       # Away Team Wins Straight Up
       self.home_team_won_straight_up = false
       self.away_team_won_straight_up = true
       self.team_that_won_straight_up  = self.away_team_id
-  end
+  end 
 end
 
   def which_team_covered
