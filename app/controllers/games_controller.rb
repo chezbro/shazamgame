@@ -57,8 +57,7 @@ class GamesController < ApplicationController
     
     respond_to do |format|
       if @game.update(game_params)
-        @game.winning_team
-        # @game.check_selection_and_tally_points(current_user)
+        @game.check_selection_and_tally_points(current_user)
         # @game.which_team_covered
         @game.save!
         @game.reload
