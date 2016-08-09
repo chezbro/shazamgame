@@ -43,8 +43,7 @@
       <% end %>
     </div>
   </div>
-  
-  <%= f.submit "Submit Selections", class: "btn btn-primary submit-scores margin-0-30" if current_user.admin? %>
+  <%= f.submit "Submit Selections", class: "margin-0-30 btn btn-primary" if current_user.admin?  %>
   <% end %>
   <% end %>
   </div>

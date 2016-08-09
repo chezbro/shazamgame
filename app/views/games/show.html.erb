@@ -1,48 +1,42 @@
-<%- model_class = Game -%>
-<div class="page-header">
-  <h1><%=t '.title', :default => Game %></h1>
-</div>
+<div class="top-50 position-relative col-md-10 col-md-offset-1">
+  <h3>Make Selections for Week 1</h3>
+  <div class="divTable">
+  <div class="divTableBody">
 
-<div class="fieldset">
-  <dl>
-      <dt class="label label-default"><%= model_class.human_attribute_name(:points) %></dt>
-      <dd><pre class="prettyprint"><%= @game.points %></pre></dd>
-      <dt class="label label-default"><%= model_class.human_attribute_name(:is_home_team) %></dt>
-      <dd><pre class="prettyprint"><%= @game.is_home_team %></pre></dd>
-      <dt class="label label-default"><%= model_class.human_attribute_name(:spread) %></dt>
-      <dd><pre class="prettyprint"><%= @game.spread %></pre></dd>
-      <dt class="label label-default"><%= model_class.human_attribute_name(:home_team_id) %></dt>
-      <dd><pre class="prettyprint"><%= @game.home_team_id %></pre></dd>
-      <dt class="label label-default"><%= model_class.human_attribute_name(:away_team_id) %></dt>
-      <dd><pre class="prettyprint"><%= @game.away_team_id %></pre></dd>
-      <dt class="label label-default"><%= model_class.human_attribute_name(:home_team_pref_pick) %></dt>
-      <dd><pre class="prettyprint"><%= @game.home_team_pref_pick %></pre></dd>
-      <dt class="label label-default"><%= model_class.human_attribute_name(:away_team_pref_pick) %></dt>
-      <dd><pre class="prettyprint"><%= @game.away_team_pref_pick %></pre></dd>
-      <dt class="label label-default"><%= model_class.human_attribute_name(:home_team_spread_pick) %></dt>
-      <dd><pre class="prettyprint"><%= @game.home_team_spread_pick %></pre></dd>
-      <dt class="label label-default"><%= model_class.human_attribute_name(:away_team_spread_pick) %></dt>
-      <dd><pre class="prettyprint"><%= @game.away_team_spread_pick %></pre></dd>
-      <dt class="label label-default"><%= model_class.human_attribute_name(:home_team_covered_spread) %></dt>
-      <dd><pre class="prettyprint"><%= @game.home_team_covered_spread %></pre></dd>
-      <dt class="label label-default"><%= model_class.human_attribute_name(:away_team_covered_spread) %></dt>
-      <dd><pre class="prettyprint"><%= @game.away_team_covered_spread %></pre></dd>
-      <dt class="label label-default"><%= model_class.human_attribute_name(:tie_game) %></dt>
-      <dd><pre class="prettyprint"><%= @game.tie_game %></pre></dd>
-      <dt class="label label-default"><%= model_class.human_attribute_name(:game_selected_by_admin) %></dt>
-      <dd><pre class="prettyprint"><%= @game.game_selected_by_admin %></pre></dd>
-  </dl>
-</div>
+  <div class="divTableRow">
+    <div class="divTableCell"><h4 class="text-align-center">Home Team</h4></div>
+    <div class="divTableCell"><h4 class="text-align-center">Away Team</h4></div>
+    <div class="divTableCell"><h4 class="">Preference Amount</h4></div>
+    <div class="divTableCell"><h4 class="text-align-center">Spread Pick</h4></div>
+    <div class="divTableCell"><h4 class="">Preference Pick</h4></div>
+  </div>
+  
+  <% @games.each do |game| %>
+    <div class="divTableRow">
+    <div class="divTableCell"><%= game_home_team_name(game) %></div>
+    <div class="divTableCell"><%= game_away_team_name(game) %></div>
+    <div class="divTableCell">
+      <%= simple_form_for @selection do |f| %>
+        <%= f.select :pref_pick_int,  pref_pick_integers, {:prompt => 'Wager Points'}, {class: "selectpicker"} %>
+    </div>
+    <div class="divTableCell">
+      <%= f.input :spread_pick_team, as: :radio_buttons, collection: [["FAV:" + " " + game_home_team_name(game), game.home_team_id],["DOG:" + " " + game_away_team_name(game), game.away_team_id]], :checked => false, class: "selection-radio-button", required: true, label: false %>
+    </div>
 
-<div class="form-group">
-  <%= link_to t('.back', :default => t("helpers.links.back")),
-              games_path, :class => 'btn btn-default'  %>
-  <%= link_to t('.edit', :default => t("helpers.links.edit")),
-              edit_game_path(@game), :class => 'btn btn-default' %>
-  <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
-              game_path(@game),
-              :method => 'delete',
-              :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
-              :class => 'btn btn-danger' %>
+    <div class="divTableCell">
+      <%= f.input :pref_pick_team, as: :radio_buttons, collection: [["FAV:" + " " + game_home_team_name(game), game.home_team_id],["DOG:" + " " + game_away_team_name(game), game.away_team_id]], :checked => false, class: "selection-radio-button", required: true, label: false %>
+    </div>
+
+    <div>
+      <%= f.hidden_field :game_id,  value: game.id %>
+      <%= f.hidden_field :user_id,  value: current_user.id %>
+    </div>
+
+    </div>
+    <%= f.submit "Submit Selections", id: "submit-picks", class: "btn btn-primary margin-10-0" %>
+    <% end %>
+  <% end %>
+  </div>
+  </div>
 </div>
 

@@ -1,15 +1,15 @@
 class GamesController < ApplicationController
   skip_before_filter :verify_authenticity_token, :only => [:index, :show]
-  #->Prelang (scaffolding:rails/scope_to_user)
-  before_filter :require_user_signed_in, only: [:new, :edit, :create, :update, :destroy]
-
   
+  before_filter :require_user_signed_in, only: [:new, :edit, :create, :update, :destroy]
 
   before_action :set_game, only: [:show, :edit, :update, :destroy]
 
   # GET /games
   # GET /games.json
+
   def index
+    @weeks = Week.all
     @selection = Selection.new
     @selections = Selection.where(user_id: current_user)
     @games = Game.where(week_id: Week.last.id).where(game_selected_by_admin: true)
@@ -22,6 +22,13 @@ class GamesController < ApplicationController
   # GET /games/1
   # GET /games/1.json
   def show
+    @selection = Selection.new
+    @selections = Selection.where(user_id: current_user)
+    @games = Game.where(week_id: params[:id]).where(game_selected_by_admin: true)
+
+    @games.each do |game|
+      @game_selections = game.selections.where(user_id: current_user)
+    end
   end 
 
   # GET /games/new
@@ -65,7 +72,8 @@ class GamesController < ApplicationController
         format.html { redirect_to(:back) }
         format.json { render :show, status: :ok, location: @game }
       else
-        format.html { render :edit }
+        flash[:success] = "Error"
+        format.html { redirect_to(:back) }
         format.json { render json: @game.errors, status: :unprocessable_entity }
       end
     end

@@ -6,11 +6,16 @@ class SelectionsController < ApplicationController
   # GET /selections.json
   def index
     @selections = Selection.all
+
   end
 
   # GET /selections/1
   # GET /selections/1.json
   def show
+    @weeks = Week.all
+    @selection = Selection.new
+    @selections = Selection.where(user_id: current_user)
+    @games = Game.where(week_id: Week.last.id).where(game_selected_by_admin: true)
   end
 
   # GET /selections/new
@@ -32,7 +37,7 @@ class SelectionsController < ApplicationController
         format.html { redirect_to games_url, notice: "Selection successfully created" }
         format.json { head :no_content }
       else
-        format.html { render :new }
+        format.html { redirect_to selection_path(Week.last), notice: @selection.errors }
         format.json { render json: @selection.errors, status: :unprocessable_entity }
       end
     end
@@ -46,7 +51,7 @@ class SelectionsController < ApplicationController
         format.html { redirect_to @selection, notice: 'Selection was successfully updated.' }
         format.json { render :show, status: :ok, location: @selection }
       else
-        format.html { render :edit }
+        format.html { redirect_to selection_path(@selection), notice: @selection.errors }
         format.json { render json: @selection.errors, status: :unprocessable_entity }
       end
     end

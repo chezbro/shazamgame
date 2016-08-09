@@ -11,6 +11,10 @@ class Game < ActiveRecord::Base
   has_many :selections
   has_many :users
 
+  validates_presence_of :home_team_score
+  validates_presence_of :away_team_score
+  
+
   def teams
     [home_team, away_team]
   end
