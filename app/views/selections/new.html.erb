@@ -1,5 +1,24 @@
-<h1>New Selection</h1>
+<div class="top-50 position-relative col-md-10 col-md-offset-1">
+  <%= simple_form_for([@game, @selection]) do |f| %>
+    <%= f.error_notification %>
+    <div>
+      <h1><%= game_home_team_name(@game) %> VS <%= game_away_team_name(@game) %></h1>
+    </div>
+    <div class="top-50 position-relative form-inputs">
+      <%= f.label :pref_pick_int, "Preference Pick Amount" %>
+      <div class="field">
+        <%= f.select :pref_pick_int,  pref_pick_integers, {:prompt => 'Points Wagered'}, {class: "selectpicker"} %>
+      </div>
+      <div class="field">
+        <%= f.label :pref_pick_team, "Preference Pick" %>
+        <%= f.input :pref_pick_team, as: :radio_buttons, collection: [["FAV:" + " " + game_home_team_name(@game), @game.home_team_id],["DOG:" + " " + game_away_team_name(@game), @game.away_team_id]], required: true, label: false %>
+      </div>
+      <div class="field">
+        <%= f.label :spread_pick_team, "Spread Pick" %>
+        <%= f.input :spread_pick_team, as: :radio_buttons, collection: [["FAV:" + " " + game_home_team_name(@game), @game.home_team_id],["DOG:" + " " + game_away_team_name(@game), @game.away_team_id]], required: true, label: false %>
+      </div>
+      <%= f.submit  %>
+    </div>  
+  <% end %>
 
-<%= render 'form' %>
-
-<%= link_to 'Back', selections_path %>
+</div>

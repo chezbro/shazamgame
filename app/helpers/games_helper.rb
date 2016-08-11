@@ -1,4 +1,6 @@
 module GamesHelper
+
+
   def pref_pick(selection)
     Team.find(selection.pref_pick_team).region + " " + Team.find(selection.pref_pick_team).name 
   end
@@ -17,5 +19,9 @@ module GamesHelper
 
   def pref_pick_integers
     [1,2,3,4,5,6,7,8,9,10,11,12,13]
+  end
+
+  def game_selection_link(game)
+    game.selections.where(user_id:current_user).first
   end
 end

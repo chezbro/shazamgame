@@ -1,4 +1,7 @@
- ☐ # Games should be read only info, i.e. the Teams playing, the spread
- ☐ # Selections should be inputs (on Games)
-   ☐ # s.new s.game s.spread_pick, s.preference_pick 
-   ☐ # s.spread_pick = g.home_team_id
+ ☐ Validate User Fields and anything that needs to be Validated
+ ☐ Validate Pref Pick Int hasn't been picked already
+ ☐ In order to make sure Selections get points correctly assigned, the tallying function must run prior to running the selection point method. 
+ ☐ Selections should be able to be updated
+ ☐ Ability to Create New Week and have each Game created for that Week (params)
+ ☐ New Picks page isn't working for non-admin users because there are no selections and it can't find any and create doesn't seem to be working here.
+ ☐ Selections may work if it's on the Selections page not the games page

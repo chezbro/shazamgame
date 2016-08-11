@@ -6,38 +6,40 @@ class SelectionsController < ApplicationController
   # GET /selections.json
   def index
     @selections = Selection.all
-
   end
 
   # GET /selections/1
   # GET /selections/1.json
   def show
     @weeks = Week.all
-    @selection = Selection.new
-    @selections = Selection.where(user_id: current_user)
     @games = Game.where(week_id: Week.last.id).where(game_selected_by_admin: true)
   end
 
   # GET /selections/new
   def new
-    @games = Game.where(week_id: 1).where(game_selected_by_admin: true)
+    @game = Game.find(params[:game_id])
     @selection = Selection.new
   end
 
   # GET /selections/1/edit
   def edit
+    @game = Game.find(params[:game_id].to_i)
+    @selection = Selection.find(params[:id])
   end
 
   # POST /selections
   # POST /selections.json
   def create
+
     @selection = Selection.new(selection_params)
+    # perhaps you can just manually find or create the Selection. If it exists, find it, if not, create a new one.
     respond_to do |format|
       if @selection.save
-        format.html { redirect_to games_url, notice: "Selection successfully created" }
+        
+        format.html { render game_url(Week.last.id), notice: "Selection successfully created" }
         format.json { head :no_content }
       else
-        format.html { redirect_to selection_path(Week.last), notice: @selection.errors }
+        format.html { render game_url(Week.last.id), notice: @selection.errors }
         format.json { render json: @selection.errors, status: :unprocessable_entity }
       end
     end
@@ -48,10 +50,12 @@ class SelectionsController < ApplicationController
   def update
     respond_to do |format|
       if @selection.update(selection_params)
-        format.html { redirect_to @selection, notice: 'Selection was successfully updated.' }
-        format.json { render :show, status: :ok, location: @selection }
+        @selection.save!
+        @selection.reload
+        format.html { redirect_to :back, notice: "Selection successfully updated" }
+        format.json { head :no_content }
       else
-        format.html { redirect_to selection_path(@selection), notice: @selection.errors }
+        format.html { redirect_to :back, notice: @selection.errors }
         format.json { render json: @selection.errors, status: :unprocessable_entity }
       end
     end

@@ -1,5 +1,5 @@
 class Game < ActiveRecord::Base
-  
+ 
   # after_save :winning_team
 
   belongs_to :week
@@ -11,10 +11,11 @@ class Game < ActiveRecord::Base
   has_many :selections
   has_many :users
 
-  validates_presence_of :home_team_score
-  validates_presence_of :away_team_score
-  
+  # validates_presence_of :home_team_id
+  # validates_presence_of :away_team_id
+  # validates_presence_of :game_selected_by_admin
 
+  
   def teams
     [home_team, away_team]
   end
@@ -25,6 +26,10 @@ class Game < ActiveRecord::Base
       return game.is_active = false
     end
   end
+
+  # def getSelections(user, game)
+  #   Selection.where(user_id: user).where(game_id: game)
+  # end
 
 
 

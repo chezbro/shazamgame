@@ -2,11 +2,13 @@ Rails.application.routes.draw do
 
   get 'landings/index'
   
-  resources :selections
+  
 
   resources :weeks
 
-  resources :games
+  resources :games do 
+    resources :selections
+  end
 
   resources :announcements
 

@@ -1,23 +1,28 @@
 <div class="top-50 position-relative col-md-10 col-md-offset-1">
-  <h3>Please Select Week:</h3>
+  <h3>Week # and Games:</h3>
   <div class="divTable">
   <div class="divTableBody">
 
   <div class="divTableRow">
     <div class="divTableCell"><h4 class="text-align-center">Week Number</h4></div>
-    <div class="divTableCell"><h4 class="text-align-center">Add Scores</h4></div>
+    <div class="divTableCell"><h4 class="text-align-center">Games</h4></div>
+    <div class="divTableCell"><h4 class="text-align-center">Selection</h4></div>
   </div>
-  
-  <% @weeks.each do |week| %>
-    <div class="divTableRow">
-      <div class="divTableCell"><%= "#{week.week_number}" %></div>
-      <% if current_user.admin? %>
-        <div class="divTableCell"><%= link_to "Add Picks for Week #{week.week_number}", selection_path(week) %></div>
-      <% else %>
-        <div class="divTableCell"><%= link_to "View Scores for Week #{week.week_number}", selection_path(week) %></div>
+
+    <% @weeks.each do |week| %>
+      <% week.games.each do |game| %>
+      
+        <div class="divTableRow">
+          <div class="divTableCell"><%= "#{week.id}" %></div>
+          <div class="divTableCell"><%= link_to  "#{game_home_team_name(game) + " vs " + game_away_team_name(game)}", game_path(game.id) %></div>
+          <% if game.selections.present? %>
+            <div class="divTableCell"><%= link_to "Make or Edit Selection", edit_game_selection_path(game.id, game.selections.first.id) %></div>
+          <% else %>
+            <div class="divTableCell"><%= link_to "New Selection", new_game_selection_path(game) %></div>
+          <% end %>
+        </div>
       <% end %>
-    </div>
-  <% end %>
-</div>
-</div>
+    <% end %>
+  </div>
+  </div>
 </div>

@@ -4,10 +4,10 @@ class WeeksController < ApplicationController
   # GET /weeks
   # GET /weeks.json
   def index
-
     @weeks = Week.all
     @game = Game.new
     @games = Game.where(week_id: 1).where(game_selected_by_admin: true)
+
   end
 
   # GET /weeks/1
@@ -16,6 +16,12 @@ class WeeksController < ApplicationController
     @week = Week.find(params[:id])
     @game = Game.new
     @games = Game.where(week_id: params[:id]).where(game_selected_by_admin: true)
+    
+    # @games.each do |game|
+    #   game.selections.each do |selection|
+    #     @selection = selection
+    #   end
+    # end
   end
 
   # GET /weeks/new
@@ -26,7 +32,6 @@ class WeeksController < ApplicationController
       games = @week.games.build
     end
 
-
   end
 
   # GET /weeks/1/edit
@@ -36,9 +41,20 @@ class WeeksController < ApplicationController
   # POST /weeks
   # POST /weeks.json
   def create
+    
+    @week = Week.new(week_params)
     respond_to do |format|
-      format.html { redirect_to root_url, notice: "New Week successfully created" }
-      format.json { head :no_content }
+      if @week.save
+        Week.where(active: true).each do |w|
+          w.active = false
+          w.save!
+        end
+        format.html { redirect_to root_url, notice: "New Week successfully created" }
+        format.json { head :no_content }
+      else
+        format.html { redirect_to root_url, notice: "Unable to Create Week", notice: @week.errors }
+        format.json { head :no_content }
+      end
     end
 
     # respond_to do |format|
@@ -85,6 +101,6 @@ class WeeksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def week_params
-      params.require(:week).permit(:week_number, :year, :year_in_datetime)
+      params.require(:week).permit(:week_number, :year, :year_in_datetime, games_attributes: [:id , :home_team_id, :away_team_id,:home_team_spread, :game_selected_by_admin ])
     end
 end

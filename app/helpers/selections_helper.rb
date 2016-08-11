@@ -1,5 +1,14 @@
 module SelectionsHelper
 
+  # def selections_for_week(user, game)
+  #   Selection.where(user_id: user).where(game_id: game)
+  # end
+
+  def pref_pick_integers
+    [1,2,3,4,5,6,7,8,9,10,11,12,13]
+  end
+
+    
   def selections_home_team_name(s)
     s.game.home_team.region + " " + s.game.home_team.name
   end

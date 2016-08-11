@@ -1,51 +1,97 @@
 <div class="top-100 position-relative col-md-10 col-md-offset-1">
   <h1><%= link_to "See All Weeks", weeks_path %></h1>
-  <div class="divTable">
-    <div>
-      <% if current_user.admin? %>
-        <h3>Choose Winners for Week <%= @week.week_number %></h3>
-      <% else %>
-        <h3>Winners for Week <%= @week.week_number %></h3>
-      <% end %>
-    </div>
-  <div class="divTableBody">
-  <div class="divTableRow">
-
-  <div class="divTableCell"><h4 class="text-align-center">Home Team</h4></div>
-  <div class="divTableCell"><h4 class="text-align-center">Away Team</h4></div>
-  <div class="divTableCell"><h4 class="text-align-center">Spread</h4></div>
-  <div class="divTableCell"><h4 class="">Home Team Score</h4></div>
-  <div class="divTableCell"><h4 class="">Away Team Score</h4></div>
-  
-  </div>
-
- 
-  
-  <% @games.each do |game| %>
-  <div class="divTableRow">
-    <div class="divTableCell"><%= game_home_team_name(game) %></div>
-    <div class="divTableCell"><%= game_away_team_name(game) %></div>
-    <div class="divTableCell"><%= game.home_team.region + " -" + game.spread.to_s %></div>
-    
-    <div class="divTableCell">
-      <%= simple_form_for game do |f| %>
-      <% if current_user.admin? %>
-        <%= f.input :home_team_score, placeholder: "Home Team Score", required: true, label: false %>
+  <% if !@week.active? %>
+    <div class="divTable">
+      <div>
+        <% if current_user.admin? %>
+          <h3>Choose Winners for Week <%= @week.week_number %></h3>
         <% else %>
-          <%= game.home_team_score %>
+          <h3>Winners for Week <%= @week.week_number %></h3>
         <% end %>
+      </div>
+    <div class="divTableBody">
+    <div class="divTableRow">
+
+    <div class="divTableCell"><h4 class="text-align-center">Home Team</h4></div>
+    <div class="divTableCell"><h4 class="text-align-center">Away Team</h4></div>
+    <div class="divTableCell"><h4 class="text-align-center">Spread</h4></div>
+    <div class="divTableCell"><h4 class="">Home Team Score</h4></div>
+    <div class="divTableCell"><h4 class="">Away Team Score</h4></div>
+    
     </div>
-    <div class="divTableCell">
-      <% if current_user.admin? %>
-        <%= f.input :away_team_score, placeholder: "Away Twam Score", required: true, label: false %>
-      <% else %>
-        <%= game.away_team_score %>
+
+    <% @games.each do |game| %>
+    <div class="divTableRow">
+      <div class="divTableCell"><%= game_home_team_name(game) %></div>
+      <div class="divTableCell"><%= game_away_team_name(game) %></div>
+      <div class="divTableCell"><%= game.home_team.region + " -" + game.spread.to_s %></div>
+      
+      <div class="divTableCell">
+        <%= simple_form_for game do |f| %>
+        <% if current_user.admin? %>
+          <%= f.input :home_team_score, placeholder: "Home Team Score", required: true, label: false %>
+          <% else %>
+            <%= game.home_team_score %>
+          <% end %>
+      </div>
+      <div class="divTableCell">
+        <% if current_user.admin? %>
+          <%= f.input :away_team_score, placeholder: "Away Twam Score", required: true, label: false %>
+        <% else %>
+          <%= game.away_team_score %>
+        <% end %>
+      </div>
+    </div>
+
+    <%= f.submit "Submit Selections", class: "margin-0-30 btn btn-primary" if current_user.admin?  %>
+    <% end %>
+    <% end %>
+    </div>
+    </div>
+<% else %>
+
+  <div class="top-50 position-relative col-md-10 col-md-offset-1">
+    <h3>Make Selections for <%= @week.id %></h3>
+    <div class="divTable">
+    <div class="divTableBody">
+
+    <div class="divTableRow">
+      <div class="divTableCell"><h4 class="text-align-center">Home Team</h4></div>
+      <div class="divTableCell"><h4 class="text-align-center">Away Team</h4></div>
+      <div class="divTableCell"><h4 class="">Preference Amount</h4></div>
+      <div class="divTableCell"><h4 class="text-align-center">Spread Pick</h4></div>
+      <div class="divTableCell"><h4 class="">Preference Pick</h4></div>
+    </div>
+    
+    <% @games.each do |game| %>
+      <div class="divTableRow">
+      <div class="divTableCell"><%= game_home_team_name(game) %></div>
+      <div class="divTableCell"><%= game_away_team_name(game) %></div>
+      <div class="divTableCell">
+        <%= simple_form_for Selection.new do |f| %>
+          <%= f.select :pref_pick_int,  pref_pick_integers, {:prompt => 'Wager Points'}, {class: "selectpicker"} %>
+      </div>
+      <div class="divTableCell">
+        <%= f.input :spread_pick_team, as: :radio_buttons, collection: [["FAV:" + " " + game_home_team_name(game), game.home_team_id],["DOG:" + " " + game_away_team_name(game), game.away_team_id]], :checked => false, class: "selection-radio-button", required: true, label: false %>
+      </div>
+
+      <div class="divTableCell">
+        <%= f.input :pref_pick_team, as: :radio_buttons, collection: [["FAV:" + " " + game_home_team_name(game), game.home_team_id],["DOG:" + " " + game_away_team_name(game), game.away_team_id]], :checked => false, class: "selection-radio-button", required: true, label: false %>
+      </div>
+
+      <div>
+        <%= f.hidden_field :game_id,  value: game.id %>
+        <%= f.hidden_field :user_id,  value: current_user.id %>
+      </div>
+
+      </div>
+      <%= f.submit "Submit Selections", id: "submit-picks", class: "btn btn-primary margin-10-0" %>
       <% end %>
+    <% end %>
+    </div>
     </div>
   </div>
-  <%= f.submit "Submit Selections", class: "margin-0-30 btn btn-primary" if current_user.admin?  %>
-  <% end %>
-  <% end %>
-  </div>
-  </div>
+
+
+<% end %>
 </div>
