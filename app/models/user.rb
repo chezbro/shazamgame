@@ -10,6 +10,9 @@ class User < ActiveRecord::Base
 
   attr_accessor :login
 
+  def get_users_selections(game)
+    self.selections.where(game_id: game).first.id
+  end
 
 
   

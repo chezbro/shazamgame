@@ -17,6 +17,25 @@ module GamesHelper
     game.away_team.region + " " + game.away_team.name
   end
 
+  def users_pref_pick_selection(game)
+    current_user.selections.where(game_id: game).first.pref_pick_team if current_user.selections.where(game_id: game).present?
+  end
+
+  def users_pref_int_selection(game)
+    current_user.selections.where(game_id: game).first.pref_pick_int if current_user.selections.where(game_id: game).present?
+  end
+
+  def users_spread_pick_selection(game)
+    current_user.selections.where(game_id: game).first.spread_pick_team if current_user.selections.where(game_id: game).present?
+  end
+
+
+  def team_name(id)
+    name = Team.find_by_id(id).try(:name)
+    region = Team.find_by_id(id).try(:region)
+    return region + " " + name if region.present? 
+  end
+
   def pref_pick_integers
     [1,2,3,4,5,6,7,8,9,10,11,12,13]
   end

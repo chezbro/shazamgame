@@ -21,29 +21,7 @@ class GamesController < ApplicationController
     @games = Game.where(week_id: params[:id]).where(game_selected_by_admin: true)
     
     @selection = Selection.where(game_id: params[:id]).where(user_id: current_user) || Selection.new
-    
-    # @games.each do |game| 
-    #   Selection.where(user_id: current_user).where(game_id: game.id).each do |selection|
-    #     @selection = selection || Selection.new
 
-    #   end
-    #     @selection
-
-        # Closer -- the @selection is populating the same values on the view everytime because it's the same selection. we need to iterate thru all these to populate view, not the same one over and over.
-    
-    
-    # @selections = Selection.where(user_id: current_user).where(game_id: self)
-    # @games.each do |game|
-    #   @selections = Selection.where(user_id: current_user).where(game_id: game.id).first
-  
-    # @games.each do |game|
-    #   game.selections.each do |selection|
-    #     if selection.user_id == current_user.id && selection.game_id == game.id
-    #       @selection = selection || Selection.new
-    #     end
-    #   end
-    #       @selection
-    # end
   end 
 
   # GET /games/new

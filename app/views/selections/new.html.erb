@@ -17,6 +17,8 @@
         <%= f.label :spread_pick_team, "Spread Pick" %>
         <%= f.input :spread_pick_team, as: :radio_buttons, collection: [["FAV:" + " " + game_home_team_name(@game), @game.home_team_id],["DOG:" + " " + game_away_team_name(@game), @game.away_team_id]], required: true, label: false %>
       </div>
+        <%= f.hidden_field :game_id,  value: @game.id %>
+        <%= f.hidden_field :user_id,  value: current_user.id %>
       <%= f.submit  %>
     </div>  
   <% end %>

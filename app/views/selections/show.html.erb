@@ -1,4 +1,4 @@
-<div class="top-50 position-relative col-md-10 col-md-offset-1">
+<!-- <div class="top-50 position-relative col-md-10 col-md-offset-1">
   <h3>Make Selections for Week 1</h3>
   <div class="divTable">
   <div class="divTableBody">
@@ -11,32 +11,33 @@
     <div class="divTableCell"><h4 class="">Preference Pick</h4></div>
   </div>
   
-  <% @games.each do |game| %>
+  </% @games.each do |game| %>
     <div class="divTableRow">
-    <div class="divTableCell"><%= game_home_team_name(game) %></div>
-    <div class="divTableCell"><%= game_away_team_name(game) %></div>
+    <div class="divTableCell"></%= game_home_team_name(game) %></div>
+    <div class="divTableCell"></%= game_away_team_name(game) %></div>
     <div class="divTableCell">
-      <%= simple_form_for @selection do |f| %>
-        <%= f.select :pref_pick_int,  pref_pick_integers, {:prompt => 'Wager Points'}, {class: "selectpicker"} %>
+      </%= simple_form_for [game, @selection] do |f| %>
+        </%= f.select :pref_pick_int,  pref_pick_integers, {:prompt => 'Wager Points'}, {class: "selectpicker"} %>
     </div>
     <div class="divTableCell">
-      <%= f.input :spread_pick_team, as: :radio_buttons, collection: [["FAV:" + " " + game_home_team_name(game), game.home_team_id],["DOG:" + " " + game_away_team_name(game), game.away_team_id]], :checked => false, class: "selection-radio-button", required: true, label: false %>
+      </%= f.input :spread_pick_team, as: :radio_buttons, collection: [["FAV:" + " " + game_home_team_name(game), game.home_team_id],["DOG:" + " " + game_away_team_name(game), game.away_team_id]], :checked => false, class: "selection-radio-button", required: true, label: false %>
     </div>
 
     <div class="divTableCell">
-      <%= f.input :pref_pick_team, as: :radio_buttons, collection: [["FAV:" + " " + game_home_team_name(game), game.home_team_id],["DOG:" + " " + game_away_team_name(game), game.away_team_id]], :checked => false, class: "selection-radio-button", required: true, label: false %>
+      </%= f.input :pref_pick_team, as: :radio_buttons, collection: [["FAV:" + " " + game_home_team_name(game), game.home_team_id],["DOG:" + " " + game_away_team_name(game), game.away_team_id]], :checked => false, class: "selection-radio-button", required: true, label: false %>
     </div>
 
     <div>
-      <%= f.hidden_field :game_id,  value: game.id %>
-      <%= f.hidden_field :user_id,  value: current_user.id %>
+      </%= f.hidden_field :game_id,  value: game.id %>
+      </%= f.hidden_field :user_id,  value: current_user.id %>
     </div>
 
     </div>
-    <%= f.submit "Submit Selections", id: "submit-picks", class: "btn btn-primary margin-10-0" %>
-    <% end %>
-  <% end %>
+    </%= f.submit "Submit Selections", id: "submit-picks", class: "btn btn-primary margin-10-0" %>
+    </% end %>
+  </% end %>
   </div>
   </div>
 </div>
 
+ -->

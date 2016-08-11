@@ -12,6 +12,7 @@ class SelectionsController < ApplicationController
   # GET /selections/1.json
   def show
     @weeks = Week.all
+    @game = Game.find(params[:game_id])
     @games = Game.where(week_id: Week.last.id).where(game_selected_by_admin: true)
   end
 
@@ -30,16 +31,15 @@ class SelectionsController < ApplicationController
   # POST /selections
   # POST /selections.json
   def create
-
     @selection = Selection.new(selection_params)
     # perhaps you can just manually find or create the Selection. If it exists, find it, if not, create a new one.
     respond_to do |format|
       if @selection.save
-        
-        format.html { render game_url(Week.last.id), notice: "Selection successfully created" }
+        format.html { redirect_to games_path, notice: "Selection successfully created" }
         format.json { head :no_content }
       else
-        format.html { render game_url(Week.last.id), notice: @selection.errors }
+        @game = Game.find(params[:game_id])
+        format.html { redirect_to new_game_selection_path(@game, @selection), flash: {error: "Error: You must fill out each Selection."} }
         format.json { render json: @selection.errors, status: :unprocessable_entity }
       end
     end
@@ -49,13 +49,14 @@ class SelectionsController < ApplicationController
   # PATCH/PUT /selections/1.json
   def update
     respond_to do |format|
-      if @selection.update(selection_params)
+        @game = Game.find(params[:game_id])
+     if @selection.update(selection_params)
         @selection.save!
         @selection.reload
-        format.html { redirect_to :back, notice: "Selection successfully updated" }
-        format.json { head :no_content }
+        format.html { redirect_to games_url,notice: 'Selection was successfully updated.' }
+        format.json { render :show, status: :ok, location: @selection }
       else
-        format.html { redirect_to :back, notice: @selection.errors }
+        format.html { redirect_to new_game_selection_path(@game, @selection), flash: {error: "Error: You must fill out each Selection."} }
         format.json { render json: @selection.errors, status: :unprocessable_entity }
       end
     end
