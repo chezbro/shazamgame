@@ -5,3 +5,4 @@
  ☐ Ability to Create New Week and have each Game created for that Week (params)
  ☐ New Picks page isn't working for non-admin users because there are no selections and it can't find any and create doesn't seem to be working here.
  ☐ Selections may work if it's on the Selections page not the games page
+ ☐ Method to Reset Weekly Scores (For All Users)

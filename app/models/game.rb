@@ -16,16 +16,6 @@ class Game < ActiveRecord::Base
   # validates_presence_of :game_selected_by_admin
 
 
-  # def close_active_games(games)
-  #   # Turns all active Games false
-  #   games.each do |g|
-  #     g.active = false
-  #     g.save!
-  #     g.reload
-  #   end
-  # end
-
-
 def set_team_that_won_straight_up
   if ( self.home_team_score > self.away_team_score )
     # Home Team Wins Straight Up
@@ -64,29 +54,27 @@ def which_team_covered_spread
 end
 
 def tally_points
+  # points aren't being added correctly to User's points
   User.all.each do |user|
     user.selections.each do |selection|
       if selection.game_id == self.id
-        binding.pry
         if selection.spread_pick_team == self.team_that_won_straight_up
-          binding.pry
           user.weekly_points += 7
           user.cumulative_points += 7
+          user.save!
         else       
-          binding.pry
           user.weekly_points += 0
           user.cumulative_points += 0
-          binding.pry
+          user.save!
         end
-
         if selection.pref_pick_team == self.team_that_covered_spread
-          binding.pry
           user.weekly_points += selection.pref_pick_int
           user.cumulative_points += selection.pref_pick_int
-          binding.pry
+          user.save!
         else
           user.weekly_points += 0
           user.cumulative_points += 0
+          user.save!
         end
       end
     end
@@ -105,13 +93,29 @@ def check_selection_and_tally_points
     self.reload    
   end
 
-  def won_game(u)
-    if u.selections.first.game.home_team_id
-    end
-  end
 
 
-# Not In Use
+# Methods Not In Use
+
+
+
+  # def close_active_games(games)
+  #   # Turns all active Games false
+  #   games.each do |g|
+  #     g.active = false
+  #     g.save!
+  #     g.reload
+  #   end
+  # end
+
+
+
+
+  # def won_game(u)
+  #   if u.selections.first.game.home_team_id
+  #   end
+  # end
+
 
 # def getSelections(user, game)
 #   Selection.where(user_id: user).where(game_id: game)
