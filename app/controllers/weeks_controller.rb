@@ -43,6 +43,8 @@ class WeeksController < ApplicationController
   def create
     
     @week = Week.new(week_params)
+    @week.games.new(params[:games_attributes])
+  
     respond_to do |format|
       if @week.save
         Week.where(active: true).each do |w|
@@ -52,7 +54,7 @@ class WeeksController < ApplicationController
         format.html { redirect_to root_url, notice: "New Week successfully created" }
         format.json { head :no_content }
       else
-        format.html { redirect_to root_url, notice: "Unable to Create Week", notice: @week.errors }
+        format.html { redirect_to root_url, notice: "Unable to Create Week" }
         format.json { head :no_content }
       end
     end

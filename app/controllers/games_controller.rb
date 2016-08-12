@@ -57,8 +57,8 @@ class GamesController < ApplicationController
     
     respond_to do |format|
       if @game.update(game_params)
+        # this, below, is running when a score is updated (what about created)
         @game.check_selection_and_tally_points(current_user)
-        # @game.which_team_covered
         @game.save!
         @game.reload
         flash[:success] = "Score Has Been Added Successfully"

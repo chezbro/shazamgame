@@ -2,6 +2,8 @@ class Week < ActiveRecord::Base
   has_many :games
   accepts_nested_attributes_for  :games
 
+
+# This will run after all the Selections are given points or not.
   def close_week_and_tally_points(week, user)
     w = Week.find(week)
     user.weekly_points = 0

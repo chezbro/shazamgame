@@ -15,15 +15,13 @@ class Game < ActiveRecord::Base
   # validates_presence_of :away_team_id
   # validates_presence_of :game_selected_by_admin
 
-  
-  def teams
-    [home_team, away_team]
-  end
 
   def close_active_games(games)
     # Turns all active Games false
-    games.each do |game|
-      return game.is_active = false
+    games.each do |g|
+      g.active = false
+      g.save!
+      g.reload
     end
   end
 
@@ -32,8 +30,8 @@ def set_team_that_won_straight_up
   if ( self.home_team_score > self.away_team_score )
     # Home Team Wins Straight Up
     self.home_team_won_straight_up = true
-    self.away_team_won_straight_up = false
     self.team_that_won_straight_up  = self.home_team_id
+    self.away_team_won_straight_up = false
     
   elsif ( self.home_team_score == self.away_team_score )
     
@@ -48,7 +46,10 @@ def set_team_that_won_straight_up
     self.away_team_won_straight_up = true
     self.team_that_won_straight_up  = self.away_team_id
   end 
+  
 end
+
+
 
 def which_team_covered
   # Home Team Covered

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160810215256) do
+ActiveRecord::Schema.define(version: 20160812152131) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -83,6 +83,7 @@ ActiveRecord::Schema.define(version: 20160810215256) do
     t.boolean  "away_team_won_straight_up"
     t.integer  "team_that_won_straight_up"
     t.integer  "team_that_covered_spread"
+    t.boolean  "active"
   end
 
   add_index "games", ["user_id"], name: "index_games_on_user_id", using: :btree

@@ -24,10 +24,10 @@
           <div class="divTableCell"><%= users_pref_int_selection(game) %></div>
           <div class="divTableCell"><%= team_name(users_pref_pick_selection(game))%></div>
           <div class="divTableCell"><%= team_name(users_spread_pick_selection(game))%></div>
-          <% if current_user.selections.where(game_id: game).present? %>
+          <% if current_user.selections.where(game_id: game).present? && game.active? %>
             <div class="divTableCell"><%= link_to "Make or Edit Selection", edit_game_selection_path(game.id, current_user.get_users_selections(game)) %></div>
           <% else %>
-            <div class="divTableCell"><%= link_to "New Selection", new_game_selection_path(game) %></div>
+            <div class="divTableCell"><%= link_to "New Selection", new_game_selection_path(game) if game.active?%></div>
           <% end %>
         </div>
       <% end %>
