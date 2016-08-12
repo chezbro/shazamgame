@@ -103,6 +103,6 @@ class WeeksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def week_params
-      params.require(:week).permit(:week_number, :year, :year_in_datetime, games_attributes: [:id , :home_team_id, :away_team_id,:home_team_spread, :game_selected_by_admin ])
+      params.require(:week).permit(:week_number, :year, :year_in_datetime, games_attributes: [:id , :home_team_id, :away_team_id,:home_team_spread, :game_selected_by_admin, :active ])
     end
 end

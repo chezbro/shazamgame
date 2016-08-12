@@ -16,14 +16,14 @@ class Game < ActiveRecord::Base
   # validates_presence_of :game_selected_by_admin
 
 
-  def close_active_games(games)
-    # Turns all active Games false
-    games.each do |g|
-      g.active = false
-      g.save!
-      g.reload
-    end
-  end
+  # def close_active_games(games)
+  #   # Turns all active Games false
+  #   games.each do |g|
+  #     g.active = false
+  #     g.save!
+  #     g.reload
+  #   end
+  # end
 
 
 def set_team_that_won_straight_up
@@ -46,16 +46,14 @@ def set_team_that_won_straight_up
     self.away_team_won_straight_up = true
     self.team_that_won_straight_up  = self.away_team_id
   end 
-  
+
 end
 
-
-
-def which_team_covered
+def which_team_covered_spread
   # Home Team Covered
   if ( (self.home_team_score + self.spread) > self.away_team_score )
-    self.team_that_covered_spread = self.home_team
-  # Push
+    self.team_that_covered_spread = self.home_team.id
+
   elsif ( (self.home_team_score - self.away_team_score ) == self.spread )
     self.tie_game = true
   # Away Team Covered
@@ -65,35 +63,45 @@ def which_team_covered
     self.save!
 end
 
-def tally_points(user)
-  user.selections.each do |selection|
-    # Get User Selection for Game
-    if selection.game_id == self.id
-      if selection.spread_pick_team == self.team_that_won_straight_up
-        selection.points = 7
-      else       
-        selection.points = 0
+def tally_points
+  User.all.each do |user|
+    user.selections.each do |selection|
+      if selection.game_id == self.id
+        binding.pry
+        if selection.spread_pick_team == self.team_that_won_straight_up
+          binding.pry
+          user.weekly_points += 7
+          user.cumulative_points += 7
+        else       
+          binding.pry
+          user.weekly_points += 0
+          user.cumulative_points += 0
+          binding.pry
+        end
+
+        if selection.pref_pick_team == self.team_that_covered_spread
+          binding.pry
+          user.weekly_points += selection.pref_pick_int
+          user.cumulative_points += selection.pref_pick_int
+          binding.pry
+        else
+          user.weekly_points += 0
+          user.cumulative_points += 0
+        end
       end
-      if selection.pref_pick_team == self.team_that_covered_spread
-        selection.points = selection.pref_pick_int
-      else
-        selection.points = 0
-      end
-        selection.save
-        selections.reload
     end
   end
 end
 
-def check_selection_and_tally_points(user)
+def check_selection_and_tally_points
     # We want the current user's selection on this Game 
     self.set_team_that_won_straight_up
-    self.save 
-    self.which_team_covered
-    self.save
+    self.save! 
+    self.which_team_covered_spread
+    self.save!
     self.reload    
-    self.tally_points(user)
-    self.save
+    self.active = false
+    self.save!
     self.reload    
   end
 

@@ -9,6 +9,7 @@
 
       <%= ff.select :home_team_spread, options_for_select( (-100..100).step(0.5).map{|n| n%1 == 0 ? n.to_i : n} ), {include_blank: "Select Home Team Spread"}, {class: "selectpicker"} %>
       <%= ff.hidden_field :game_selected_by_admin, value: true %>
+      <%= ff.hidden_field :active, value: true %>
     </div>
     <% end %>
     <%= f.submit "Create New Week", data: { confirm: 'Are you sure you want to create a New Week?' }, class: "btn btn-primary" %>

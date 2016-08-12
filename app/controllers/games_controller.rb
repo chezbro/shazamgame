@@ -38,10 +38,8 @@ class GamesController < ApplicationController
   def create
     @game = Game.new(game_params)
     @game.user = current_user
-
     respond_to do |format|
       if @game.save
-        
         format.html { redirect_to @game, notice: 'Game was successfully created.' }
         format.json { render :show, status: :created, location: @game }
       else
@@ -54,11 +52,11 @@ class GamesController < ApplicationController
   # PATCH/PUT /games/1
   # PATCH/PUT /games/1.json
   def update
-    
     respond_to do |format|
       if @game.update(game_params)
         # this, below, is running when a score is updated (what about created)
-        @game.check_selection_and_tally_points(current_user)
+        @game.check_selection_and_tally_points
+        @game.tally_points
         @game.save!
         @game.reload
         flash[:success] = "Score Has Been Added Successfully"
