@@ -15,37 +15,15 @@
     </tr>
   </tfoot>
   <tbody>
+    <% @cumulative_points.each do |score| %>
     <tr>
       <td>
-        echezbro
+        <%= score[1] %>
       </td>
       <td>
-        631
+        <%= score[0]  %>
       </td>
-    </tr>
-    <tr>
-      <td>
-        ccooper
-      </td>
-      <td>
-        629
-      </td>
-    </tr>
-    <tr>
-      <td>
-        justinjackson
-      </td>
-      <td>
-        617
-      </td>
-    </tr>
-    <tr>
-      <td>
-        marcysmith
-      </td>
-      <td>
-        613
-      </td>
+    <% end %>
     </tr>
   </tbody>
 </table>

@@ -15,37 +15,15 @@
     </tr>
   </tfoot>
   <tbody>
+    <% @weekly_points.each do |score| %>
     <tr>
       <td>
-        echezbro
+        <%= score[1] if @week.active? %>
       </td>
       <td>
-        177
+        <%= score[0] if @week.active? %>
       </td>
-    </tr>
-    <tr>
-      <td>
-        ccooper
-      </td>
-      <td>
-        121
-      </td>
-    </tr>
-    <tr>
-      <td>
-        justinjackson
-      </td>
-      <td>
-        119
-      </td>
-    </tr>
-    <tr>
-      <td>
-        marcysmith
-      </td>
-      <td>
-        118
-      </td>
+    <% end %>
     </tr>
   </tbody>
 </table>

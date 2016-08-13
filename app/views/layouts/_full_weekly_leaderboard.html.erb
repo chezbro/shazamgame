@@ -9,103 +9,16 @@
       </th>
     </tr>
   </thead>
-
   <tbody>
+    <% @full_weekly_points.each do |score| %>
     <tr>
       <td>
-        echezbro
+        <%= score[1] %>
       </td>
       <td>
-        177
+        <%= score[0] %>
       </td>
     </tr>
-    <tr>
-      <td>
-        ccooper
-      </td>
-      <td>
-        121
-      </td>
-    </tr>
-    <tr>
-      <td>
-        justinjackson
-      </td>
-      <td>
-        119
-      </td>
-    </tr>
-    <tr>
-      <td>
-        marcysmith
-      </td>
-      <td>
-        118
-      </td>
-    </tr>
-    <tr>
-      <td>
-        dougjones
-      </td>
-      <td>
-        115
-      </td>
-    </tr>
-    <tr>
-      <td>
-        nelsonbanda
-      </td>
-      <td>
-        111
-      </td>
-    </tr>
-    <tr>
-      <td>
-        chrisstephens
-      </td>
-      <td>
-        107
-      </td>
-    </tr>
-    <tr>
-      <td>
-        willsolomon
-      </td>
-      <td>
-        103
-      </td>
-    </tr>
-    <tr>
-      <td>
-        maxkellerman
-      </td>
-      <td>
-        101
-      </td>
-    </tr>
-    <tr>
-      <td>
-        jasonstein
-      </td>
-      <td>
-        99
-      </td>
-    </tr>
-    <tr>
-      <td>
-        wendyketai
-      </td>
-      <td>
-        97
-      </td>
-    </tr>
-    <tr>
-      <td>
-        benwallace
-      </td>
-      <td>
-        93
-      </td>
-    </tr>
+    <% end %>
   </tbody>
 </table>

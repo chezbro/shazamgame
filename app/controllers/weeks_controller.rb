@@ -16,7 +16,6 @@ class WeeksController < ApplicationController
     @week = Week.find(params[:id])
     @game = Game.new
     @games = Game.where(week_id: params[:id]).where(game_selected_by_admin: true)
-    
     # @games.each do |game|
     #   game.selections.each do |selection|
     #     @selection = selection
@@ -41,12 +40,11 @@ class WeeksController < ApplicationController
   # POST /weeks
   # POST /weeks.json
   def create
-    
     @week = Week.new(week_params)
     @week.games.new(params[:games_attributes])
-  
     respond_to do |format|
       if @week.save
+        # User.delete_weekly_points
         Week.where(active: true).each do |w|
           w.active = false
           w.save!
