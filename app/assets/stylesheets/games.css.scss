@@ -1,9 +1,22 @@
 // DIV Tables
 
 /* DivTable.com */
+
+.orangeGamesTable{
+  background: linear-gradient(to left, #ff6540, #fb7140);
+  color: #fff;
+  a{
+    color: #fff;
+  }
+  .divTableCell, .divTableHead {
+    border: 1px solid #f78760;
+  }
+}
+
 .divTable{
   display: table;
   width: 100%;
+
 }
 .divTableRow {
   display: table-row;
@@ -16,6 +29,10 @@
   border: 1px solid #999999;
   display: table-cell;
   padding: 10px 10px;
+
+  a{
+    // color: #fff;
+  }
 }
 .divTableCell select{
   width: 160px;

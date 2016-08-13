@@ -1,6 +1,6 @@
 <div class="top-50 position-relative col-md-10 col-md-offset-1">
-  <h2>Picksheet</h2>
-  <div class="divTable">
+  <h3>Hi <%= current_user.username.capitalize %>, here's your Picksheet for this Week:</h3>
+  <div class="divTable orangeGamesTable">
   <div class="divTableBody">
 
   <div class="divTableRow">
@@ -9,8 +9,8 @@
     <div class="divTableCell"><h4 class="text-align-center">Away Team</h4></div>
     <div class="divTableCell"><h4 class="text-align-center">Spread</h4></div>
     <div class="divTableCell"><h4 class="text-align-center">Pref Amount</h4></div>
-    <div class="divTableCell"><h4 class="text-align-center">Current Pref Pick</h4></div>
-    <div class="divTableCell"><h4 class="text-align-center">Current Spread Pick</h4></div>
+    <div class="divTableCell"><h4 class="text-align-center">Pref Pick</h4></div>
+    <div class="divTableCell"><h4 class="text-align-center">Spread Pick</h4></div>
     <div class="divTableCell"><h4 class="text-align-center">Selection</h4></div>
   </div>
 
@@ -24,8 +24,10 @@
           <div class="divTableCell"><%= users_pref_int_selection(game) %></div>
           <div class="divTableCell"><%= team_name(users_pref_pick_selection(game))%></div>
           <div class="divTableCell"><%= team_name(users_spread_pick_selection(game))%></div>
-          <% if current_user.selections.where(game_id: game).present? && game.active? %>
-            <div class="divTableCell"><%= link_to "Edit Selection", edit_game_selection_path(game.id, current_user.get_users_selections(game)) %></div>
+
+          <!-- If Game is not Active you should still show full table except last column (selection) -->
+          <% if current_user.selections.where(game_id: game).present? %>
+            <div class="divTableCell"><%= link_to "Edit Selection", edit_game_selection_path(game.id, current_user.get_users_selections(game)) if game.active? %></div>
           <% else %>
             <div class="divTableCell"><%= link_to "Make New Selection", new_game_selection_path(game) if game.active? %></div>
           <% end %>

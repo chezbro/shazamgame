@@ -10,9 +10,9 @@ class GamesController < ApplicationController
 
   def index
     @weeks = Week.all
-    @selection = Selection.new
-    @selections = Selection.where(user_id: current_user)
-    @games = Game.where(week_id: Week.last.id).where(game_selected_by_admin: true)
+    # @selection = Selection.new
+    # @selections = Selection.where(user_id: current_user)
+    # @games = Game.where(week_id: Week.last.id).where(game_selected_by_admin: true)
   end
 
   # GET /games/1
