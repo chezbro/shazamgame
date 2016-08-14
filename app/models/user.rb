@@ -10,6 +10,11 @@ class User < ActiveRecord::Base
 
   attr_accessor :login
 
+  
+  def unique_pick_validation(params)
+    arr = (1..13)    
+  end
+
   def get_users_selections(game)
     self.selections.where(game_id: game).first.id
   end
@@ -27,7 +32,7 @@ class User < ActiveRecord::Base
     User.all.each do |user|
       points_array << [user.cumulative_points, user.username]
     end
-      points_array.sort{|a,b| b<=>a}.take(5)
+      points_array.sort{|a,b| b<=>a}.take(5)  
   end
 
   def self.full_weekly_points

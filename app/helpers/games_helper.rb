@@ -1,6 +1,5 @@
 module GamesHelper
 
-
   def pref_pick(selection)
     Team.find(selection.pref_pick_team).region + " " + Team.find(selection.pref_pick_team).name 
   end

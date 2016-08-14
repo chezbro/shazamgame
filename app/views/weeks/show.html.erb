@@ -23,7 +23,7 @@
     <div class="divTableRow">
       <div class="divTableCell"><%= game_home_team_name(game) %></div>
       <div class="divTableCell"><%= game_away_team_name(game) %></div>
-      <div class="divTableCell"><%= game.home_team.region + " -" + game.spread.to_s %></div>
+      <div class="divTableCell"><%= game.home_team.region + spread_operator(game) + game.spread.to_s %></div>
       <div class="divTableCell">
         <%= simple_form_for game do |f| %>
         <% if current_user.admin? %>
