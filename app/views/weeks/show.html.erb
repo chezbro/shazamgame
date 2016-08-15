@@ -23,18 +23,18 @@
     <div class="divTableRow">
       <div class="divTableCell"><%= game_home_team_name(game) %></div>
       <div class="divTableCell"><%= game_away_team_name(game) %></div>
-      <div class="divTableCell"><%= game.home_team.region + spread_operator(game) + game.spread.to_s %></div>
+      <div class="divTableCell"><%= game.home_team.region + " " + spread_operator(game) + game.spread.to_s %></div>
       <div class="divTableCell">
         <%= simple_form_for game do |f| %>
         <% if current_user.admin? %>
-          <%= f.input :home_team_score, placeholder: "Home Team Score", required: true, label: false %>
+          <%= f.input :home_team_score, placeholder: "Enter Home Team Score", required: true, label: false %>
           <% else %>
             <%= game.home_team_score %>
           <% end %>
       </div>
       <div class="divTableCell">
         <% if current_user.admin? %>
-          <%= f.input :away_team_score, placeholder: "Away Twam Score", required: true, label: false %>
+          <%= f.input :away_team_score, placeholder: "Enter Away Twam Score", required: true, label: false %>
         <% else %>
           <%= game.away_team_score %>
         <% end %>

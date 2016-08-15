@@ -14,13 +14,13 @@
     <div class="divTableCell"><h4 class="text-align-center">Selection</h4></div>
   </div>
 
-    <% @weeks.each do |week| %>
-      <% week.games.each do |game| %>
+    
+      <% @week.games.each do |game| %>
         <div class="divTableRow">
-          <div class="divTableCell"><%= "#{week.id}" %></div>
+          <div class="divTableCell"><%= "#{game.week.id}" %></div>
           <div class="divTableCell"><%= game_home_team_name(game) %></div>
           <div class="divTableCell"><%= game_away_team_name(game) %></div>
-          <div class="divTableCell"><%= game.home_team.region + " -" + game.spread.to_s %></div>
+          <div class="divTableCell"><%= game.home_team.region + " " + spread_operator(game) + game.spread.to_s %></div>
           <div class="divTableCell"><%= users_pref_int_selection(game) %></div>
           <div class="divTableCell"><%= team_name(users_pref_pick_selection(game))%></div>
           <div class="divTableCell"><%= team_name(users_spread_pick_selection(game))%></div>
@@ -31,6 +31,42 @@
           <% else %>
             <div class="divTableCell"><%= link_to "Make New Selection", new_game_selection_path(game) if game.active? %></div>
           <% end %>
+        </div>
+      
+    <% end %>
+  </div>
+  </div>
+
+<br>
+<h3>Past Selections</h3>
+<div class="divTable orangeGamesTable">
+  <div class="divTableBody">
+
+  <div class="divTableRow">
+    <div class="divTableCell"><h4 class="text-align-center">Week Number</h4></div>
+    <div class="divTableCell"><h4 class="text-align-center">Home Team</h4></div>
+    <div class="divTableCell"><h4 class="text-align-center">Away Team</h4></div>
+    <div class="divTableCell"><h4 class="text-align-center">Spread</h4></div>
+    <div class="divTableCell"><h4 class="text-align-center">Pref Amount</h4></div>
+    <div class="divTableCell"><h4 class="text-align-center">Pref Pick</h4></div>
+    <div class="divTableCell"><h4 class="text-align-center">Spread Pick</h4></div>
+    
+  </div>
+
+    <% @weeks.each do |week| %>
+      <% week.games.each do |game| %>
+        <div class="divTableRow">
+          <div class="divTableCell"><%= "#{week.id}" %></div>
+          <% if game.home_team_id? %>
+          <div class="divTableCell"><%= game_home_team_name(game) %></div>
+          <div class="divTableCell"><%= game_away_team_name(game) %></div>
+          <div class="divTableCell"><%= game.home_team.region + spread_operator(game) + game.spread.to_s %></div>
+          <div class="divTableCell"><%= users_pref_int_selection(game) %></div>
+          <div class="divTableCell"><%= team_name(users_pref_pick_selection(game))%></div>
+          <div class="divTableCell"><%= team_name(users_spread_pick_selection(game))%></div>
+          <% end %>
+          <!-- If Game is not Active you should still show full table except last column (selection) -->
+
         </div>
       <% end %>
     <% end %>

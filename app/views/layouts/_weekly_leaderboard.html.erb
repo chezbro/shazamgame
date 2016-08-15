@@ -15,15 +15,26 @@
     </tr>
   </tfoot>
   <tbody>
-    <% @weekly_points.each do |score| %>
-    <tr>
-      <td>
-        <%= score[1] if @week.active? %>
-      </td>
-      <td>
-        <%= score[0] if @week.active? %>
-      </td>
-    <% end %>
+      <% if @week.present? %>
+        <% @weekly_points.each do |score| %>
+      <tr>
+        <td>
+          <%= score[1] if @week.active? %>
+        </td>
+        <td>
+          <%= score[0] if @week.active? %>
+        </td>
     </tr>
+    <% end %>
+  <% else %>
+      <tr>
+        <td>
+          <%= "Week Inactive" %>
+        </td>
+        <td>
+          <%= "Week Inactive" %>
+        </td>
+    </tr>
+  <% end %>
   </tbody>
 </table>

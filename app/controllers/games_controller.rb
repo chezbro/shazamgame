@@ -9,10 +9,8 @@ class GamesController < ApplicationController
   # GET /games.json
 
   def index
-    @weeks = Week.all
-    # @selection = Selection.new
-    # @selections = Selection.where(user_id: current_user)
-    # @games = Game.where(week_id: Week.last.id).where(game_selected_by_admin: true)
+    @weeks = Week.where(active: false)
+    @week = Week.last
   end
 
   # GET /games/1
@@ -36,7 +34,7 @@ class GamesController < ApplicationController
   # POST /games
   # POST /games.json
   def create
-    @game = Game.new(game_params)
+    # @game = Game.new(game_params)
     @game.user = current_user
     respond_to do |format|
       if @game.save

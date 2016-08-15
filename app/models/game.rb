@@ -1,4 +1,4 @@
-class Game < ActiveRecord::Base
+  class Game < ActiveRecord::Base
  
   # after_save :winning_team
 
@@ -14,8 +14,6 @@ class Game < ActiveRecord::Base
   # validates_presence_of :home_team_id
   # validates_presence_of :away_team_id
   # validates_presence_of :game_selected_by_admin
-
-
 
 def set_team_that_won_straight_up
   if ( self.home_team_score > self.away_team_score )

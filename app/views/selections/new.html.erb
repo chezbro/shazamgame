@@ -2,7 +2,8 @@
   <%= simple_form_for([@game, @selection]) do |f| %>
     <%= f.error_notification %>
     <div>
-      <h1><%= game_home_team_name(@game) %> VS <%= game_away_team_name(@game) %></h1>
+      <h1><%= game_home_team_name(@game) + " " + "(#{(spread_operator(@game)+@game.spread.to_s)})" %> VS <%= game_away_team_name(@game) %></h1>
+
     </div>
     <div class="top-50 position-relative form-inputs">
       <%= f.label :pref_pick_int, "Preference Pick Amount" %>

@@ -9,16 +9,24 @@
 
   <div class="divTableRow">
     <div class="divTableCell"><h4 class="text-align-center">Week Number</h4></div>
-    <div class="divTableCell"><h4 class="text-align-center">Add Scores</h4></div>
+    <div class="divTableCell"><h4 class="text-align-center">Scores</h4></div>
   </div>
   
   <% @weeks.each do |week| %>
     <div class="divTableRow">
       <div class="divTableCell"><%= "#{week.week_number}" %></div>
       <% if current_user.admin? %>
-        <div class="divTableCell"><%= link_to "Add Scores for Week #{week.week_number}", week_path(week) %></div>
+        <% if week.active? %>
+          <div class="divTableCell"><%= link_to "Add Scores for Week #{week.week_number}", week_path(week) %></div>
+        <% else %>
+           <div class="divTableCell"><%= link_to "View Scores for Week #{week.week_number}", week_path(week) %></div>
+        <% end %>
       <% else %>
+        <% if week.active? %>
+          <div class="divTableCell"><%= link_to "View Scores for this Week", week_path(week) %></div>
+        <% else %>
         <div class="divTableCell"><%= link_to "View Scores for Week #{week.week_number}", week_path(week) %></div>
+        <% end %>
       <% end %>
     </div>
   <% end %>

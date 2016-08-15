@@ -7,8 +7,10 @@ Rails.application.routes.draw do
   resources :weeks
 
   resources :games do 
-    resources :selections
+    resources :selections, except: :index
   end
+
+  get 'selections' => 'selections#index', as: :selections
 
   resources :announcements
 

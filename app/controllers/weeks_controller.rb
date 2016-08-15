@@ -27,7 +27,7 @@ class WeeksController < ApplicationController
   def new
     @week = Week.new
     # Build 13 games
-    13.times do 
+    1.times do 
       games = @week.games.build
     end
 
@@ -41,14 +41,22 @@ class WeeksController < ApplicationController
   # POST /weeks.json
   def create
     @week = Week.new(week_params)
+    
     @week.games.new(params[:games_attributes])
+    
     respond_to do |format|
       if @week.save
-        # User.delete_weekly_points
-        Week.where(active: true).each do |w|
-          w.active = false
-          w.save!
+        week_number = Week.all.count.to_s
+        @week.week_number = week_number
+        Week.where(active: true).each do |week|
+          week.active = false
+          week.save!
         end
+        @week.active = true
+        @week.save!
+        # @week.week_number = 
+        Game.last.delete
+        # User.delete_weekly_points
         format.html { redirect_to root_url, notice: "New Week successfully created" }
         format.json { head :no_content }
       else
@@ -101,6 +109,6 @@ class WeeksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def week_params
-      params.require(:week).permit(:week_number, :year, :year_in_datetime, games_attributes: [:id , :home_team_id, :away_team_id,:home_team_spread, :spread, :game_selected_by_admin, :active ])
+      params.require(:week).permit(:week_number, :active, :year, :year_in_datetime, games_attributes: [:id , :home_team_id, :away_team_id,:home_team_spread, :spread, :game_selected_by_admin, :active ])
     end
 end
