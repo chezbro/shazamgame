@@ -27,7 +27,7 @@ class WeeksController < ApplicationController
   def new
     @week = Week.new
     # Build 13 games
-    1.times do 
+    2.times do 
       games = @week.games.build
     end
 
@@ -41,13 +41,14 @@ class WeeksController < ApplicationController
   # POST /weeks.json
   def create
     @week = Week.new(week_params)
-    
     @week.games.new(params[:games_attributes])
-    
+    # extra game is created above
+
     respond_to do |format|
       if @week.save
         week_number = Week.all.count.to_s
         @week.week_number = week_number
+        User.set_weekly_points_to_zero
         Week.where(active: true).each do |week|
           week.active = false
           week.save!

@@ -53,10 +53,9 @@ def which_team_covered_spread
 end
 
 def tally_points
-  # points aren't being added correctly to User's points
   User.all.each do |user|
     user.selections.each do |selection|
-      if selection.game_id == self.id
+      if selection.game_id == self.id && selection.game.week.id == Week.last.id
         if selection.spread_pick_team == self.team_that_won_straight_up
           user.weekly_points += 7
           user.cumulative_points += 7
@@ -96,8 +95,6 @@ def check_selection_and_tally_points
 
 # Methods Not In Use
 
-
-
   # def close_active_games(games)
   #   # Turns all active Games false
   #   games.each do |g|
@@ -107,20 +104,14 @@ def check_selection_and_tally_points
   #   end
   # end
 
-
-
-
   # def won_game(u)
   #   if u.selections.first.game.home_team_id
   #   end
   # end
 
-
 # def getSelections(user, game)
 #   Selection.where(user_id: user).where(game_id: game)
 # end
-
-
 
 # def check_selection_and_tally_points(user)
 #   # We want the current user's selection on this Game 

@@ -72,6 +72,10 @@ class SelectionsController < ApplicationController
     end
   end
 
+
+  def update_integers
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_selection

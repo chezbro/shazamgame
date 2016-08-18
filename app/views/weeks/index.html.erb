@@ -12,7 +12,7 @@
     <div class="divTableCell"><h4 class="text-align-center">Scores</h4></div>
   </div>
   
-  <% @weeks.each do |week| %>
+  <% @weeks.order(:id).each do |week| %>
     <div class="divTableRow">
       <div class="divTableCell"><%= "#{week.week_number}" %></div>
       <% if current_user.admin? %>

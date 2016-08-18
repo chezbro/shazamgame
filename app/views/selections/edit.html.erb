@@ -12,7 +12,7 @@
         </div>
         <div class="field">
           <%= f.label :pref_pick_team, "Preference Pick" %>
-          <%= f.input :pref_pick_team, as: :radio_buttons, collection: [["FAV:" + " " + game_home_team_name(@game), @game.home_team_id],["DOG:" + " " + game_away_team_name(@game), @game.away_team_id]], required: true, label: false %>
+          <%= f.input :pref_pick_team, as: :radio_buttons, collection: [["FAV:" + " " + game_home_team_name(@game) + " " + "(#{@game.spread.to_s})", @game.home_team_id],["DOG:" + " " + game_away_team_name(@game), @game.away_team_id]], required: true, label: false %>
         </div>
       </div>
     <div class="col-sm-4">

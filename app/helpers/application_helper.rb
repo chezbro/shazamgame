@@ -10,5 +10,18 @@ module ApplicationHelper
     end
   end
 
+  def week_amount
+    Week.all.count.to_s
+  end
 
+  # def fav_or_dog(game)
+  #   if game.spread > 0
+  #     return "FAV:"
+  #   elsif game.spread == 0
+  #     return "Even:"
+  #   else
+  #     return "DOG:"
+  #   end
+  # end
+  
 end

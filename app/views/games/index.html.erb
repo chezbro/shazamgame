@@ -14,10 +14,10 @@
     <div class="divTableCell"><h4 class="text-align-center">Selection</h4></div>
   </div>
 
-    
+    <% if @week %>
       <% @week.games.each do |game| %>
         <div class="divTableRow">
-          <div class="divTableCell"><%= "#{game.week.id}" %></div>
+          <div class="divTableCell"><%= "#{game.week.week_number}" %></div>
           <div class="divTableCell"><%= game_home_team_name(game) %></div>
           <div class="divTableCell"><%= game_away_team_name(game) %></div>
           <div class="divTableCell"><%= game.home_team.region + " " + spread_operator(game) + game.spread.to_s %></div>
@@ -34,6 +34,7 @@
         </div>
       
     <% end %>
+  <% end %>
   </div>
   </div>
 
@@ -56,7 +57,7 @@
     <% @weeks.each do |week| %>
       <% week.games.each do |game| %>
         <div class="divTableRow">
-          <div class="divTableCell"><%= "#{week.id}" %></div>
+          <div class="divTableCell"><%= "#{week.week_number}" %></div>
           <% if game.home_team_id? %>
           <div class="divTableCell"><%= game_home_team_name(game) %></div>
           <div class="divTableCell"><%= game_away_team_name(game) %></div>

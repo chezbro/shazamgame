@@ -1,4 +1,5 @@
 <div class="top-50 position-relative col-md-10 col-md-offset-1">
+
   <%= simple_form_for([@game, @selection]) do |f| %>
     <%= f.error_notification %>
     <div>
@@ -8,19 +9,19 @@
     <div class="top-50 position-relative form-inputs">
       <%= f.label :pref_pick_int, "Preference Pick Amount" %>
       <div class="field">
-        <%= f.select :pref_pick_int,  pref_pick_integers, {:prompt => 'Points Wagered'}, {class: "selectpicker"} %>
+        <%= f.select :pref_pick_int,  pref_pick_integers, {:prompt => 'Points Wagered'}, {class: "selectpicker pref_pick_integers"} %>
       </div>
       <div class="field">
         <%= f.label :pref_pick_team, "Preference Pick" %>
-        <%= f.input :pref_pick_team, as: :radio_buttons, collection: [["FAV:" + " " + game_home_team_name(@game), @game.home_team_id],["DOG:" + " " + game_away_team_name(@game), @game.away_team_id]], required: true, label: false %>
+        <%= f.input :pref_pick_team, as: :radio_buttons, collection: [["FAV:" + " " + game_home_team_name(@game) + " " + "(#{@game.spread.to_s})", @game.home_team_id],["DOG:" + " " + game_away_team_name(@game), @game.away_team_id]], required: true, label: false %>
       </div>
       <div class="field">
         <%= f.label :spread_pick_team, "Spread Pick" %>
-        <%= f.input :spread_pick_team, as: :radio_buttons, collection: [["FAV:" + " " + game_home_team_name(@game), @game.home_team_id],["DOG:" + " " + game_away_team_name(@game), @game.away_team_id]], required: true, label: false %>
+        <%= f.input :spread_pick_team, as: :radio_buttons, collection: [["FAV:" + " " + game_home_team_name(@game) + " " + "(#{@game.spread.to_s})", @game.home_team_id],["DOG:" + " " + game_away_team_name(@game), @game.away_team_id]], required: true, label: false %>
       </div>
         <%= f.hidden_field :game_id,  value: @game.id %>
         <%= f.hidden_field :user_id,  value: current_user.id %>
-      <%= f.submit  %>
+      <%= f.submit "Create New Game", class: "btn btn-primary" %>
     </div>  
   <% end %>
 
