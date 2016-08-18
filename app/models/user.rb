@@ -10,6 +10,8 @@ class User < ActiveRecord::Base
 
   attr_accessor :login
 
+
+
   
   def unique_pick_validation(params)
     arr = (1..13)    

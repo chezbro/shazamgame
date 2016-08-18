@@ -16,7 +16,9 @@ Rails.application.routes.draw do
 
   get    "instructions"   => "landings#instructions",         as: :instructions
 
-  get    "leaderboard"   => "landings#leaderboard",         as: :leaderboard
+  get    "stats"   => "landings#stats",         as: :stats
+
+  get    "users"   => "landings#users",         as: :users
 
   get    "real_time_scores"   => "landings#real_time_scores",         as: :real_time_scores
 

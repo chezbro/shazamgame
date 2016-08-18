@@ -10,9 +10,14 @@ class LandingsController < ApplicationController
     @week = Week.last
   end
 
-  def leaderboard
+  def stats
     @full_cumulative_points = User.full_cumulative_points
     @full_weekly_points = User.full_weekly_points
+  end
+
+  def users
+
+
   end
 
   

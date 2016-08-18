@@ -20,11 +20,12 @@
           <li><%= link_to "Home", root_url %></li>
           <li><%= link_to "Instructions", instructions_path %></li>
           <li><%= link_to "My Picks", games_path %></li>
-          <li><%= link_to "Leaderboard", leaderboard_path %></li>
+          <li><%= link_to "Stats", stats_path %></li>
           <li><%= link_to "Matches", weeks_path %></li>
           <li><%= link_to "Live Scores", real_time_scores_path %></li>
           <li><%= link_to "Profile", edit_user_registration_path %></li>
       <% if current_user.admin? %>
+          <li><%= link_to "See All Users", users_path %></li>
           <li><%= link_to "See All Picks", selections_path %></li>
           <li><%= link_to "Create New Week", new_week_path %></li>
           <li><%= link_to "Create New Announcement", new_announcement_path %></li>
