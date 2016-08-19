@@ -7,7 +7,20 @@
           <p><%= announce Announcement.newest, hide_message: "" %></p>
         </div>
 
+        <div class="text-align-center col-xs-3 col-md-3">
+          <h4 class="text-underline">Top Scores for the Week</h4>
+          <%= render partial: "layouts/weekly_leaderboard" %>
+        </div>
 
+        <div class="text-align-center col-xs-3 col-md-3">
+          <h4 class="text-underline">Top Scores for the Season</h4>
+          <%= render partial: "layouts/cumulative_leaderboard" %>
+        </div>
+
+        <div class="text-align-center col-xs-3 col-md-3">
+          <h4 class="text-underline">Previous Champions</h4>
+          <%= render partial: "layouts/previous_champions" %>
+        </div>
       <% else %>
         <div class="text-align-center col-xs-12">
           <h4>Welcome to the New Shazam!</h4>
