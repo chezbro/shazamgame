@@ -15,7 +15,7 @@
     </tr>
   </tfoot>
   <tbody>
-      <% if @week.present? %>
+      <% if @week.present? && @weekly_points.present? %>
         <% @weekly_points.each do |score| %>
       <tr>
         <td>
