@@ -15,7 +15,7 @@
     </tr>
   </tfoot>
   <tbody>
-    <% @cumulative_points.each do |score| %>
+    <% @cumulative_points.each if @cumulative_points.present? do |score| %>
     <tr>
       <td>
         <%= score[1] %>

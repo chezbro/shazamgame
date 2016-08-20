@@ -15,6 +15,17 @@
   # validates_presence_of :away_team_id
   # validates_presence_of :game_selected_by_admin
 
+def validate_pref_pick(params)
+  initial_arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
+  removed_arr = []
+  if initial_arr.include?(params)
+    removed_arr << params
+    initial_arr.delete(params)
+    return initial_arr
+  else
+  end
+end
+
 def set_team_that_won_straight_up
   if ( self.home_team_score > self.away_team_score )
     # Home Team Wins Straight Up
