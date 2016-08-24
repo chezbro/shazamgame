@@ -10,6 +10,8 @@ class Selection < ActiveRecord::Base
   validates_presence_of :spread_pick_team
   
 
+  validates_uniqueness_of :pref_pick_int, :scope => [:user_id, :game_id]
+
   def user_pref_pick_uniqueness(selections)
     selections.each do |selection|
       if selection.pref_pick_int.present?

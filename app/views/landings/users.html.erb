@@ -10,34 +10,16 @@
           <th>
             Name
           </th>
-          <th>
-            Address
-          </th>
-          <th>
-            Cell Phone Number
-          </th>
-          <th>
-            Favorite Teams
-          </th>
         </tr>
       </thead>
       <tbody>
         <% User.all.each do |user| %>
         <tr>
           <td>
-            <%= user.username %>
+            <%= link_to "#{user.username}", user_path(user.id) %>
           </td>
           <td>
-            <%= user.name %>
-          </td>
-          <td>
-            <%= user.address %>
-          </td>
-          <td>
-            <%= user.cell_phone_number %>
-          </td>
-          <td>
-            <%= user.fav_teams %>
+            <%= link_to "#{user.name}", user_path(user.id) %>
           </td>
         </tr>
         <% end %>

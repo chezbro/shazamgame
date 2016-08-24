@@ -6670,6 +6670,7 @@ a.thumbnail.active {
   margin-bottom: 20px;
   border: 1px solid transparent;
   border-radius: 4px;
+  background: #ff9068!important;
 }
 /* line 16, /Users/EMC/.rvm/gems/ruby-2.2.1/gems/bootstrap-sass-3.3.5/assets/stylesheets/bootstrap/_alerts.scss */
 .alert h4 {

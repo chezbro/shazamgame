@@ -5,7 +5,10 @@
         Username
       </th>
       <th>
-        Total Points
+        Game A Points
+      </th>
+      <th>
+        Game B Points
       </th>
     </tr>
   </thead>
@@ -13,10 +16,13 @@
     <% @full_weekly_points.each do |score| %>
     <tr>
       <td>
-        <%= score[1] %>
+        <%= score[2] %>
       </td>
       <td>
         <%= score[0] %>
+      </td>
+      <td>
+        <%= score[1] %>
       </td>
     </tr>
     <% end %>

@@ -6,6 +6,8 @@ class SelectionsController < ApplicationController
   # GET /selections.json
   def index
     @selections = Selection.all
+    # @selections = Selection.where(user_id: current_user).where(week_id: Week.last.id)
+    
   end
 
   # GET /selections/1
@@ -31,15 +33,18 @@ class SelectionsController < ApplicationController
   # POST /selections
   # POST /selections.json
   def create
-    @selection = Selection.new(selection_params)
+    if Selection.where(user_id: current_user).where(game_id: params[:selection][:game_id]).present?
+    @selection = Selection.where(user_id: current_user).where(game_id: params[:selection][:game_id]).first
+    @selection.update(selection_params)
+    else
+      @selection = Selection.new(selection_params)
+    end
     # perhaps you can just manually find or create the Selection. If it exists, find it, if not, create a new one.
     respond_to do |format|
       if @selection.save
-        format.html { redirect_to games_path, notice: "Selection successfully created" }
-        format.json { head :no_content }
+        format.html { redirect_to games_path, :notice => "Selection has been saved successfully." }
       else
-        @game = Game.find(params[:game_id])
-        format.html { redirect_to new_game_selection_path(@game, @selection), flash: {error: "Error: You must fill out each Selection."} }
+        format.html { redirect_to games_path, flash: {error: "Error: You must fill out each Selection."} }
         format.json { render json: @selection.errors, status: :unprocessable_entity }
       end
     end
