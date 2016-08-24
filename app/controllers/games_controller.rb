@@ -11,6 +11,7 @@ class GamesController < ApplicationController
   def index
     @weeks = Week.where(active: false)
     @week = Week.last
+    # @selection = Selection.new
   end
 
   # GET /games/1
@@ -19,7 +20,6 @@ class GamesController < ApplicationController
     @games = Game.where(week_id: params[:id]).where(game_selected_by_admin: true)
     
     @selection = Selection.where(game_id: params[:id]).where(user_id: current_user) || Selection.new
-
   end 
 
   # GET /games/new
@@ -53,13 +53,11 @@ class GamesController < ApplicationController
     respond_to do |format|
       if @game.update(game_params)
         # this, below, is running when a score is updated (what about created)
-        @game.check_selection_and_tally_points
-        @game.tally_points
-        @game.save!
-        @game.reload
-        flash[:success] = "Score Has Been Added Successfully"
-        format.html { redirect_to(:back) }
-        format.json { render :show, status: :ok, location: @game }
+        # @game.check_selection_and_tally_points
+        # @game.tally_points
+        # @game.save!
+        # @game.reload
+        format.js 
       else
         flash[:success] = "Error"
         format.html { redirect_to(:back) }
@@ -87,6 +85,6 @@ class GamesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def game_params
-      params.require(:game).permit(:week_id, :user_id, :points, :is_home_team, :spread, :home_team_id, :away_team_id, :home_team_pref_pick, :away_team_pref_pick, :home_team_spread_pick, :away_team_spread_pick, :home_team_covered_spread, :away_team_covered_spread, :tie_game, :game_selected_by_admin, :home_team_score, :away_team_score, :home_team_won_straight_up, :away_team_won_straight_up, :team_that_won_straight_up, :team_that_covered_spread)
+      params.require(:game).permit(:week_id, :user_id, :points, :is_home_team, :spread, :home_team_id, :away_team_id, :home_team_pref_pick, :away_team_pref_pick, :home_team_spread_pick, :away_team_spread_pick, :home_team_covered_spread, :away_team_covered_spread, :tie_game, :game_selected_by_admin, :home_team_score, :away_team_score, :home_team_won_straight_up, :away_team_won_straight_up, :team_that_won_straight_up, :team_that_covered_spread, selections_attributes: [:id, :pref_pick_team, :pref_pick_int, :spread_pick_team, :user_id, :game_id])
     end
 end

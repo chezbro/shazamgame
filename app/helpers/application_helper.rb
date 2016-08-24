@@ -14,14 +14,21 @@ module ApplicationHelper
     Week.all.count.to_s
   end
 
-  # def fav_or_dog(game)
-  #   if game.spread > 0
-  #     return "FAV:"
-  #   elsif game.spread == 0
-  #     return "Even:"
-  #   else
-  #     return "DOG:"
-  #   end
-  # end
+  def check_existing_selection(game)
+    if Selection.where(user_id: current_user).where(game_id: game.id).present?
+      @selection = Selection.where(user_id: current_user).where(game_id: game.id).first 
+    else
+      @selection = Selection.new
+    end
+  end
+
+  def check_existing_submit(game)
+    if Selection.where(user_id: current_user).where(game_id: game.id).present?
+      submit_msg = "Update Selection"
+    else
+      submit_msg = "New Selection"
+    end
+  end
+
   
 end

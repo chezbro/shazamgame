@@ -1,4 +1,4 @@
-  class Game < ActiveRecord::Base
+class Game < ActiveRecord::Base
  
   # after_save :winning_team
 
@@ -10,6 +10,10 @@
   
   has_many :selections
   has_many :users
+
+  # validates_presence_of :selections
+
+  # accepts_nested_attributes_for  :selections
 
   # validates_presence_of :home_team_id
   # validates_presence_of :away_team_id
@@ -58,6 +62,7 @@ def tally_points
       if selection.game_id == self.id && selection.game.week.id == Week.last.id
         if selection.spread_pick_team == self.team_that_won_straight_up
           user.weekly_points += 7
+          # user.weekly_points_game_a += 7
           user.cumulative_points += 7
           user.save!
         else       
@@ -67,6 +72,7 @@ def tally_points
         end
         if selection.pref_pick_team == self.team_that_covered_spread
           user.weekly_points += selection.pref_pick_int
+          # user.weekly_points_game_b += selection.pref_pick_int
           user.cumulative_points += selection.pref_pick_int
           user.save!
         else

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160815003039) do
+ActiveRecord::Schema.define(version: 20160823134043) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -135,11 +135,13 @@ ActiveRecord::Schema.define(version: 20160815003039) do
     t.string   "name"
     t.string   "nickname"
     t.boolean  "admin",                  default: false
-    t.string   "address"
+    t.text     "address"
     t.string   "fav_teams"
     t.string   "cell_phone_number"
     t.integer  "weekly_points",          default: 0
     t.integer  "cumulative_points",      default: 0
+    t.integer  "weekly_points_game_a"
+    t.integer  "weekly_points_game_b"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

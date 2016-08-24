@@ -6670,7 +6670,6 @@ a.thumbnail.active {
   margin-bottom: 20px;
   border: 1px solid transparent;
   border-radius: 4px;
-  background: #ff9068!important;
 }
 /* line 16, /Users/EMC/.rvm/gems/ruby-2.2.1/gems/bootstrap-sass-3.3.5/assets/stylesheets/bootstrap/_alerts.scss */
 .alert h4 {
@@ -8829,7 +8828,7 @@ button.close {
 
 /* line 45, /Users/EMC/Desktop/Code/shazamgame/app/assets/stylesheets/bootstrap-overrides.css.scss */
 .table-bordered > tbody > tr > td {
-  height: 37px !important;
+  height: 37px;
 }
 
 /*!
@@ -9283,6 +9282,12 @@ select.selectpicker {
   font-size: 1.3em;
 }
 
+/* line 25, /Users/EMC/Desktop/Code/shazamgame/app/assets/stylesheets/landings.css.scss */
+.champions_td_height {
+  height: 61px !important;
+  line-height: 40px !important;
+}
+
 /*==========SCALE-IN==========*/
 @-webkit-keyframes scale-in {
   0% {
@@ -9321,7 +9326,7 @@ select.selectpicker {
     width: 100%;
   }
 }
-/* line 49, /Users/EMC/Desktop/Code/shazamgame/app/assets/stylesheets/landings.css.scss */
+/* line 53, /Users/EMC/Desktop/Code/shazamgame/app/assets/stylesheets/landings.css.scss */
 .hero {
   width: 100%;
   max-width: 100%;
@@ -9332,7 +9337,7 @@ select.selectpicker {
   color: #392f28;
 }
 
-/* line 59, /Users/EMC/Desktop/Code/shazamgame/app/assets/stylesheets/landings.css.scss */
+/* line 63, /Users/EMC/Desktop/Code/shazamgame/app/assets/stylesheets/landings.css.scss */
 .hero h1 {
   font-size: 4.1em;
   margin: auto;
@@ -9346,7 +9351,7 @@ select.selectpicker {
   font-weight: 200;
 }
 
-/* line 88, /Users/EMC/Desktop/Code/shazamgame/app/assets/stylesheets/landings.css.scss */
+/* line 92, /Users/EMC/Desktop/Code/shazamgame/app/assets/stylesheets/landings.css.scss */
 .hero p {
   font-size: 1.5em;
   margin: auto;
@@ -9358,12 +9363,12 @@ select.selectpicker {
   z-index: 1;
 }
 
-/* line 98, /Users/EMC/Desktop/Code/shazamgame/app/assets/stylesheets/landings.css.scss */
+/* line 102, /Users/EMC/Desktop/Code/shazamgame/app/assets/stylesheets/landings.css.scss */
 .hero img {
   width: 100%;
 }
 
-/* line 101, /Users/EMC/Desktop/Code/shazamgame/app/assets/stylesheets/landings.css.scss */
+/* line 105, /Users/EMC/Desktop/Code/shazamgame/app/assets/stylesheets/landings.css.scss */
 .bar {
   width: 100%;
   height: 200px;
@@ -9386,7 +9391,7 @@ select.selectpicker {
   animation: roll-out 1.2s ease-out;
 }
 
-/* line 119, /Users/EMC/Desktop/Code/shazamgame/app/assets/stylesheets/landings.css.scss */
+/* line 123, /Users/EMC/Desktop/Code/shazamgame/app/assets/stylesheets/landings.css.scss */
 .hero h1, .hero p {
   -webkit-animation: scale-in 1.3s ease-out;
   -moz-animation: scale-in 1.3s  ease-out;
@@ -9394,24 +9399,24 @@ select.selectpicker {
 }
 
 @media all and (max-width: 780px) {
-  /* line 127, /Users/EMC/Desktop/Code/shazamgame/app/assets/stylesheets/landings.css.scss */
+  /* line 131, /Users/EMC/Desktop/Code/shazamgame/app/assets/stylesheets/landings.css.scss */
   .hero {
     height: 50vw;
   }
 
-  /* line 130, /Users/EMC/Desktop/Code/shazamgame/app/assets/stylesheets/landings.css.scss */
+  /* line 134, /Users/EMC/Desktop/Code/shazamgame/app/assets/stylesheets/landings.css.scss */
   .bar {
     height: 26vw;
     top: 10vw;
   }
 
-  /* line 134, /Users/EMC/Desktop/Code/shazamgame/app/assets/stylesheets/landings.css.scss */
+  /* line 138, /Users/EMC/Desktop/Code/shazamgame/app/assets/stylesheets/landings.css.scss */
   .hero h1 {
     font-size: 8vw;
     top: 13vw;
   }
 
-  /* line 138, /Users/EMC/Desktop/Code/shazamgame/app/assets/stylesheets/landings.css.scss */
+  /* line 142, /Users/EMC/Desktop/Code/shazamgame/app/assets/stylesheets/landings.css.scss */
   .hero p {
     font-size: 3vw;
     top: 27vw;

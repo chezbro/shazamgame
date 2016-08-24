@@ -6,6 +6,8 @@ Rails.application.routes.draw do
 
   resources :weeks
 
+  resources :users, only: [:show]
+
   resources :games do 
     resources :selections, except: :index
   end

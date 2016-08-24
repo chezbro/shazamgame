@@ -16,8 +16,6 @@ class LandingsController < ApplicationController
   end
 
   def users
-
-
   end
 
   
