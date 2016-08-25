@@ -10,7 +10,7 @@ class GamesController < ApplicationController
 
   def index
     @weeks = Week.where(active: false)
-    @week = Week.last
+    @week = Week.last if Week.last.present?
     # @selection = Selection.new
   end
 
