@@ -37,7 +37,7 @@ case Rails.env
           name: t["name"],
           abbrev: t["abbrev"],
           city: t["city"],
-          state: t["state"]
+          state: t["state"],
           latitude: t["latitude"],
         )
     end
