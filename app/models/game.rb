@@ -19,16 +19,16 @@ class Game < ActiveRecord::Base
   # validates_presence_of :away_team_id
   # validates_presence_of :game_selected_by_admin
 
-def validate_pref_pick(params)
-  initial_arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
-  removed_arr = []
-  if initial_arr.include?(params)
-    removed_arr << params
-    initial_arr.delete(params)
-    return initial_arr
-  else
-  end
-end
+# def validate_pref_pick(params)
+#   initial_arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
+#   removed_arr = []
+#   if initial_arr.include?(params)
+#     removed_arr << params
+#     initial_arr.delete(params)
+#     return initial_arr
+#   else
+#   end
+# end
 
 def set_team_that_won_straight_up
   if ( self.home_team_score > self.away_team_score )
@@ -72,22 +72,30 @@ def tally_points
     user.selections.each do |selection|
       if selection.game_id == self.id && selection.game.week.id == Week.last.id
         if selection.spread_pick_team == self.team_that_won_straight_up
+
           user.weekly_points += 7
-          # user.weekly_points_game_a += 7
+          user.weekly_points_game_a += 7
           user.cumulative_points += 7
+
           user.save!
         else       
+
           user.weekly_points += 0
+          user.weekly_points_game_a += 0
           user.cumulative_points += 0
           user.save!
         end
         if selection.pref_pick_team == self.team_that_covered_spread
+
           user.weekly_points += selection.pref_pick_int
-          # user.weekly_points_game_b += selection.pref_pick_int
+          user.weekly_points_game_b += selection.pref_pick_int
           user.cumulative_points += selection.pref_pick_int
+
           user.save!
         else
+
           user.weekly_points += 0
+          user.weekly_points_game_b += 0
           user.cumulative_points += 0
           user.save!
         end

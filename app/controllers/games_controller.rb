@@ -18,7 +18,6 @@ class GamesController < ApplicationController
   # GET /games/1.json
   def show
     @games = Game.where(week_id: params[:id]).where(game_selected_by_admin: true)
-    
     @selection = Selection.where(game_id: params[:id]).where(user_id: current_user) || Selection.new
   end 
 
@@ -53,11 +52,11 @@ class GamesController < ApplicationController
     respond_to do |format|
       if @game.update(game_params)
         # this, below, is running when a score is updated (what about created)
-        # @game.check_selection_and_tally_points
-        # @game.tally_points
-        # @game.save!
-        # @game.reload
-        format.js 
+        @game.check_selection_and_tally_points
+        @game.tally_points
+        @game.save!
+        @game.reload
+        format.html { redirect_to Week.last, notice: 'Score was successfully added.' }
       else
         flash[:success] = "Error"
         format.html { redirect_to(:back) }

@@ -11,11 +11,12 @@
   </thead>
   <tfoot>
     <tr>
-      <th class="text-align-center" colspan="2"><a href="/leaderboard">See Full Leaderboard</a></th>
+      <th class="text-align-center" colspan="2"><a href="/stats">See Full Leaderboard</a></th>
     </tr>
   </tfoot>
   <tbody>
-    <% @cumulative_points.each if @cumulative_points.present? do |score| %>
+    <!-- if @cumulative_points.present? <- this made nothing render, why? -->
+    <% @cumulative_points.each do |score| %>
     <tr>
       <td>
         <%= score[1] %>

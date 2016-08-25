@@ -5,8 +5,8 @@ class LandingsController < ApplicationController
   end
 
   def activity
-    # @weekly_points = User.weekly_points
-    # @cumulative_points = User.cumulative_points
+    @weekly_points = User.weekly_points
+    @cumulative_points = User.cumulative_points
     @week = Week.last
   end
 

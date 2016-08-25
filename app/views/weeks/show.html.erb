@@ -41,7 +41,7 @@
       </div>
     </div>
 
-    <%= f.submit "Submit Selections", data: { confirm: "Are you sure this Score is Correct?"}, class: "margin-10-0-30-0 btn btn-primary" if current_user.admin?  %>
+    <%= f.submit "Submit Selections", :onclick => "return confirm('Please Confirm These Scores Are Correct.')", class: "margin-10-0-30-0 btn btn-primary" if current_user.admin?  %>
     <% end %>
     <% end %>
     </div>

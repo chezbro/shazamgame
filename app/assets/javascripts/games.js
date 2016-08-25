@@ -1,30 +1,21 @@
-// $(function() {
-//   function addPoints(){ alert("Adding points"); }
-      
-//   function validateForm() {
+$(function() {
 
-//       var inputs = document.querySelectorAll('input[type="radio"]'),
-//       // An empty array
-//       checker = [];
-      
-//       for (var i = 0; i < inputs.length; i++) {
-//           if (inputs[i].checked) {
-//               // Whenever find a checked element, push it in checker array
-//               checker.push(true);
-//           }
-//       }
-      
-//       // Since, there are only 3 radio groups, according to OP,
-//       // call addPoints when all 3 (yes/no) have been selected
-//       if (checker.length === 8) {
-//           addPoints();
-//       }
-//       // Show an alert if none has been selected
-//       else if(checker.length === 0){
-//           alert("!");
-//       }else{
-//           // Add something you may want
-//       }
-//   }
-// $()
-// })
+  function getSelections() {
+    var options = $('.pref_pick_int option:selected');
+
+    var a = $.map(options ,function(option) {
+        return option.value;
+    });
+
+    for (i = 0; i < a.length; ++i) {
+        if(a.indexOf(a[i]) != a.lastIndexOf(a[i]))
+              alert("Preference Amount Must be Unique");
+    }
+}
+
+
+$('.pref_pick_int').change(getSelections);
+
+})
+
+

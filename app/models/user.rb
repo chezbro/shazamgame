@@ -9,9 +9,6 @@ class User < ActiveRecord::Base
   validates :username , uniqueness: {case_sesitive: false}
 
   attr_accessor :login
-
-
-
   
   def unique_pick_validation(params)
     arr = (1..13)    
@@ -21,6 +18,8 @@ class User < ActiveRecord::Base
   def self.set_weekly_points_to_zero
     User.all.each do |user|
       user.weekly_points = 0
+      user.weekly_points_game_a = 0
+      user.weekly_points_game_b = 0
       user.save!
     end
   end
@@ -33,8 +32,6 @@ class User < ActiveRecord::Base
 #   end
 # end
   
-
-
   def get_users_selections(game)
     self.selections.where(game_id: game).first.id
   end
