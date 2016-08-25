@@ -27,9 +27,19 @@ case Rails.env
   when "production"
 
     teams = JSON.parse(File.read('teams.json'))
-    
-    teams.each do |record|
-      Team.create!(record)
+
+    teams["teams"].each do |t|
+      Team.create(
+          tid: t["tid"],
+          cid: t["cid"],
+          did: t["did"],
+          region: t["region"],
+          name: t["name"],
+          abbrev: t["abbrev"],
+          city: t["city"],
+          state: t["state"]
+          latitude: t["latitude"],
+        )
     end
     
     Week.create(week_number: "1", year: "2016", active: true)
