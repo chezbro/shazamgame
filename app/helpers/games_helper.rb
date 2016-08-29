@@ -42,4 +42,6 @@ module GamesHelper
   def game_selection_link(game)
     game.selections.where(user_id:current_user).first
   end
+
+  
 end

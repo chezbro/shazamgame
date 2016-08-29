@@ -8,16 +8,24 @@ class Selection < ActiveRecord::Base
   validates_presence_of :pref_pick_int
   validates_presence_of :pref_pick_team
   validates_presence_of :spread_pick_team
-  
 
-  validates_uniqueness_of :pref_pick_int, :scope => [:user_id, :game_id]
-
-  def user_pref_pick_uniqueness(user, week)
-    # Selection.where(user_id: user).joins(:game). where(:games => { :week_id => week.id }).each do |s|
-  end
+  # before_save :pref_pick_unique
 
 
+# private 
 
+# def pref_pick_unique(user)
+#   Game.where(week_id: Week.last.id).each do |g|
+#     g.selections.where(user_id: user).each do |s|
+#       if pref_picks.include?(self.pref_pick_int)
+#         errors.add(:base, 'Preference Pick Must Be Unique')
+#       else
+#         pref_picks << self.pref_pick_int
+#         binding.pry
+#       end
+#     end
+#   end
+# end
 
   # def self.pref_picks(user)
   #   arr = []

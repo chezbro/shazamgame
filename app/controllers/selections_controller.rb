@@ -50,9 +50,7 @@ class SelectionsController < ApplicationController
         format.js { flash.now[:notice] = "Selection successfully submitted." }
         # format.html { redirect_to games_path, :notice => "Selection has been saved successfully." }
       else
-        
-        format.html { redirect_to games_path, flash: {error: "Error: You must fill out each Selection."} }
-        format.json { render json: @selection.errors, status: :unprocessable_entity }
+        format.js { flash.now[:notice] = "Error: You must fill out each Selection." }
       end
     end
   end
@@ -65,11 +63,10 @@ class SelectionsController < ApplicationController
      if @selection.update(selection_params)
         @selection.save!
         @selection.reload
-        format.html { redirect_to games_url,notice: 'Selection was successfully updated.' }
-        format.json { render :show, status: :ok, location: @selection }
+        format.js { flash.now[:notice] = "Selection successfully submitted." }
+        # format.html { redirect_to games_path, :notice => "Selection has been saved successfully." }
       else
-        format.html { redirect_to new_game_selection_path(@game, @selection), flash: {error: "Error: You must fill out each Selection."} }
-        format.json { render json: @selection.errors, status: :unprocessable_entity }
+        format.js { flash.now[:notice] = "Error: You must fill out each Selection." }
       end
     end
   end

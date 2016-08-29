@@ -1,7 +1,7 @@
 <div class="top-50 position-relative col-md-12">
   <div id="flash">
     <% if notice.present? %>
-      <%= render partial: "layouts/banner" %>
+      <%= render partial: "layouts/notice" %>
     <% end %>
   </div>
   <h3>Hi <%= current_user.username.capitalize %>, here's your Picksheet for this Week:</h3>
@@ -65,9 +65,6 @@
           </td>
           <td>
             <%= spread_operator(game) + game.spread.to_s %>
-
-
-
           </td>
           <td>
           <% if game.active? %>
