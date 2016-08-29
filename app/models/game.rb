@@ -58,7 +58,7 @@ def which_team_covered_spread
   if ( (self.home_team_score + self.spread) > self.away_team_score )
     self.team_that_covered_spread = self.home_team.id
 
-  elsif ( (self.home_team_score - self.away_team_score ) == self.spread )
+  elsif ( ( (self.home_team_score + self.spread ) - self.away_team_score ) == 0 )
     self.tie_game = true
   # Away Team Covered
   else
@@ -68,36 +68,37 @@ def which_team_covered_spread
 end
 
 def tally_points
+  # Game A is Pref Pick (each straight up win == pref_pick_int)
+  # Game B is Spread Pick (each correct pick against spread += 7)
   User.all.each do |user|
     user.selections.each do |selection|
       if selection.game_id == self.id && selection.game.week.id == Week.last.id
         if selection.spread_pick_team == self.team_that_won_straight_up
-
           user.weekly_points += 7
-          user.weekly_points_game_a += 7
+          user.weekly_points_game_b += 7
           user.cumulative_points += 7
-
           user.save!
         else       
-
+          user.weekly_points += 0
+          user.weekly_points_game_b += 0
+          user.cumulative_points += 0
+          user.save!
+        end
+        if selection.pref_pick_team == self.team_that_covered_spread
+          user.weekly_points += selection.pref_pick_int
+          user.weekly_points_game_a += selection.pref_pick_int
+          user.cumulative_points += selection.pref_pick_int
+          user.save!
+        else
           user.weekly_points += 0
           user.weekly_points_game_a += 0
           user.cumulative_points += 0
           user.save!
         end
-        if selection.pref_pick_team == self.team_that_covered_spread
-
-          user.weekly_points += selection.pref_pick_int
-          user.weekly_points_game_b += selection.pref_pick_int
-          user.cumulative_points += selection.pref_pick_int
-
-          user.save!
-        else
-
-          user.weekly_points += 0
-          user.weekly_points_game_b += 0
-          user.cumulative_points += 0
-          user.save!
+        # Does this work? It's not hitting the binding here.
+        if selection.game.tie_game == true
+          user.weekly_points += 7
+          user.weekly_points_game_a += 7
         end
       end
     end
