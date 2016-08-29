@@ -2,8 +2,6 @@ Rails.application.routes.draw do
 
   get 'landings/index'
   
-  
-
   resources :weeks
 
   resources :users, only: [:show]
@@ -13,6 +11,8 @@ Rails.application.routes.draw do
   end
 
   get 'selections' => 'selections#index', as: :selections
+
+  post 'teams' => 'teams#create'
 
   resources :announcements
 

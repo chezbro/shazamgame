@@ -25,9 +25,10 @@ class WeeksController < ApplicationController
 
   # GET /weeks/new
   def new
+    @team = Team.new
     @week = Week.new
     # Build 13 games
-    13.times do 
+    4.times do 
       games = @week.games.build
     end
 
@@ -113,4 +114,5 @@ class WeeksController < ApplicationController
     def week_params
       params.require(:week).permit(:week_number, :active, :year, :year_in_datetime, games_attributes: [:id , :home_team_id, :away_team_id,:home_team_spread, :spread, :game_selected_by_admin, :active ])
     end
+
 end

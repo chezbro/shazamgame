@@ -1,4 +1,9 @@
 <div class="top-50 position-relative col-md-12">
+  <div id="flash">
+    <% if notice.present? %>
+      <%= render partial: "layouts/banner" %>
+    <% end %>
+  </div>
   <h3>Hi <%= current_user.username.capitalize %>, here's your Picksheet for this Week:</h3>
 
 <!-- New Table -->
@@ -37,7 +42,7 @@
   <tbody>
   <% @week.games.each do |game| %>
   <% check_existing_selection(game) %>
-    <%= simple_form_for([game, @selection] ) do |s| %>
+    <%= simple_form_for([game, @selection], remote: true) do |s| %>
         <tr>
           <td>
             <%= s.label :pref_pick_team, game_home_team_name(game)  %>
@@ -69,7 +74,7 @@
             <% if Selection.where(user_id: current_user).where(game_id: game.id).present? %>
               <%= s.submit "Update Selection", class: "btn btn-warning" %>
             <% else %>
-              <%= s.submit "New Selection", class: "btn btn-primary" %>
+              <%= s.submit "Submit", class: "btn btn-primary" %>
             <% end %>
           </td>
         <% end %>
@@ -85,5 +90,6 @@
   <p><b>Game "A"</b> - Pick the teams that will win the games and rank them from 13-1. Each correct pick earns you points equal to the 13-1 ranking number you assigned it. You may not use the same ranking number (between 13 and 1) twice.</p>
   <p><b>Game "B"</b> - Pick the teams that will beat the point spread. Each correct pick earns you 7 points.</p>
   <p></p>
+  <p>*Please remember you must press the Submit button next to each Game in order to submit your picks.</p>
 </div>
 </div>

@@ -5,7 +5,12 @@ class SelectionsController < ApplicationController
   # GET /selections
   # GET /selections.json
   def index
-    @selections = Selection.all
+    if current_user.admin? == true
+      @selections = Selection.all
+    else
+      @selections = Selection.where(user_id: current_user).joins(:game).where(:games => { :week_id => Week.last.id })
+    end
+
     # @selections = Selection.where(user_id: current_user).where(week_id: Week.last.id)
     
   end
@@ -42,8 +47,10 @@ class SelectionsController < ApplicationController
     # perhaps you can just manually find or create the Selection. If it exists, find it, if not, create a new one.
     respond_to do |format|
       if @selection.save
-        format.html { redirect_to games_path, :notice => "Selection has been saved successfully." }
+        format.js { flash.now[:notice] = "Selection successfully submitted." }
+        # format.html { redirect_to games_path, :notice => "Selection has been saved successfully." }
       else
+        
         format.html { redirect_to games_path, flash: {error: "Error: You must fill out each Selection."} }
         format.json { render json: @selection.errors, status: :unprocessable_entity }
       end
