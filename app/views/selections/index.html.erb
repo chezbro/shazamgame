@@ -17,6 +17,7 @@
 
   <%@selections.each do |selection| %>
   <div class="divTableRow">
+    <% if selection.game.present? %>
       <div class="divTableCell"><%= selection.game.week.week_number %></div>
       <div class="divTableCell"><%= selection.user.username %></div>
       <div class="divTableCell"><%= selections_home_team_name(selection) + " " + "(#{(spread_operator(selection.game)+selection.game.spread.to_s)})"   %></div>
@@ -24,8 +25,9 @@
       <div class="divTableCell"><%= selection.pref_pick_int %></div>
       <div class="divTableCell"><%= selection_team(selection.pref_pick_team) %></div>
       <div class="divTableCell"><%= selection_team(selection.spread_pick_team) %></div>
-  </div>
     <% end %>
+  </div>
+  <% end %>
 
   </div>
   </div>

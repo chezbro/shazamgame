@@ -1,8 +1,6 @@
 <div class="col-md-7 col-md-offset-3">
   <div id="flash">
-    <% if notice.present? %>
-      <%= render partial: "layouts/notice" %>
-    <% end %>
+
   </div>
 
   <%= simple_form_for @week, url: url_for(action: "create", controller: "weeks"), method: "post" do |f| %>
@@ -26,7 +24,7 @@
   <p><%= link_to "*Add New Team", "#", class: "add_new_team" %></p>
   
   <div class="new_team_form">
-    <%= simple_form_for @team, url: url_for(action: "create", controller: "teams"), method: "post", remote: true do |t| %>
+    <%= simple_form_for @team, url: url_for(action: "create", controller: "teams"), method: "post" do |t| %>
       <%= t.input :region, label: "State/Region (i.e. 'Michigan')"   %>
       <%= t.input :name, label: "Team Name (i.e. 'Wolverines')"   %>
       <%= t.submit "Add New Team", class: "btn btn-primary" %>

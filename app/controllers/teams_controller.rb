@@ -5,7 +5,7 @@ class TeamsController < ApplicationController
     Team.create(team_params)
 
     respond_to do |format|
-        format.js { flash.now[:notice] = "Team successfully added." }
+        format.html { redirect_to new_week_path, notice: "New Team successfully created" }
       end
   end
 
