@@ -77,8 +77,8 @@ Rails.application.configure do
     domain: "shazam13.herokuapp.com'",
     authentication: "plain",
     enable_starttls_auto: true,
-    user_name: ENV["GMAIL_USERNAME"],
-    password: ENV["GMAIL_PASSWORD"]
+    user_name: "ericchesbrough@gmail.com",
+    password: "Pistons123$"
   }
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
