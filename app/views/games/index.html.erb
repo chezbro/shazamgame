@@ -56,11 +56,11 @@
             <%= s.select( :pref_pick_int, pref_pick_integers, {prompt: "Select an Amount"}, { class: "pref_pick_int"} )%>
           </td>
           <td>
-            <%= s.label :spread_pick_team, game_home_team_name(game)  %>
+            <%= s.label :spread_pick_team, fave(game) %>
             <%= s.radio_button :spread_pick_team, game.home_team_id  %>
           </td>
           <td>
-            <%= s.label :spread_pick_team, game_away_team_name(game)  %>
+            <%= s.label :spread_pick_team, dog(game)  %>
             <%= s.radio_button :spread_pick_team, game.away_team_id  %>
           </td>
           <td>

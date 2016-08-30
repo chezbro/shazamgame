@@ -8,6 +8,13 @@ class User < ActiveRecord::Base
   
   validates :username , uniqueness: {case_sesitive: false}
 
+  validates_presence_of :name
+  validates_presence_of :username
+  # validates_presence_of :cell_phone_number
+  # validates_presence_of :address
+  # validates_presence_of :fav_teams
+
+
   attr_accessor :login
   
   def unique_pick_validation(params)

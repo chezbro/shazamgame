@@ -11,6 +11,9 @@
             Name
           </th>
           <th>
+            Email
+          </th>
+          <th>
             Address
           </th>
           <th>
@@ -24,19 +27,22 @@
       <tbody>
         <tr>
           <td>
-            <%= @user.username %>
+            <%= @user.try(:username) %>
           </td>
           <td>
-            <%= @user.name %>
+            <%= @user.try(:name) %>
           </td>
           <td>
-            <%= @user.address %>
+            <%= @user.try(:email) %>
           </td>
           <td>
-            <%= @user.cell_phone_number %>
+            <%= @user.try(:address) %>
           </td>
           <td>
-            <%= @user.fav_teams %>
+            <%= @user.try(:cell_phone_number) %>
+          </td>
+          <td>
+            <%= @user.try(:fav_teams)%>
           </td>
         </tr>
       </tbody>
