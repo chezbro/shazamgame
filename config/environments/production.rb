@@ -84,22 +84,20 @@ Rails.application.configure do
   #   password: "Pistons123$"
   # }
 
-config.action_mailer.delivery_method = :smtp
-config.action_mailer.perform_deliveries = true
-config.action_mailer.raise_delivery_errors = false
-config.action_mailer.default :charset => "utf-8"
+
 config.action_mailer.default_url_options = { :host => 'http://shazam13.herokuapp.com' }
 
-config.action_mailer.smtp_settings = {
-  :user_name => "app54209875@heroku.com",
-  :password => "zua18pna0392",
-  :address => 'smtp.sendgrid.net',
-  :domain => 'shazam13.herokuapp.com',
-  :port => 587,
-  :authentication => :plain,
-  :enable_starttls_auto => true
-}
+config.action_mailer.delivery_method = :smtp
 
+config.action_mailer.smtp_settings = {
+address: "smtp.sendgrid.net",
+port: 25,
+domain: "heroku.com", 
+authentication: "plain",
+enable_starttls_auto: true,
+user_name: ENV["SENDGRID_USERNAME"],
+password: ENV["SENDGRID_PASSWORD"]
+}
 
 
 
