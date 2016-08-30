@@ -69,23 +69,36 @@ Rails.application.configure do
   # ActionMailer Config in development/production rb file
   # config.action_mailer.default_url_options = { :host => 'shazam13.herokuapp.com' }
 
-  config.action_mailer.default_url_options = { :host => 'gmail.com' }
+  # config.action_mailer.default_url_options = { :host => 'gmail.com' }
 
-  config.action_mailer.delivery_method = :smtp
-  config.action_mailer.perform_deliveries = true
-  config.action_mailer.raise_delivery_errors = false
-  config.action_mailer.default :charset => "utf-8"
-  config.action_mailer.smtp_settings = {
-    address: "smtp.gmail.com",
-    port: 587,
-    domain: "gmail.com'",
-    authentication: "plain",
-    enable_starttls_auto: true,
-    user_name: "ericchesbrough@gmail.com",
-    password: "Pistons123$"
-  }
+  # config.action_mailer.delivery_method = :smtp
+  # config.action_mailer.perform_deliveries = true
+  # config.action_mailer.raise_delivery_errors = false
+  # config.action_mailer.default :charset => "utf-8"
+  # config.action_mailer.smtp_settings = {
+  #   address: "smtp.gmail.com",
+  #   port: 587,
+  #   authentication: "plain",
+  #   enable_starttls_auto: true,
+  #   user_name: "ericchesbrough@gmail.com",
+  #   password: "Pistons123$"
+  # }
 
+config.action_mailer.delivery_method = :smtp
+config.action_mailer.perform_deliveries = true
+config.action_mailer.raise_delivery_errors = false
+config.action_mailer.default :charset => "utf-8"
+config.action_mailer.default_url_options = { :host => 'http://shazam13.herokuapp.com' }
 
+config.action_mailer.smtp_settings = {
+  :user_name => "app54209875@heroku.com",
+  :password => "zua18pna0392",
+  :address => 'smtp.sendgrid.net',
+  :domain => 'shazam13.herokuapp.com',
+  :port => 587,
+  :authentication => :plain,
+  :enable_starttls_auto => true
+}
 
 
 
