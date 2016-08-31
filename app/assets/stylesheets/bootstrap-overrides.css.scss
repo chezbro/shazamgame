@@ -33,12 +33,16 @@
 // White Links in Navbar
 .navbar-default .navbar-nav > li > a {
   color: #fff;
-  font-size: 1.1em;
+  font-size: 1.35em;
+  -webkit-font-smoothing: antialiased;
 }
 
 // White Shazam Text (Logo) in Navbar
 .navbar-default .navbar-brand {
   color: #fff;
+  margin-left: 5px;
+  font-size: 1.6em;
+  -webkit-font-smoothing: antialiased;
 }
 
 // Give the links a little room to breathe dawg

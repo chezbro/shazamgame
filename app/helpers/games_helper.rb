@@ -16,6 +16,23 @@ module GamesHelper
     end
   end
 
+  def fave_selected(game)
+    if game.spread < 0
+      game.home_team_id
+    else
+      game.away_team_id
+    end
+  end
+
+  def dog_selected(game)
+    if game.spread > 0
+      game.home_team_id
+    else
+      game.away_team_id
+    end
+  end
+
+
   def pref_pick(selection)
     Team.find(selection.pref_pick_team).region + " " + Team.find(selection.pref_pick_team).name 
   end

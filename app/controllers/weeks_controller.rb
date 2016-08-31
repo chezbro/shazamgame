@@ -28,7 +28,7 @@ class WeeksController < ApplicationController
     @team = Team.new
     @week = Week.new
     # Build 13 games
-    13.times do 
+    3.times do 
       games = @week.games.build
     end
 

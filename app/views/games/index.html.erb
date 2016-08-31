@@ -57,11 +57,11 @@
           </td>
           <td>
             <%= s.label :spread_pick_team, fave(game) %>
-            <%= s.radio_button :spread_pick_team, game.home_team_id  %>
+            <%= s.radio_button :spread_pick_team, fave_selected(game)  %>
           </td>
           <td>
             <%= s.label :spread_pick_team, dog(game)  %>
-            <%= s.radio_button :spread_pick_team, game.away_team_id  %>
+            <%= s.radio_button :spread_pick_team, dog_selected(game)  %>
           </td>
           <td>
             <%= spread_operator(game) + game.spread.to_s %>
