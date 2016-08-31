@@ -1,8 +1,20 @@
-$("#flash").html('<%= j render partial: "layouts/notice" %>');
 
-$('.alert').delay(7000).fadeOut(function() {
-  $(this).remove(); 
-});
-$('#flash').delay(7000).fadeOut(function() {
-  $(this).remove(); 
- });
+  $(".flash").html('<%= j render partial: "layouts/notice" %>');
+
+  <% unless @errors == true %>
+
+    $(".selection-button-"+<%= @game %>).removeClass("btn btn-primary")
+
+    $(".selection-button-"+<%= @game %>).addClass("btn btn-warning")
+
+    $(".selection-button-"+<%= @game %>).val("Update Selection")
+
+  <% end %>
+
+  $('.alert').delay(7000).fadeOut(function() {
+
+  });
+  $('.flash').delay(7000).fadeOut(function() {
+
+   });
+

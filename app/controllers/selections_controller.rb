@@ -41,17 +41,20 @@ class SelectionsController < ApplicationController
   # POST /selections.json
   def create
     if Selection.where(user_id: current_user).where(game_id: params[:selection][:game_id]).present?
-    @selection = Selection.where(user_id: current_user).where(game_id: params[:selection][:game_id]).first
-    @selection.update(selection_params)
+      @selection = Selection.where(user_id: current_user).where(game_id: params[:selection][:game_id]).first
+      @selection.update(selection_params)
     else
       @selection = Selection.new(selection_params)
     end
-    # perhaps you can just manually find or create the Selection. If it exists, find it, if not, create a new one.
+    @errors = false 
+    @game = params[:selection][:game_id]
     respond_to do |format|
       if @selection.save
+        format.html
         format.js { flash.now[:notice] = "Selection successfully submitted." }
-        # format.html { redirect_to games_path, :notice => "Selection has been saved successfully." }
       else
+        @errors = true
+        format.html
         format.js { flash.now[:notice] = "Error: You must fill out each Selection." }
       end
     end

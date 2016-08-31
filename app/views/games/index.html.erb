@@ -1,5 +1,5 @@
 <div class="top-50 position-relative col-md-12">
-  <div id="flash">
+  <div class="flash">
     <% if notice.present? %>
       <%= render partial: "layouts/notice" %>
     <% end %>
@@ -69,9 +69,9 @@
           <td>
           <% if game.active? %>
             <% if Selection.where(user_id: current_user).where(game_id: game.id).present? %>
-              <%= s.submit "Update Selection", class: "btn btn-warning" %>
+              <%= s.submit "Update Selection", class: "btn btn-warning" + " selection-button-#{game.id}" %>
             <% else %>
-              <%= s.submit "Submit", class: "btn btn-primary" %>
+              <%= s.submit "Submit", class: "btn btn-primary" + " selection-button-#{game.id}" %>
             <% end %>
           </td>
         <% end %>
