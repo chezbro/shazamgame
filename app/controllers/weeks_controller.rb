@@ -28,10 +28,15 @@ class WeeksController < ApplicationController
     @team = Team.new
     @week = Week.new
     # Build 13 games
-    3.times do 
-      games = @week.games.build
+    if Rails.env.development?
+      3.times do 
+        games = @week.games.build
+      end
+    else
+      13.times do 
+        games = @week.games.build
+      end
     end
-
   end
 
   # GET /weeks/1/edit
