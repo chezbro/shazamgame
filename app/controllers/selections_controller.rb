@@ -6,11 +6,9 @@ class SelectionsController < ApplicationController
   # GET /selections.json
   def index
     if current_user.admin? == true
-      @selections = Selection.all.order(:user_id).order("created_at DESC")
-      # order("pref_pick_int DESC").joins(:game).where(:games => { :week_id => Week.order("week_id DESC") })
-      
+      @selections = Selection.joins(:game).order("games.week_id DESC").order("user_id DESC").order("pref_pick_int ASC")
     else
-      @selections = Selection.where(user_id: current_user).joins(:game).where(:games => { :week_id => Week.last.id })
+      @selections = Selection.where(user_id: current_user).joins(:game).order("games.week_id DESC").order("pref_pick_int ASC")
     end
 
     # @selections = Selection.where(user_id: current_user).where(week_id: Week.last.id)

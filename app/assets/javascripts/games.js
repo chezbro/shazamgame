@@ -1,21 +1,28 @@
-// $(function() {
+$(function() {
 
-//   function getSelections() {
-//     var options = $('.pref_pick_int option:selected');
+  function getSelections() {
+    var $selects = $('.pref_pick_int option:selected').not($(".pref_pick_int").find("option:contains('Select an Amount')")  )
+        values = [];
 
-//     var a = $.map(options ,function(option) {
-//         return option.value;
-//     });
+      $($selects).each(function() {
+          if($(this).val()) {
+              values.push($(this).val());        
+          }
+      });
+        if(!values.length) {
+            alert('Please select a new pref pick amount');
+            return false;
+        }
+      if(values.length < $selects.length || $.unique(values).length < $selects.length) {
+        alert('Please Select a unique Pref Amount');
+        return false;
+      }
 
-//     for (i = 0; i < a.length; ++i) {
-//         if(a.indexOf(a[i]) != a.lastIndexOf(a[i]))
-//               alert("Preference Amount Must be Unique");
-//     }
-// }
+}
 
 
-// $('.pref_pick_int').change(getSelections);
+$('.pref_pick_int').change(getSelections);
 
-// })
+})
 
 
