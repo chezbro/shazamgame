@@ -79,22 +79,12 @@ def tally_points
           user.weekly_points_game_b += 7
           user.cumulative_points += 7
           user.save!
-        # else       
-        #   user.weekly_points += 0
-        #   user.weekly_points_game_b += 0
-        #   user.cumulative_points += 0
-        #   user.save!
         end
         if selection.pref_pick_team == self.team_that_won_straight_up
           user.weekly_points += selection.pref_pick_int
           user.weekly_points_game_a += selection.pref_pick_int
           user.cumulative_points += selection.pref_pick_int
           user.save!
-        # else
-        #   user.weekly_points += 0
-        #   user.weekly_points_game_a += 0
-        #   user.cumulative_points += 0
-        #   user.save!
         end
         if selection.game.tie_game == true
           user.weekly_points += 7
