@@ -57,6 +57,7 @@ gem 'announcements'
 gem 'rails_12factor', group: :production
 gem 'bootstrap-select-rails'
 
+
 group :development do
   gem 'quiet_assets'
   gem 'better_errors'

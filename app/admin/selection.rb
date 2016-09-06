@@ -21,8 +21,4 @@ ActiveAdmin.register Selection do
     end
     actions
   end
-
-
-
-
 end

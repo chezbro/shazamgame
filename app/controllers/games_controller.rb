@@ -65,6 +65,17 @@ class GamesController < ApplicationController
     end
   end
 
+  def disable_selections
+  end
+
+  def disable_picks
+    Game.where(active: true).each do |game|
+      binding.pry
+      game.active = false
+      game.save!
+    end
+  end
+
   # DELETE /games/1
   # DELETE /games/1.json
   def destroy

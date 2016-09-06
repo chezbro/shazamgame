@@ -50,7 +50,7 @@ module GamesHelper
   end
 
   def full_game_name(game)
-    game.home_team.region + game.home_team.name + " vs. " + game.away_team.region + " " + game.away_team.name
+    game.home_team.region + " " + game.home_team.name + " vs. " + game.away_team.region + " " + game.away_team.name
   end
   def users_pref_pick_selection(game)
     current_user.selections.where(game_id: game).first.pref_pick_team if current_user.selections.where(game_id: game).present?

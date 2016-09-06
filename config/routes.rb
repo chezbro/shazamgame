@@ -14,6 +14,10 @@ Rails.application.routes.draw do
 
   post 'teams' => 'teams#create'
 
+  get 'disable_selections' => 'games#disable_selections', as: :disable_selections
+
+  post 'disable_picks' => 'games#disable_picks', as: :disable_picks
+
   resources :announcements
 
   get    "instructions"   => "landings#instructions",         as: :instructions
@@ -25,6 +29,9 @@ Rails.application.routes.draw do
   get    "real_time_scores"   => "landings#real_time_scores",         as: :real_time_scores
 
   get    "activity"   => "landings#activity",         as: :activity
+
+
+
 
   devise_for :users, controllers: {registrations: "users/registrations", sessions: "users/sessions", passwords: "users/passwords"}, skip: [:sessions, :registrations]
   devise_for :admin_users, ActiveAdmin::Devise.config
