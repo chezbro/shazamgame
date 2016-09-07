@@ -6,6 +6,7 @@ ActiveAdmin.setup do |config|
   #
   config.site_title = "Shazamgame"
 
+
   # Set the link url for the title. For example, to take
   # users to your main site. Defaults to no link.
   #
@@ -119,7 +120,7 @@ ActiveAdmin.setup do |config|
   # This allows your users to comment on any resource registered with Active Admin.
   #
   # You can completely disable comments:
-  # config.comments = false
+  config.comments = false
   #
   # You can change the name under which comments are registered:
   # config.comments_registration_name = 'AdminComment'
@@ -269,5 +270,5 @@ ActiveAdmin.setup do |config|
   # of those filters by default here.
   #
   # config.include_default_association_filters = true
-  config.comments_registration_name = "AdminComment"
+  # config.comments_registration_name = "AdminComment"
 end

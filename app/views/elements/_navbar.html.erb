@@ -29,10 +29,11 @@
         <% if current_user.admin? %>
           <li><%= link_to "See All Users", users_path %></li>
           <li><%= link_to "See All Picks", selections_path %></li>
+          <li><%= link_to "Edit Selections", "admin/selections" %></li>
           <li><%= link_to "Create New Week", new_week_path %></li>
           <li><%= link_to "Create New Announcement", new_announcement_path %></li>
           <li><%= link_to "Choose Winners", weeks_path %></li>
-          <li><%= link_to "Disable Picks", disable_picks_path %></li>
+          <li><%#= link_to "Disable Picks", disable_picks_path %></li>
         <% end %>
 
           <li><%= link_to "Sign Out", destroy_user_session_path, method: :delete %></li>
