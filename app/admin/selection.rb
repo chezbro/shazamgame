@@ -5,7 +5,7 @@ ActiveAdmin.register Selection do
   index do
     
     column :week do |selection|
-      selection.game.week_id if selection.game.present?
+      selection.game.week.week_number if selection.game.present?
     end 
 
     column :game_id do |selection|
