@@ -1,7 +1,11 @@
 <p id="notice"><%= notice %></p>
 
 <div class="top-100 position-relative col-md-10 col-md-offset-1">
-  <h3>Current Selections:</h3>
+  <% if current_user.admin? %>
+    <h3>All Users' Selections:</h3>
+  <% else %>
+    <h3>Current Selections:</h3>
+  <% end %>
   <div class="divTable">
   <div class="divTableBody">
 
@@ -17,7 +21,7 @@
 
   <%@selections.each do |selection| %>
   <div class="divTableRow">
-    <% if selection.game.present? %>
+    <% if selection.game.present? && selection.game.week_id == Week.last.id %>
       <div class="divTableCell"><%= selection.game.week.week_number %></div>
       <div class="divTableCell"><%= selection.user.username %></div>
       <div class="divTableCell"><%= selections_home_team_name(selection) + " " + "(#{(spread_operator(selection.game)+selection.game.spread.to_s)})"   %></div>
