@@ -3,8 +3,12 @@ class Announcement < ActiveRecord::Base
   validates_presence_of :body
   
   def self.newest
-	Announcement.last
+	Announcement.where(saved: nil).last
   end
+
+  def self.newest_saved
+    Announcement.where(saved: true).last 
+  end 
   
   def self.newest_private
     Announcement.where("type is null").order("id desc").first

@@ -15,6 +15,7 @@ $(function() {
           }
         if(values.length < $selects.length || $.unique(values).length < $selects.length) {
           alert('Please Select a unique Pref Amount');
+          $(this)[0].selectedIndex=0;
           return false;
         }
 

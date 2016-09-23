@@ -3,7 +3,8 @@ class AnnouncementsController < ApplicationController
 
   def new
     @announcement = Announcement.new
-    @announcements = Announcement.all
+    @announcements = Announcement.where(saved: nil)
+    @saved_announcements = Announcement.where(saved: true)
   end
   
   def create
@@ -24,7 +25,7 @@ private
 
 # Never trust parameters from the scary internet, only allow the white list through.
 def announcement_params
-  params.require(:announcement).permit(:body)
+  params.require(:announcement).permit(:body, :saved)
 end
 
 end

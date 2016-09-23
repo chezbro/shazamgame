@@ -51,7 +51,6 @@ class GamesController < ApplicationController
   def update
     respond_to do |format|
       if @game.update(game_params)
-        # this, below, is running when a score is updated (what about created)
         @game.check_selection_and_tally_points
         @game.tally_points
         @game.save!

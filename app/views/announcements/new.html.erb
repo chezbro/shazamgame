@@ -11,8 +11,36 @@
       <%= f.button :submit, data: { confirm: 'Are you sure you want to update the Announcement' }, class: "btn btn-primary"  %>
     </div>
   <% end %>
-  <div class="position-relative top-50">
+  <div class="">
     <% @announcements.each do |announcement| %>
+    <ul>
+      <li>
+        <strong>Announcement: </strong><%= announcement.body %>
+        <br>
+        <strong> Date of Announcement: </strong><%= announcement.created_at.strftime("%A, %b %d")%>  
+      </li>
+    </ul>
+    <% end %>
+  </div>
+</div>
+
+
+<div class="col-md-10 col-md-offset-1">
+  <h1>Create A Saved Announcement</h1>
+  <%= simple_form_for(@announcement) do |f| %>
+    <%= f.error_notification %>
+
+    <div class="form-inputs">
+      <%= f.input :body, placeholder: "Please Enter Your New Announcement Here", label: false %>
+    </div>
+
+    <div class="form-actions">
+      <%= f.hidden_field :saved,  value: true %>
+      <%= f.button :submit, data: { confirm: 'Are you sure you want to update the Announcement' }, class: "btn btn-primary"  %>
+    </div>
+  <% end %>
+  <div class="">
+    <% @saved_announcements.each do |announcement| %>
     <ul>
       <li>
         <strong>Announcement: </strong><%= announcement.body %>
