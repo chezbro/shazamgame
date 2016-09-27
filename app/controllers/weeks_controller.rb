@@ -54,6 +54,7 @@ class WeeksController < ApplicationController
       if @week.save
         week_number = Week.all.count.to_s
         @week.week_number = week_number
+        User.set_weekly_points_to_zero
         Week.where(active: true).each do |week|
           week.active = false
           week.save!
