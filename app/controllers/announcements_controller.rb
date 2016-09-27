@@ -3,8 +3,8 @@ class AnnouncementsController < ApplicationController
 
   def new
     @announcement = Announcement.new
-    @announcements = Announcement.where(saved: nil)
-    @saved_announcements = Announcement.where(saved: true)
+    @announcements = Announcement.where(saved: nil).order("created_at DESC")
+    @saved_announcements = Announcement.where(saved: true).order("created_at DESC")
   end
   
   def create
