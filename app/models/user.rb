@@ -2,7 +2,7 @@ class User < ActiveRecord::Base
     # has_many :games
 
   has_many :selections
-  has_many :scores
+  has_many :points
 
   devise :database_authenticatable, :registerable,
         :recoverable, :rememberable, :trackable, :validatable

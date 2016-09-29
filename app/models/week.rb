@@ -1,6 +1,7 @@
 class Week < ActiveRecord::Base
   has_many :games
   has_many :scores
+  has_many :points
   accepts_nested_attributes_for  :games
 
 
