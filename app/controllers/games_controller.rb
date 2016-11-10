@@ -69,9 +69,12 @@ class GamesController < ApplicationController
 
   def disable_picks
     Game.where(active: true).each do |game|
-      binding.pry
       game.active = false
       game.save!
+    end
+    respond_to do |format|
+      format.html { redirect_to games_url, notice: 'Selections Now Disabled.' }
+      format.json { head :no_content }
     end
   end
 

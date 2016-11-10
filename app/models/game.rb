@@ -30,6 +30,13 @@ class Game < ActiveRecord::Base
 #   end
 # end
 
+def self.disable_picks
+  Game.where(active: true).each do |game|
+    game.active = false
+    game.save!
+  end
+end
+
 def set_team_that_won_straight_up
   if ( self.home_team_score > self.away_team_score )
     # Home Team Wins Straight Up

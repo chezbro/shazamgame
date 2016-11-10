@@ -26,14 +26,14 @@
       <div class="divTableCell"><%= game.home_team.region + " " + spread_operator(game) + game.spread.to_s %></div>
       <div class="divTableCell">
         <%= simple_form_for game do |f| %>
-        <% if current_user.admin? && game.active == true && game.week.active == true %>
+        <% if current_user.admin? == true && game.week.active == true %>
           <%= f.input :home_team_score, placeholder: "Enter Home Team Score", required: true, label: false %>
           <% else %>
             <%= game.home_team_score %>
           <% end %>
       </div>
       <div class="divTableCell">
-        <% if current_user.admin? && game.active == true && game.week.active == true %>
+        <% if current_user.admin? == true && game.week.active == true %>
           <%= f.input :away_team_score, placeholder: "Enter Away Twam Score", required: true, label: false %>
         <% else %>
           <%= game.away_team_score %>
@@ -41,7 +41,7 @@
       </div>
     </div>
 
-    <%= f.submit "Submit Selections", :onclick => "return confirm('Please Confirm These Scores Are Correct.')", class: "margin-10-0-30-0 btn btn-primary" if current_user.admin?  && game.active == true && game.week.active == true %>
+    <%= f.submit "Submit Selections", :onclick => "return confirm('Please Confirm These Scores Are Correct.')", class: "margin-10-0-30-0 btn btn-primary" if current_user.admin? == true && game.week.active == true %>
     <% end %>
     <% end %>
     </div>

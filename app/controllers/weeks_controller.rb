@@ -29,7 +29,7 @@ class WeeksController < ApplicationController
     @week = Week.new
     # Build 13 games
     if Rails.env.development?
-      3.times do 
+      1.times do 
         games = @week.games.build
       end
     else
@@ -67,7 +67,6 @@ class WeeksController < ApplicationController
         format.html { redirect_to root_url, notice: "New Week successfully created" }
         format.json { head :no_content }
       else
-        binding.pry
         format.html { redirect_to root_url, notice: "Unable to Create Week" }
         format.json { head :no_content }
       end
