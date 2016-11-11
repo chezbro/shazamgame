@@ -73,7 +73,7 @@ class GamesController < ApplicationController
       game.save!
     end
     respond_to do |format|
-      format.html { redirect_to games_url, notice: 'Selections Now Disabled.' }
+      format.html { redirect_to games_url, alert: 'Selections Now Disabled.' }
       format.json { head :no_content }
     end
   end
