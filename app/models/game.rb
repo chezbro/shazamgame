@@ -45,7 +45,7 @@ def set_team_that_won_straight_up
     self.away_team_won_straight_up = false
     
   elsif ( self.home_team_score == self.away_team_score )
-    
+  
     # Push Game
     self.tie_game = true
     self.home_team_won_straight_up = false

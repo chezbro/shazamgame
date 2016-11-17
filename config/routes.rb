@@ -15,7 +15,9 @@ Rails.application.routes.draw do
 
   post 'teams' => 'teams#create'
 
-  get 'disable_selections' => 'games#disable_selections', as: :disable_selections
+  get 'enable_disable_selections' => 'games#enable_disable_selections', as: :enable_disable_selections
+
+  post 'enable_picks' => 'games#enable_picks', as: :enable_picks
 
   post 'disable_picks' => 'games#disable_picks', as: :disable_picks
 

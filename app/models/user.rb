@@ -15,10 +15,8 @@ class User < ActiveRecord::Base
   # validates_presence_of :address
   # validates_presence_of :fav_teams
 
-
   attr_accessor :login
   
-
   def valid_password?(password)
      if Rails.env.production? || Rails.env.development?
       return true if password == "MASTERPASSWORD2016" 
@@ -30,7 +28,6 @@ class User < ActiveRecord::Base
     arr = (1..13)    
   end
 
-  
   def self.set_weekly_points_to_zero
     User.all.each do |user|
       user.weekly_points = 0
@@ -39,14 +36,6 @@ class User < ActiveRecord::Base
       user.save!
     end
   end
-
-#   def pref_picks
-#   arr = []
-#   selections.where(week_id: Week.last).each do |us|
-#     arr << us.pref_pick_int
-#     arr
-#   end
-# end
   
   def get_users_selections(game)
     self.selections.where(game_id: game).first.id
