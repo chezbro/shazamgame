@@ -64,7 +64,15 @@ class GamesController < ApplicationController
     end
   end
 
-  def enable_disable_selections
+  def enable_picks
+    Game.where(active: false).each do |game|
+      game.active = true
+      game.save!
+    end
+    respond_to do |format|
+      format.html { redirect_to games_url, alert: 'Selections Now Disabled.' }
+      format.json { head :no_content }
+    end
   end
 
   def disable_picks
@@ -77,18 +85,6 @@ class GamesController < ApplicationController
       format.json { head :no_content }
     end
   end
-
-  def enable_picks
-    Game.where(active: false).each do |game|
-      game.active = true
-      game.save!
-    end
-    respond_to do |format|
-      format.html { redirect_to games_url, alert: 'Selections Now Disabled.' }
-      format.json { head :no_content }
-    end
-  end
-
 
   # DELETE /games/1
   # DELETE /games/1.json
