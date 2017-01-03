@@ -25,26 +25,13 @@
 
 // })
 
-
-
-
 // $(function() {
-
-// var $select = $(".pref_pick_int");
-// $select.on("change", function() {
-//     var selected = [];  
-//     $.each($select, function(index, select) {           
-//         if (select.value !== "") { selected.push(select.value); }
-//     });         
-//    $(".pref_pick_int option").prop("disabled", false);         
-//    for (var index in selected) { 
-//       selected.filter(function(itm,i,a){
-//         if (i==a.indexOf(itm)){
-//           $('option[value="'+selected[index]+'"]').prop("disabled", true); 
-//         }
-//       })
-//    }
-// });
-
+//   $('.pref_pick_int').change(function() {
+//       if($(this).val() != "") {
+//           $(".pref_pick_int option:selected").remove();
+//           $('.pref_pick_int option:selected').attr('disabled', 'disabled');
+//       } else {
+//           // $('.pref_pick_int option:selected').removeAttr('disabled');
+//       }
+//   })
 // })
-
