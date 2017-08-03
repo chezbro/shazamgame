@@ -41,47 +41,49 @@
     </tr>
   </thead>
   <tbody>
-  <% @week.games.each do |game| %>
-  <% check_existing_selection(game) %>
-    <%= simple_form_for([game, @selection], remote: true) do |s| %>
-        <tr>
-          <td>
-            <%= s.label :pref_pick_team, game_home_team_name(game)  %>
-            <%= s.radio_button :pref_pick_team, game.home_team_id  %>
-          </td>
-          <td>
-            <%= s.label :pref_pick_team, game_away_team_name(game)  %>
-            <%= s.radio_button :pref_pick_team, game.away_team_id  %>
-          </td>
-          <td>
-            <%= s.select( :pref_pick_int, pref_pick_integers, {prompt: "Select an Amount"}, { class: "pref_pick_int"} )%>
-          </td>
-          <td>
-            <%= s.label :spread_pick_team, fave(game) %>
-            <%= s.radio_button :spread_pick_team, fave_selected(game)  %>
-          </td>
-          <td>
-            <%= s.label :spread_pick_team, dog(game)  %>
-            <%= s.radio_button :spread_pick_team, dog_selected(game)  %>
-          </td>
-          <td>
-            <%= spread_operator(game) + game.spread.to_s %>
-          </td>
-          <td><%= game.bowl_game_name %></td>
-          <td>
-            <% if game.active? %>
-              <% if Selection.where(user_id: current_user).where(game_id: game.id).present? %>
-                <%= s.submit "Update Selection", class: "btn btn-warning" + " selection-button-#{game.id}" %>
-              <% else %>
-                <%= s.submit "Submit", class: "btn btn-primary" + " selection-button-#{game.id}" %>
-            <% end %>
-          </td>
+  <% if @week.present? %>
+    <% @week.games.each do |game| %>
+    <% check_existing_selection(game) %>
+      <%= simple_form_for([game, @selection], remote: true) do |s| %>
+          <tr>
+            <td>
+              <%= s.label :pref_pick_team, game_home_team_name(game)  %>
+              <%= s.radio_button :pref_pick_team, game.home_team_id  %>
+            </td>
+            <td>
+              <%= s.label :pref_pick_team, game_away_team_name(game)  %>
+              <%= s.radio_button :pref_pick_team, game.away_team_id  %>
+            </td>
+            <td>
+              <%= s.select( :pref_pick_int, pref_pick_integers, {prompt: "Select an Amount"}, { class: "pref_pick_int"} )%>
+            </td>
+            <td>
+              <%= s.label :spread_pick_team, fave(game) %>
+              <%= s.radio_button :spread_pick_team, fave_selected(game)  %>
+            </td>
+            <td>
+              <%= s.label :spread_pick_team, dog(game)  %>
+              <%= s.radio_button :spread_pick_team, dog_selected(game)  %>
+            </td>
+            <td>
+              <%= spread_operator(game) + game.spread.to_s %>
+            </td>
+            <td><%= game.bowl_game_name %></td>
+            <td>
+              <% if game.active? %>
+                <% if Selection.where(user_id: current_user).where(game_id: game.id).present? %>
+                  <%= s.submit "Update Selection", class: "btn btn-warning" + " selection-button-#{game.id}" %>
+                <% else %>
+                  <%= s.submit "Submit", class: "btn btn-primary" + " selection-button-#{game.id}" %>
+              <% end %>
+            </td>
+          <% end %>
+            <%= s.hidden_field :game_id,  value: game.id %>
+            <%= s.hidden_field :user_id,  value: current_user.id %>
         <% end %>
-          <%= s.hidden_field :game_id,  value: game.id %>
-          <%= s.hidden_field :user_id,  value: current_user.id %>
-      <% end %>
-        </tr>
-    
+          </tr>
+
+    <% end %>
   <% end %>
   </tbody>
 </table>
