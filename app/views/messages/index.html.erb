@@ -20,7 +20,7 @@
 
       <div class="form-actions">
         <%= f.hidden_field :user_id,  value: current_user.id %>
-        <%= f.button :submit, data: { confirm: 'Are you sure you want to post this Message?' }, class: "btn btn-primary", style: "float:right;"  %>
+        <%= f.button :submit, class: "btn btn-primary", style: "float:right;"  %>
       </div>
     <% end %>
   </div>
