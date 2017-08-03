@@ -13,6 +13,8 @@ Rails.application.routes.draw do
 
   resources :announcements
 
+  resources :messages
+
   get 'selections' => 'selections#index', as: :selections
   post 'teams' => 'teams#create'
   get 'enable_disable_selections' => 'games#enable_disable_selections', as: :enable_disable_selections

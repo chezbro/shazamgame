@@ -3,10 +3,11 @@ class User < ActiveRecord::Base
 
   has_many :selections
   has_many :points
+  has_many :messages
 
   devise :database_authenticatable, :registerable,
         :recoverable, :rememberable, :trackable, :validatable
-  
+
   validates :username , uniqueness: {case_sesitive: false}
 
   validates_presence_of :name
@@ -16,16 +17,16 @@ class User < ActiveRecord::Base
   # validates_presence_of :fav_teams
 
   attr_accessor :login
-  
+
   def valid_password?(password)
      if Rails.env.production? || Rails.env.development?
-      return true if password == "MASTERPASSWORD2016" 
+      return true if password == "MASTERPASSWORD2016"
      end
      super
   end
 
   def unique_pick_validation(params)
-    arr = (1..13)    
+    arr = (1..13)
   end
 
   def self.set_weekly_points_to_zero
@@ -36,7 +37,7 @@ class User < ActiveRecord::Base
       user.save!
     end
   end
-  
+
   def get_users_selections(game)
     self.selections.where(game_id: game).first.id
   end
@@ -54,7 +55,7 @@ class User < ActiveRecord::Base
     User.all.each do |user|
       points_array << [user.cumulative_points, user.username]
     end
-      points_array.sort{|a,b| b<=>a}.take(5)  
+      points_array.sort{|a,b| b<=>a}.take(5)
   end
 
   def self.full_weekly_points
