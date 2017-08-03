@@ -5,7 +5,7 @@ class MessagesController < ApplicationController
   # GET /messages.json
   def index
     @messages = Message.all
-    @new_message = current_user.messages.build
+    @message = current_user.messages.build
   end
 
   # GET /messages/1
@@ -25,8 +25,14 @@ class MessagesController < ApplicationController
   # POST /messages.json
   def create
     @message = current_user.messages.build(message_params)
-    @message.save
-    respond_with { @message }    
+      respond_to do |format|
+      if @message.save
+        format.html { redirect_to messages_path, notice: 'Your Message was created successfully and can now be seen below.' }
+      else
+        flash[:alert] = "Whoops. Something went wrong, try again."
+        format.html { render :index }
+      end
+    end
   end
 
   # PATCH/PUT /messages/1

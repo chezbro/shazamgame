@@ -1,5 +1,27 @@
-<h1>Messages</h1>
-<% @messages.each do |msg| %>
-  Message from <%= msg.user.username %>:
-  <strong><%= msg.body %></strong>
-<% end %>
+<div style="min-height:100%;position:relative;width:100vw;">
+  <h1 style="text-align:center">League Message Board</h1>
+  <div style="height:85vh;width:100%;padding-bottom:60px;background:#eee;">
+    <ul style="list-style-type:none;">
+    <% @messages.each do |msg| %>
+      <li style="background:#fff;color:#000;border:2px solid #ff562a;padding:10px;width:50%;margin:15px 0px;border-radius:30px;">
+        Message from <%= msg.user.username %>:
+        <strong><%= msg.body %></strong>
+      <% end %>
+      </li>
+    </ul>
+  </div>
+  <div style="position:absolute;bottom:0;margin:0 autp;width:85%;left:7%;height:60px;">
+    <%= simple_form_for(@message) do |f| %>
+      <%= f.error_notification %>
+
+      <div class="form-inputs">
+        <%= f.input :body, placeholder: "Please Enter Your Message Here", label: false %>
+      </div>
+
+      <div class="form-actions">
+        <%= f.hidden_field :user_id,  value: current_user.id %>
+        <%= f.button :submit, data: { confirm: 'Are you sure you want to post this Message?' }, class: "btn btn-primary", style: "float:right;"  %>
+      </div>
+    <% end %>
+  </div>
+</div>
