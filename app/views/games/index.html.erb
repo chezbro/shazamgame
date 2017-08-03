@@ -26,10 +26,10 @@
         Pref Pick Amount
       </th>
       <th>
-        Fave
+        Fave <%= link_to "Select All Faves", "#", id: "all_favorites" %>
       </th>
       <th>
-        Dog
+        Dog <%= link_to "Select All Dogs", "#", id: "all_dogs" %>
       </th>
       <th>
         Spread
@@ -59,11 +59,11 @@
             </td>
             <td>
               <%= s.label :spread_pick_team, fave(game) %>
-              <%= s.radio_button :spread_pick_team, fave_selected(game)  %>
+              <%= s.radio_button :spread_pick_team, fave_selected(game), class: "radio_favorite" %>
             </td>
             <td>
               <%= s.label :spread_pick_team, dog(game)  %>
-              <%= s.radio_button :spread_pick_team, dog_selected(game)  %>
+              <%= s.radio_button :spread_pick_team, dog_selected(game), class: "radio_dogs"  %>
             </td>
             <td>
               <%= spread_operator(game) + game.spread.to_s %>
@@ -94,3 +94,13 @@
   <p>*Please remember you must press the Submit button next to each Game in order to submit your picks.</p>
 </div>
 </div>
+<script>
+  $(function() {
+    $("#all_favorites").on("click", function(){
+      $(".radio_favorite").attr("checked", "checked");
+    })
+    $("#all_dogs").on("click", function(){
+      $(".radio_dogs").attr("checked", "checked");
+    })
+  })
+</script>
