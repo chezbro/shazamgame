@@ -26,10 +26,10 @@
         Pref Pick Amount
       </th>
       <th>
-        Fave <%= link_to "Select All Faves", "#", id: "all_favorites" %>
+        Fave <%= link_to "Select All Faves", "#", class: "all_favorites", onclick: "faves()" %>
       </th>
       <th>
-        Dog <%= link_to "Select All Dogs", "#", id: "all_dogs" %>
+        Dog <%= link_to "Select All Dogs", "#", class: "all_dogs", onclick: "dogs()" %>
       </th>
       <th>
         Spread
@@ -59,11 +59,11 @@
             </td>
             <td>
               <%= s.label :spread_pick_team, fave(game) %>
-              <%= s.radio_button :spread_pick_team, fave_selected(game), class: "radio_favorite" %>
+              <%= s.radio_button :spread_pick_team, fave_selected(game), class: "radio_favorites" %>
             </td>
             <td>
               <%= s.label :spread_pick_team, dog(game)  %>
-              <%= s.radio_button :spread_pick_team, dog_selected(game), class: "radio_dogs"  %>
+              <%= s.radio_button :spread_pick_team, dog_selected(game), class: "radio_dogs" %>
             </td>
             <td>
               <%= spread_operator(game) + game.spread.to_s %>
@@ -95,12 +95,12 @@
 </div>
 </div>
 <script>
-  $(function() {
-    $("#all_favorites").on("click", function(){
-      $(".radio_favorite").attr("checked", "checked");
-    })
-    $("#all_dogs").on("click", function(){
-      $(".radio_dogs").attr("checked", "checked");
-    })
-  })
+  function faves () {
+    $(".radio_favorites").prop('checked', true);
+    $(".radio_dogs").prop('checked', false);
+  }
+  function dogs () {
+    $(".radio_dogs").prop('checked', true);
+    $(".radio_favorites").prop('checked', false); 
+  }
 </script>
