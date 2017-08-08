@@ -38,5 +38,15 @@ Rails.application.configure do
   config.assets.quiet = true
 
   config.action_mailer.default_url_options = { :host => 'localhost' }
-  
+
+  ActionMailer::Base.smtp_settings = {
+  :user_name => 'app54209875@heroku.com',
+  :password => 'Pistons1',
+  # :domain => 'gmail.com',
+  :address => 'smtp.sendgrid.net',
+  :port => 587,
+  :authentication => :plain,
+  :enable_starttls_auto => true
+}
+
 end
