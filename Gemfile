@@ -56,6 +56,7 @@ gem 'puma'
 gem 'announcements'
 gem 'rails_12factor', group: :production
 gem 'bootstrap-select-rails'
+gem 'whenever'
 
 
 group :development do
