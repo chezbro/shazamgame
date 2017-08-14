@@ -6,8 +6,9 @@
       <li style="position:relative;left:25%;background:#fff;color:#000;border:2px solid #ff562a;padding:10px;width:50%;margin:15px 0px;border-radius:30px;">
         Message from <%= msg.user.username %>:
         <strong><%= msg.body %></strong>
-      <% end %>
+        <span><%= link_to 'X',  { action: :destroy, id: msg.id }, style: "float:right;", method: :delete, data: { confirm: 'Are you sure you want to delete this Message?' } if msg.user == current_user %></span>
       </li>
+      <% end %>
     </ul>
   </div>
   <div style="position:absolute;bottom:0;margin:0 autp;width:85%;left:7%;height:60px;">
