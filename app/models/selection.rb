@@ -1,5 +1,4 @@
 class Selection < ActiveRecord::Base
-
   belongs_to :user
   belongs_to :game
 
@@ -10,9 +9,7 @@ class Selection < ActiveRecord::Base
   validates_presence_of :spread_pick_team
 
   # before_save :pref_pick_unique
-
-
-# private 
+# private
 
 # def pref_pick_unique(user)
 #   Game.where(week_id: Week.last.id).each do |g|

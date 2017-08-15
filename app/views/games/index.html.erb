@@ -36,7 +36,6 @@
         <br>
         <small>(Home Team)</small>
       </th>
-      <th>Bowl Game</th>
       <th>* Must Submit*</th>
     </tr>
   </thead>
@@ -68,7 +67,6 @@
             <td>
               <%= spread_operator(game) + game.spread.to_s %>
             </td>
-            <td><%= game.bowl_game_name %></td>
             <td>
               <% if game.active? %>
                 <% if Selection.where(user_id: current_user).where(game_id: game.id).present? %>
@@ -101,6 +99,6 @@
   }
   function dogs () {
     $(".radio_dogs").prop('checked', true);
-    $(".radio_favorites").prop('checked', false); 
+    $(".radio_favorites").prop('checked', false);
   }
 </script>

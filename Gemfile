@@ -57,7 +57,7 @@ gem 'announcements'
 gem 'rails_12factor', group: :production
 gem 'bootstrap-select-rails'
 gem 'whenever'
-
+gem 'byebug'
 
 group :development do
   gem 'quiet_assets'

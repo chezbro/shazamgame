@@ -5,10 +5,10 @@ module SelectionsHelper
   # end
 
   def pref_pick_integers
-    [13]
+    [13,12,11,10,9,8,7,6,5,4,3,2,1]
     # [1,1,2, 2,3,3,4,4,5,5,6,6,7,7,8,8,9,9,10,10,11,11,12,12,13,13]
   end
-    
+
   def selections_home_team_name(s)
     s.game.home_team.region + " " + s.game.home_team.name
   end
@@ -22,5 +22,5 @@ module SelectionsHelper
     Team.find_by_id(selection).try(:region)
   end
 
-  
+
 end

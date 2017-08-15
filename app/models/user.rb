@@ -81,6 +81,31 @@ class User < ActiveRecord::Base
     end
   end
 
+
+  def has_user_made_selections?
+    selection_array = []
+    self.selections.all.each do |selection|
+      if selection.game.week_id == Week.last.id
+        selection_array << selection.game
+      end
+    end
+    if selection_array.length == 5
+      return false
+    else
+      return true
+    end
+  end
+
+  def self.reminder_email_list
+    email_list = []
+    User.all.each do |user|
+      if user.has_user_made_selections? == false
+        email_list << user.email
+      end
+    end
+    return email_list
+  end
+
   #->Prelang (user_login:devise/username_login_support)
   def self.find_first_by_auth_conditions(warden_conditions)
     conditions = warden_conditions.dup
