@@ -2,6 +2,7 @@ class Week < ActiveRecord::Base
   has_many :games
   has_many :scores
   has_many :points
+  has_many :selections
   accepts_nested_attributes_for  :games
 
 
@@ -15,9 +16,8 @@ class Week < ActiveRecord::Base
   #       selection.points += user.weekly_points
   #     end
   #   end
-  # end  
+  # end
 
 # Write method to reset All Users Weekly Scores
 
 end
-

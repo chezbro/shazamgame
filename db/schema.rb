@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170803160507) do
+ActiveRecord::Schema.define(version: 20170815220724) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -131,6 +131,7 @@ ActiveRecord::Schema.define(version: 20170803160507) do
     t.integer  "spread_pick"
     t.integer  "pref_pick_team"
     t.integer  "spread_pick_team"
+    t.integer  "week_id"
   end
 
   create_table "teams", force: :cascade do |t|

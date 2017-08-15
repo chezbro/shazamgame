@@ -10,7 +10,7 @@ class SelectionsController < ApplicationController
     else
       @selections = Selection.where(user_id: current_user).joins(:game).order("games.week_id DESC").order("pref_pick_int ASC")
     end
-    
+
   end
 
   # GET /selections/1
@@ -42,7 +42,7 @@ class SelectionsController < ApplicationController
     else
       @selection = Selection.new(selection_params)
     end
-    @errors = false 
+    @errors = false
     @game = params[:selection][:game_id]
     respond_to do |format|
       if @selection.save
@@ -94,6 +94,6 @@ class SelectionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def selection_params
-      params.require(:selection).permit(:id, :game_id, :user_id, :points, :pref_pick_int, :pref_pick_str, :spread_pick, :pref_pick_team, :spread_pick_team)
+      params.require(:selection).permit(:id, :game_id, :user_id, :week_id, :points, :pref_pick_int, :pref_pick_str, :spread_pick, :pref_pick_team, :spread_pick_team)
     end
 end

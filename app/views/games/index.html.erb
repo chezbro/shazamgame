@@ -78,6 +78,7 @@
           <% end %>
             <%= s.hidden_field :game_id,  value: game.id %>
             <%= s.hidden_field :user_id,  value: current_user.id %>
+            <%= s.hidden_field :week_id,  value: game.week_id %>
         <% end %>
           </tr>
 

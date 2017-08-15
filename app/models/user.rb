@@ -83,27 +83,34 @@ class User < ActiveRecord::Base
 
 
   def has_user_made_selections?
-    selection_array = []
-    self.selections.all.each do |selection|
-      if selection.game.week_id == Week.last.id
-        selection_array << selection.game
-      end
-    end
-    if selection_array.length == 5
+    # selection_array = []
+    if self.selections.where(week_id: Week.last.id).count < 5
       return false
     else
       return true
     end
   end
 
+
+  #   self.selections.all.each do |selection|
+  #     if selection.game.week_id == Week.last.id
+  #     end
+  #   end
+  #   if selection_array.length < 3
+  #     return false
+  #   else
+  #     return true
+  #   end
+  # end
+
   def self.reminder_email_list
     email_list = []
     User.all.each do |user|
       if user.has_user_made_selections? == false
-        email_list << user.email
+        email_list << user
       end
     end
-    return email_list
+    return email_list.map(&:email)
   end
 
   #->Prelang (user_login:devise/username_login_support)
