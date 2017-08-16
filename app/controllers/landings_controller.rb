@@ -4,12 +4,13 @@ class LandingsController < ApplicationController
   def index
   end
 
-  def send_email
+  def email_reminders_page
+    @email_list = User.reminder_email_list
   end
 
-  def selections_reminder_email
-    emails = User.all.collect(&:email).join(", ")
-    mail(to: emails, subject: 'SHAZAM13 — Selections Reminder!', body: 'Please remember to make your Selections by tomorrow morning at 11AM CST!')
+  def send_reminder_email
+    @email_list = UserMailer.selections_reminder_email
+    @email_list.deliver!
   end
 
   def activity

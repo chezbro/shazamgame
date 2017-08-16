@@ -83,25 +83,13 @@ class User < ActiveRecord::Base
 
 
   def has_user_made_selections?
-    # selection_array = []
     if self.selections.where(week_id: Week.last.id).count < 5
+      # change ^ to 13 for production
       return false
     else
       return true
     end
   end
-
-
-  #   self.selections.all.each do |selection|
-  #     if selection.game.week_id == Week.last.id
-  #     end
-  #   end
-  #   if selection_array.length < 3
-  #     return false
-  #   else
-  #     return true
-  #   end
-  # end
 
   def self.reminder_email_list
     email_list = []

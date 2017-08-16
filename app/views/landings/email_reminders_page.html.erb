@@ -1,0 +1,10 @@
+<div class="container">
+  <h1>Send email</h1>
+
+  <p>Users that haven't made Selections: <%= @email_list %></p>
+
+
+
+  <%= button_to 'Send Email to these Users', send_reminder_email_path, method: :post, class: 'btn btn-primary'%>
+
+</div>
