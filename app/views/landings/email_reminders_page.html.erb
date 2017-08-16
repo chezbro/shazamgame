@@ -1,9 +1,13 @@
 <div class="container">
   <h1>Send email</h1>
-
-  <p>Users that haven't made Selections: <%= @email_list %></p>
-
-
+  <ul>
+    <h4>Users that haven't made All Selections:</h4>
+    <% @email_list.each do |email| %>
+      <li style="list-style-type:none;">
+        <%= email %>
+      </li>
+    <% end %>
+  </ul>
 
   <%= button_to 'Send Email to these Users', send_reminder_email_path, method: :post, class: 'btn btn-primary'%>
 

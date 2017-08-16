@@ -84,7 +84,7 @@ class User < ActiveRecord::Base
 
   def has_user_made_selections?
     if self.selections.where(week_id: Week.last.id).count < 5
-      # change ^ to 13 for production
+      # change ^ to 13 or 26 (to include game a and game b) for production
       return false
     else
       return true
