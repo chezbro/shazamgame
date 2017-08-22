@@ -1,6 +1,6 @@
 <div class="container">
   <h1>Send email</h1>
-  <ul>
+  <ul style="padding:0px;">
     <h4>Users that haven't made All Selections:</h4>
     <% @email_list.each do |email| %>
       <li style="list-style-type:none;">
@@ -9,6 +9,6 @@
     <% end %>
   </ul>
 
-  <%= button_to 'Send Email to these Users', send_reminder_email_path, method: :post, class: 'btn btn-primary'%>
+  <%= button_to 'Send Email to these Users', send_reminder_email_path, method: :post, class: 'btn btn-primary', data: { confirm: 'Are you sure you want to email these Users?' } %>
 
 </div>
