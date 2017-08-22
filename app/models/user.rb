@@ -83,7 +83,7 @@ class User < ActiveRecord::Base
 
 
   def has_user_made_selections?
-    if self.selections.where(week_id: Week.last.id).count < 13
+    if( (Week.last.present?) && (self.selections.where(week_id: Week.last.id).count < 13) )
       # change ^ to 13 or 26 (1 selection == game a and and b?) for production
       return false
     else
