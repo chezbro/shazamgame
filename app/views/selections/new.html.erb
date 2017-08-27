@@ -21,8 +21,9 @@
       </div>
         <%= f.hidden_field :game_id,  value: @game.id %>
         <%= f.hidden_field :user_id,  value: current_user.id %>
+        <%= f.hidden_field :week_id,  value: @week.id %>
       <%= f.submit "Create New Game", class: "btn btn-primary" %>
-    </div>  
+    </div>
   <% end %>
 
 </div>

@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
 
-  resources :points
   get 'landings/index'
+
+  resources :points
 
   resources :weeks
 

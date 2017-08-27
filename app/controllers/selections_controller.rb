@@ -23,6 +23,7 @@ class SelectionsController < ApplicationController
 
   # GET /selections/new
   def new
+    @week = Week.last
     @game = Game.find(params[:game_id])
     @selection = Selection.new
   end
