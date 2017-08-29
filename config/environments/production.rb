@@ -95,8 +95,8 @@ port: 25,
 domain: "heroku.com",
 authentication: "plain",
 enable_starttls_auto: true,
-user_name: "app54209875@heroku.com",
-password: "zua18pna0392"
+user_name: ENV["SENDGRID_USERNAME"],
+password: ENV["SENDGRID_PASSWORD"]
 }
 
 
