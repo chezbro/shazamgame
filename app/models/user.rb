@@ -81,7 +81,6 @@ class User < ActiveRecord::Base
     end
   end
 
-
   def has_user_made_selections?
     if( (Week.last.present?) && (self.selections.where(week_id: Week.last.id).count < 13) )
       # change ^ to 13 or 26 (1 selection == game a and and b?) for production
@@ -94,7 +93,7 @@ class User < ActiveRecord::Base
   def self.reminder_email_list
     email_list = []
     User.all.each do |user|
-      if user.has_user_made_selections? == false
+      if ( (user.active == true) && (user.has_user_made_selections? == false) )
         email_list << user
       end
     end
