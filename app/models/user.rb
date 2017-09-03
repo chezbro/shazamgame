@@ -90,6 +90,16 @@ class User < ActiveRecord::Base
     end
   end
 
+  def deactivate_profile
+    self.active = false
+    self.save!
+  end
+
+  def activate_profile
+    self.active = true
+    self.save!
+  end
+
   def self.reminder_email_list
     email_list = []
     User.all.each do |user|

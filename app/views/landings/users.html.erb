@@ -10,6 +10,9 @@
           <th>
             Name
           </th>
+          <th>
+            Status
+          </th>
         </tr>
       </thead>
       <tbody>
@@ -21,11 +24,12 @@
           <td>
             <%= link_to "#{user.name}", user_path(user.id) %>
           </td>
+          <td>
+            <%= user.active? == true ? (link_to "Active (Click to Deactivate User)", deactivate_profile_path) : (link_to "Inactive (Click to Activate User)", activate_profile_path) %>
+          </td>
         </tr>
         <% end %>
       </tbody>
 </table>
   </div>
 </div>
-
-
