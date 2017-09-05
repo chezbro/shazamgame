@@ -90,13 +90,13 @@ class User < ActiveRecord::Base
     end
   end
 
-  def deactivate_profile
-    self.active = false
+  def activate_profile
+    self.active = true
     self.save!
   end
 
-  def activate_profile
-    self.active = true
+  def deactivate_profile
+    self.active = false
     self.save!
   end
 

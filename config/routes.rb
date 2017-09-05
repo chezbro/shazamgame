@@ -27,8 +27,8 @@ Rails.application.routes.draw do
   get    "real_time_scores"   => "landings#real_time_scores",         as: :real_time_scores
   get    "activity"   => "landings#activity",         as: :activity
   get    "email_reminders_page"   => "landings#email_reminders_page",         as: :email_reminders_page
-  get    "deactivate_profile"   => "users#deactivate_profile",         as: :deactivate_profile
   get    "activate_profile"   => "users#activate_profile",         as: :activate_profile
+  get    "deactivate_profile"   => "users#deactivate_profile",         as: :deactivate_profile
   post   "send_reminder_email"   => "landings#send_reminder_email",         as: :send_reminder_email
 
   devise_for :users, controllers: {registrations: "users/registrations", sessions: "users/sessions", passwords: "users/passwords"}, skip: [:sessions, :registrations]
