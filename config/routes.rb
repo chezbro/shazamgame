@@ -24,6 +24,7 @@ Rails.application.routes.draw do
   get    "instructions"   => "landings#instructions",         as: :instructions
   get    "stats"   => "landings#stats",         as: :stats
   get    "users"   => "landings#users",         as: :users
+  get    "player_selections"   => "landings#player_selections",         as: :player_selections
   get    "real_time_scores"   => "landings#real_time_scores",         as: :real_time_scores
   get    "activity"   => "landings#activity",         as: :activity
   get    "email_reminders_page"   => "landings#email_reminders_page",         as: :email_reminders_page

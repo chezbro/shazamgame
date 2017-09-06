@@ -1,6 +1,6 @@
 class GamesController < ApplicationController
   skip_before_filter :verify_authenticity_token, :only => [:index, :show]
-  
+
   before_filter :require_user_signed_in, only: [:new, :edit, :create, :update, :destroy]
 
   before_action :set_game, only: [:show, :edit, :update, :destroy]
@@ -19,7 +19,7 @@ class GamesController < ApplicationController
   def show
     @games = Game.where(week_id: params[:id]).where(game_selected_by_admin: true)
     @selection = Selection.where(game_id: params[:id]).where(user_id: current_user) || Selection.new
-  end 
+  end
 
   # GET /games/new
   def new
@@ -53,6 +53,7 @@ class GamesController < ApplicationController
       if @game.update(game_params)
         @game.check_selection_and_tally_points
         @game.tally_points
+        @game.has_game_been_scored = true
         @game.save!
         @game.reload
         format.html { redirect_to Week.last, notice: 'Score was successfully added.' }

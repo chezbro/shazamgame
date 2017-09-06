@@ -1,5 +1,5 @@
 class LandingsController < ApplicationController
-  # before_filter :disable_navbar, only: [:index]
+  before_filter :check_if_admin, only: [:users]
 
   def index
   end
@@ -27,11 +27,24 @@ class LandingsController < ApplicationController
   def users
   end
 
+  def player_selections
+  end
+
 
   def instructions
   end
 
   def real_time_scores
+  end
+
+  protected
+
+  def check_if_admin
+    if current_user.admin == true
+      # allow thru
+    else
+      redirect_to root_path
+    end
   end
 
 end

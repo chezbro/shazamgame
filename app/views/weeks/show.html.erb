@@ -16,9 +16,9 @@
     <div class="divTableCell"><h4 class="text-align-center">Spread</h4></div>
     <div class="divTableCell"><h4 class="">Home Team Score</h4></div>
     <div class="divTableCell"><h4 class="">Away Team Score</h4></div>
-    
+
     </div>
-    
+
     <% @games.each do |game| %>
     <div class="divTableRow">
       <div class="divTableCell"><%= game_home_team_name(game) %></div>
@@ -41,7 +41,7 @@
       </div>
     </div>
 
-    <%= f.submit "Submit Selections", :onclick => "return confirm('Please Confirm These Scores Are Correct.')", class: "margin-10-0-30-0 btn btn-primary" if current_user.admin? == true && game.week.active == true %>
+    <%= f.submit "Submit Selections", :onclick => "return confirm('Please Confirm These Scores Are Correct.')", class: "margin-10-0-30-0 btn btn-primary" if( (current_user.admin? == true) && (game.week.active == true) && (game.has_game_been_scored != true) ) %>
     <% end %>
     <% end %>
     </div>
