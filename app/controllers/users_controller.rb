@@ -1,6 +1,5 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
-
   # GET /users
   # GET /users.json
   def index
@@ -67,7 +66,7 @@ class UsersController < ApplicationController
       format.html { redirect_to users_url, notice: 'User was successfully activated.' }
     end
   end
-  
+
   def deactivate_profile
     current_user.deactivate_profile if current_user.present?
     respond_to do |format|

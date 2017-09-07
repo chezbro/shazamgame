@@ -30,7 +30,6 @@
 
         <% if current_user.admin? %>
           <li><%= link_to "See All Users", users_path %></li>
-          <li><%= link_to "Player's Selections", player_selections_path %></li>
           <li><%= link_to "See All Picks", selections_path %></li>
           <li><%= link_to "Edit Selections", "admin/selections" %></li>
           <li><%= link_to "Edit Points", "admin/users" %></li>
