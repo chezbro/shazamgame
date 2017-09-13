@@ -61,14 +61,18 @@ class UsersController < ApplicationController
   end
 
   def activate_profile
-    current_user.activate_profile if current_user.present?
+    user = User.find(params[:user_id])
+    user.active = true
+    user.save!
     respond_to do |format|
       format.html { redirect_to users_url, notice: 'User was successfully activated.' }
     end
   end
 
   def deactivate_profile
-    current_user.deactivate_profile if current_user.present?
+    user = User.find(params[:user_id])
+    user.active = false
+    user.save!
     respond_to do |format|
       format.html { redirect_to users_url, notice: 'User was successfully deactivated.' }
     end

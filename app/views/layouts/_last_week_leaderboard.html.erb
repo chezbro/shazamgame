@@ -10,7 +10,7 @@
     </tr>
   </thead>
   <tbody>
-    <% User.all.each do |user| %>
+    <% User.limit(5).each do |user| %>
       <tr>
         <td>
           <%= user.username  %>

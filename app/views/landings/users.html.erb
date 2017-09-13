@@ -25,7 +25,7 @@
             <%= link_to "#{user.name}", user_path(user.id) %>
           </td>
           <td>
-            <%= user.active? == true ? (link_to "Active (Click to Deactivate User)", deactivate_profile_path) : (link_to "Inactive (Click to Activate User)", activate_profile_path) %>
+            <%= user.active? == true ? (link_to "Active (Click to Deactivate User)", deactivate_profile_path(user_id: user)) : (link_to "Inactive (Click to Activate User)", activate_profile_path(user_id: user)) %>
           </td>
         </tr>
         <% end %>

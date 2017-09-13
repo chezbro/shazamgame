@@ -30,11 +30,11 @@ class User < ActiveRecord::Base
   end
 
   def self.last_weeks_points
+    points_array = []
     User.all.each do |user|
-      user.total_weekly_points = user.weekly_points
-      user.save!
-      # issue is that every time page loads it looks above and after scores get cleared this becomes cleared as well
+      points_array << [user.total_weekly_points, user.username]
     end
+      points_array.sort{|a,b| b<=>a}.take(5)
   end
 
   def self.set_weekly_points_to_zero
@@ -98,15 +98,15 @@ class User < ActiveRecord::Base
     end
   end
 
-  def activate_profile
-    self.active = true
-    self.save!
-  end
-
-  def deactivate_profile
-    self.active = false
-    self.save!
-  end
+  # def activate_profile(user)
+  #   self.active = true
+  #   self.save!
+  # end
+  #
+  # def deactivate_profile(user)
+  #   self.active = false
+  #   self.save!
+  # end
 
   def self.reminder_email_list
     email_list = []
