@@ -29,7 +29,7 @@ class WeeksController < ApplicationController
     @week = Week.new
     # Build 13 games
     if Rails.env.development?
-      5.times do
+      2.times do
         games = @week.games.build
       end
     else
@@ -61,8 +61,11 @@ class WeeksController < ApplicationController
         end
         @week.active = true
         @week.save!
-        # @week.week_number =
+
         Game.last.delete
+        # this is needed ^
+
+
         # User.delete_weekly_points
         format.html { redirect_to root_url, notice: "New Week successfully created" }
         format.json { head :no_content }

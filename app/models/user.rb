@@ -29,6 +29,14 @@ class User < ActiveRecord::Base
     arr = (1..13)
   end
 
+  def self.last_weeks_points
+    User.all.each do |user|
+      user.total_weekly_points = user.weekly_points
+      user.save!
+      # issue is that every time page loads it looks above and after scores get cleared this becomes cleared as well
+    end
+  end
+
   def self.set_weekly_points_to_zero
     User.all.each do |user|
       user.weekly_points = 0

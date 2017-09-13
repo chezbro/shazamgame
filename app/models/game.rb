@@ -1,5 +1,5 @@
 class Game < ActiveRecord::Base
- 
+
   # after_save :winning_team
 
   belongs_to :week
@@ -7,7 +7,7 @@ class Game < ActiveRecord::Base
 
   belongs_to :away_team, class_name: 'Team', foreign_key: 'away_team_id'
   belongs_to :home_team, class_name: 'Team', foreign_key: 'home_team_id'
-  
+
   has_many :selections
   has_many :users
 
@@ -43,20 +43,20 @@ def set_team_that_won_straight_up
     self.home_team_won_straight_up = true
     self.team_that_won_straight_up  = self.home_team_id
     self.away_team_won_straight_up = false
-    
+
   elsif ( self.home_team_score == self.away_team_score )
-  
+
     # Push Game
     self.tie_game = true
     self.home_team_won_straight_up = false
     self.away_team_won_straight_up = false
 
-  else 
+  else
     # Away Team Wins Straight Up
     self.home_team_won_straight_up = false
     self.away_team_won_straight_up = true
     self.team_that_won_straight_up  = self.away_team_id
-  end 
+  end
 
 end
 
@@ -83,18 +83,21 @@ def tally_points
       if selection.game_id == self.id && selection.game.week.id == Week.last.id
         if selection.spread_pick_team == self.team_that_covered_spread
           user.weekly_points += 7
+          user.total_weekly_points += 7
           user.weekly_points_game_b += 7
           user.cumulative_points += 7
           user.save!
         end
         if selection.pref_pick_team == self.team_that_won_straight_up
           user.weekly_points += selection.pref_pick_int
+          user.total_weekly_points += selection.pref_pick_int
           user.weekly_points_game_a += selection.pref_pick_int
           user.cumulative_points += selection.pref_pick_int
           user.save!
         end
         if selection.game.tie_game == true
           user.weekly_points += 7
+          user.total_weekly_points += 7
           user.weekly_points_game_b += 7
           user.cumulative_points += 7
           user.save!
@@ -105,15 +108,15 @@ def tally_points
 end
 
 def check_selection_and_tally_points
-    # We want the current user's selection on this Game 
+    # We want the current user's selection on this Game
     self.set_team_that_won_straight_up
-    self.save! 
+    self.save!
     self.which_team_covered_spread
     self.save!
-    self.reload    
+    self.reload
     self.active = false
     self.save!
-    self.reload    
+    self.reload
   end
 
 
@@ -139,13 +142,13 @@ def check_selection_and_tally_points
 # end
 
 # def check_selection_and_tally_points(user)
-#   # We want the current user's selection on this Game 
-  
+#   # We want the current user's selection on this Game
+
 #   user.selections.each do |selection|
-    
+
 #     # Get User Selection for Game
 #     if selection.game_id == self.id
-      
+
 #       if selection.spread_pick_team.id == self.team_that_won_straight_up.id
 #         selection.points = 7
 #       else

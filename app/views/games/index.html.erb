@@ -54,7 +54,7 @@
               <%= s.radio_button :pref_pick_team, game.away_team_id  %>
             </td>
             <td>
-              <%= s.select( :pref_pick_int, pref_pick_integers, {prompt: "Select an Amount"}, { class: "pref_pick_int"} )%>
+              <%= s.select( :pref_pick_int, pref_pick_integers, {:include_blank => "Select an Amount"}, { class: "pref_pick_int"} )%>
             </td>
             <td>
               <%= s.label :spread_pick_team, fave(game) %>

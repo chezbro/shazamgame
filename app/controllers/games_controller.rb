@@ -53,6 +53,7 @@ class GamesController < ApplicationController
       if @game.update(game_params)
         @game.check_selection_and_tally_points
         @game.tally_points
+        # dont want to reset the total_weekly_points, want to preserve them and only delete when she scores game winners 
         @game.has_game_been_scored = true
         @game.save!
         @game.reload
