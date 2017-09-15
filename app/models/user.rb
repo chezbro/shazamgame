@@ -82,6 +82,13 @@ class User < ActiveRecord::Base
       points_array.sort{|a,b| b<=>a}
   end
 
+  def self.last_week_leaders
+    points_array = []
+    User.all.each do |user|
+      points_array << [user.total_weekly_points, user.username]
+    end
+      points_array.sort{|a,b| b<=>a}
+  end
 
   def self.delete_weekly_scores
     User.all.each do |user|

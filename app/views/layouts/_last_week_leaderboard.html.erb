@@ -9,6 +9,11 @@
       </th>
     </tr>
   </thead>
+  <tfoot>
+    <tr>
+      <th class="text-align-center" colspan="2"><a href="/last-week">See Full Leaderboard</a></th>
+    </tr>
+  </tfoot>
   <tbody>
     <% User.limit(5).order(total_weekly_points: :desc).each do |user| %>
       <tr>

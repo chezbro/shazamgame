@@ -1,0 +1,24 @@
+<table class="table table-bordered table-striped table-responsive">
+  <thead>
+    <tr>
+      <th>
+        Username
+      </th>
+      <th>
+        Points
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @last_week_leaders.each do |score| %>
+    <tr>
+      <td>
+        <%= score[1] %>
+      </td>
+      <td>
+        <%= score[0] %>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -23,6 +23,7 @@ Rails.application.routes.draw do
   post 'disable_picks' => 'games#disable_picks', as: :disable_picks
   get    "instructions"   => "landings#instructions",         as: :instructions
   get    "stats"   => "landings#stats",         as: :stats
+  get    "last-week"   => "landings#last_week_leaders",         as: :last_week_leaders
   get    "users"   => "landings#users",         as: :users
   get    "player_selections"   => "landings#player_selections",         as: :player_selections
   get    "real_time_scores"   => "landings#real_time_scores",         as: :real_time_scores

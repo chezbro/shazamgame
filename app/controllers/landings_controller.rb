@@ -24,6 +24,10 @@ class LandingsController < ApplicationController
     @full_weekly_points = User.full_weekly_points
   end
 
+  def last_week_leaders
+    @last_week_leaders = User.last_week_leaders
+  end
+
   def users
   end
 
