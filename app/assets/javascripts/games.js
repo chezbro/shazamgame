@@ -1,6 +1,6 @@
 $(function() {
 
-    function getSelections() {
+  function getSelections() {
       var $selects = $('.pref_pick_int option:selected').not($(".pref_pick_int").find("option:contains('Select an Amount')")  )
           values = [];
 
@@ -21,6 +21,7 @@ $(function() {
 
   }
 
-$('.pref_pick_int').change(getSelections);
+  $('.pref_pick_int').change(getSelections);
+
 
 })

@@ -84,7 +84,12 @@ class SelectionsController < ApplicationController
   end
 
 
-  def update_integers
+  def reset_selections
+    Selection.where(user_id: current_user).where(week_id: Week.last.id).destroy_all if Selection.where(user_id: current_user).where(week_id: Week.last.id).present?
+    respond_to do |format|
+      format.html { redirect_to games_path, notice: 'Selections have been reset.' }
+      format.json { head :no_content }
+    end
   end
 
   private

@@ -1,4 +1,4 @@
-<div class="top-100 position-relative row">
+<div style="margin-top:15px;" class="row">
   <div class="col-sm-10 col-sm-offset-1">
     <% if current_user.admin == true %>
       <h4>Admin Only Can View This:</h4>
@@ -48,7 +48,7 @@
           </tr>
         </tbody>
       </table>
-      <div class="top-100 position-relative col-md-10 col-md-offset-1">
+      <div class="col-md-10 col-md-offset-1">
         <h3><%= @user.name.capitalize %>'s Selections:</h3>
         <div class="divTable">
         <div class="divTableBody">
@@ -59,6 +59,8 @@
           <div class="divTableCell"><h4 class="text-align-center">Preference Amount</h4></div>
           <div class="divTableCell"><h4 class="text-align-center">Preference Pick</h4></div>
           <div class="divTableCell"><h4 class="text-align-center">Spread Pick</h4></div>
+          <div class="divTableCell"><h4 class="text-align-center">Pref Pick Result</h4></div>
+          <div class="divTableCell"><h4 class="text-align-center">Spread Pick Result</h4></div>
         </div>
 
         <% @user.selections.where(week_id: Week.last.id).each do |selection| %>
@@ -69,6 +71,14 @@
             <div class="divTableCell"><%= selection.pref_pick_int %></div>
             <div class="divTableCell"><%= selection_team(selection.pref_pick_team) %></div>
             <div class="divTableCell"><%= selection_team(selection.spread_pick_team) %></div>
+            <div class="divTableCell">
+              <!-- Show if Selection was a winning selection. -->
+              <%= selection.pref_pick_team == selection.game.team_that_won_straight_up ? "Won" : "Lost" %>
+            </div>
+            <div class="divTableCell">
+              <!-- Show if Selection was a winning selection. -->
+              <%= selection.spread_pick_team == selection.game.team_that_covered_spread ? "Won" : "Lost" %>
+            </div>
           <% end %>
         </div>
         <% end %>
