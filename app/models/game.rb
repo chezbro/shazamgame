@@ -83,21 +83,21 @@ def tally_points
       if selection.game_id == self.id && selection.game.week.id == Week.last.id
         if selection.spread_pick_team == self.team_that_covered_spread
           user.weekly_points += 7
-          user.total_weekly_points += 7
+          # user.total_weekly_points += 7
           user.weekly_points_game_b += 7
           user.cumulative_points += 7
           user.save!
         end
         if selection.pref_pick_team == self.team_that_won_straight_up
           user.weekly_points += selection.pref_pick_int
-          user.total_weekly_points += selection.pref_pick_int
+          # user.total_weekly_points += selection.pref_pick_int
           user.weekly_points_game_a += selection.pref_pick_int
           user.cumulative_points += selection.pref_pick_int
           user.save!
         end
         if selection.game.tie_game == true
           user.weekly_points += 7
-          user.total_weekly_points += 7
+          # user.total_weekly_points += 7
           user.weekly_points_game_b += 7
           user.cumulative_points += 7
           user.save!
