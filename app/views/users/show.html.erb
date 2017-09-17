@@ -59,8 +59,8 @@
           <div class="divTableCell"><h4 class="text-align-center">Preference Amount</h4></div>
           <div class="divTableCell"><h4 class="text-align-center">Preference Pick</h4></div>
           <div class="divTableCell"><h4 class="text-align-center">Spread Pick</h4></div>
-          <div class="divTableCell"><h4 class="text-align-center">Pref Pick Result</h4></div>
-          <div class="divTableCell"><h4 class="text-align-center">Spread Pick Result</h4></div>
+          <!-- <div class="divTableCell"><h4 class="text-align-center">Pref Pick Result</h4></div>
+          <div class="divTableCell"><h4 class="text-align-center">Spread Pick Result</h4></div> -->
         </div>
 
         <% @user.selections.where(week_id: Week.last.id).each do |selection| %>
@@ -71,14 +71,13 @@
             <div class="divTableCell"><%= selection.pref_pick_int %></div>
             <div class="divTableCell"><%= selection_team(selection.pref_pick_team) %></div>
             <div class="divTableCell"><%= selection_team(selection.spread_pick_team) %></div>
-            <div class="divTableCell">
+  
               <!-- Show if Selection was a winning selection. -->
-              <%= selection.pref_pick_team == selection.game.team_that_won_straight_up ? "Won" : "Lost" %>
-            </div>
-            <div class="divTableCell">
+              <%#= selection.pref_pick_team == selection.game.team_that_won_straight_up ? "Won" : "Lost" %>
+
               <!-- Show if Selection was a winning selection. -->
-              <%= selection.spread_pick_team == selection.game.team_that_covered_spread ? "Won" : "Lost" %>
-            </div>
+              <%#= selection.spread_pick_team == selection.game.team_that_covered_spread ? "Won" : "Lost" %>
+
           <% end %>
         </div>
         <% end %>
