@@ -71,13 +71,14 @@
             <div class="divTableCell"><%= selection.pref_pick_int %></div>
             <div class="divTableCell"><%= selection_team(selection.pref_pick_team) %></div>
             <div class="divTableCell"><%= selection_team(selection.spread_pick_team) %></div>
-
+            <div class="divTableCell">
               <!-- Show if Selection was a winning selection. -->
               <%= selection.pref_pick_team == selection.game.team_that_won_straight_up ? "Won" : "Lost" %>
-
+            </div>
+            <div class="divTableCell">
               <!-- Show if Selection was a winning selection. -->
               <%= selection.spread_pick_team == selection.game.team_that_covered_spread ? "Won" : "Lost" %>
-
+            </div>
           <% end %>
         </div>
         <% end %>
