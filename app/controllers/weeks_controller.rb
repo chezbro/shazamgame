@@ -65,7 +65,6 @@ class WeeksController < ApplicationController
         Game.last.delete
         # this is needed ^
 
-
         # User.delete_weekly_points
         format.html { redirect_to root_url, notice: "New Week successfully created" }
         format.json { head :no_content }

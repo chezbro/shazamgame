@@ -71,7 +71,7 @@ class User < ActiveRecord::Base
     User.all.each do |user|
       points_array << [user.weekly_points_game_a, user.weekly_points_game_b, user.username]
     end
-      points_array.sort {|x, y| x.to_s<=>y.to_s}
+      points_array.sort {|x, y| y.to_s<=>x.to_s}
   end
 
   def self.full_cumulative_points

@@ -2,6 +2,9 @@
   <thead>
     <tr>
       <th>
+        Rank
+      </th>
+      <th>
         Username
       </th>
       <th>
@@ -13,8 +16,9 @@
     </tr>
   </thead>
   <tbody>
-    <% @full_weekly_points.each do |score| %>
+    <% @full_weekly_points.each_with_index do |score, i| %>
     <tr>
+      <td><%= i+1 %></td>
       <td>
         <%= score[2] %>
       </td>

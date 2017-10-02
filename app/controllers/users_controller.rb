@@ -9,6 +9,11 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /users/1.json
   def show
+    if params[:week_id]
+      @week = Week.find(params[:week_id])
+    else
+      @week = Week.last
+    end
   end
 
   # GET /users/new

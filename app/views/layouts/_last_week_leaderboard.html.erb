@@ -1,6 +1,7 @@
 <table class="table table-bordered table-striped table-responsive">
   <thead>
     <tr>
+      <th>Rank</th>
       <th>
         Username
       </th>
@@ -9,21 +10,62 @@
       </th>
     </tr>
   </thead>
-  <tfoot>
-    <tr>
-      <th class="text-align-center" colspan="2"><a href="/last-week">See Full Leaderboard</a></th>
-    </tr>
-  </tfoot>
+
   <tbody>
-    <% User.limit(5).order(total_weekly_points: :desc).each do |user| %>
-      <tr>
-        <td>
-          <%= user.username  %>
-        </td>
-        <td>
-          <%= user.total_weekly_points  %>
-        </td>
-      </tr>
-    <% end %>
+    <tr>
+      <td>
+        1
+      </td>
+      <td>
+        tkaegi
+      </td>
+      <td>
+        168
+      </td>
+    </tr>
+    <tr>
+      <td>
+        2
+      </td>
+      <td>
+        Stevensryan
+      </td>
+      <td>
+        160
+      </td>
+    </tr>
+    <tr>
+      <td>
+        3
+      </td>
+      <td>
+        RSmith
+      </td>
+      <td>
+        150
+      </td>
+    </tr>
+    <tr>
+      <td>
+        4
+      </td>
+      <td>
+        aschallman017
+      </td>
+      <td>
+        147
+      </td>
+    </tr>
+    <tr>
+      <td>
+        5
+      </td>
+      <td>
+        Steve
+      </td>
+      <td>
+        147
+      </td>
+    </tr>
   </tbody>
 </table>
