@@ -69,9 +69,11 @@ class User < ActiveRecord::Base
   def self.full_weekly_points
     points_array = []
     User.all.each do |user|
-      points_array << [user.weekly_points_game_a, user.weekly_points_game_b, user.username]
+      points_array << [user.weekly_points_game_a, user.weekly_points_game_b, user.username, user.weekly_points]
     end
-      points_array.sort {|x, y| y.to_s<=>x.to_s}
+      return points_array.sort_by{|k|k[3]}.reverse
+
+
   end
 
   def self.full_cumulative_points
