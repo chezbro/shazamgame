@@ -71,9 +71,9 @@ class User < ActiveRecord::Base
     User.all.each do |user|
       points_array << [user.weekly_points_game_a, user.weekly_points_game_b, user.username, user.weekly_points]
     end
+      # This, below, takes the weekly leaderboard and orders it by weekly points (even
+      # though this attr isn't shown in the view/table), not by game a or game b.
       return points_array.sort_by{|k|k[3]}.reverse
-
-
   end
 
   def self.full_cumulative_points
