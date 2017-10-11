@@ -22,7 +22,6 @@ class LandingsController < ApplicationController
   def stats
     @full_cumulative_points = User.full_cumulative_points
     @full_weekly_points = User.full_weekly_points
-    @user_count = Array.new(User.all.count) {|i| i+1 }
   end
 
   def last_week_leaders
