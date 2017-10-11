@@ -92,6 +92,16 @@ class User < ActiveRecord::Base
       points_array.sort{|a,b| b<=>a}
   end
 
+  def self.last_week_full_leaderboard
+    points_array = []
+    Score.all.each do |score|
+      points_array << [score.game_a, score.game_b, score.user.username, score.points_for_week]
+    end
+      # This, below, takes the weekly leaderboard and orders it by weekly points (even
+      # though this attr isn't shown in the view/table), not by game a or game b.
+      return points_array.sort_by{|k|k[3]}.reverse
+  end
+
   def self.delete_weekly_scores
     User.all.each do |user|
       user.weekly_points.delete

@@ -26,7 +26,7 @@ class LandingsController < ApplicationController
   end
 
   def last_week_leaders
-    @last_week_leaders = User.last_week_leaders
+    @last_week_leaders = User.last_week_full_leaderboard
   end
 
   def users
