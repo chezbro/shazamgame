@@ -34,7 +34,6 @@ class LandingsController < ApplicationController
   def player_selections
   end
 
-
   def instructions
   end
 

@@ -1,5 +1,5 @@
 class UserMailer < ActionMailer::Base
-  default :from => 'ericchesbrough@gmail.com'
+  default :from => 'ckcimd@aol.com'
 
   def selections_reminder_email
     email_list = User.reminder_email_list
