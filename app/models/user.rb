@@ -84,6 +84,13 @@ class User < ActiveRecord::Base
       points_array.sort{|a,b| b<=>a}
   end
 
+
+  def self.set_weekly_scores
+    User.all.each do |user|
+      Score.create(week_id: Week.last.id, user_id: user.id, game_a: user.weekly_points_game_a, game_b: user.weekly_points_game_b, points_for_week: user.weekly_points_game_a + user.weekly_points_game_b)
+    end
+  end
+
   def self.last_week_leaders
     points_array = []
     User.all.each do |user|
@@ -94,7 +101,7 @@ class User < ActiveRecord::Base
 
   def self.last_week_full_leaderboard
     points_array = []
-    Score.all.each do |score|
+    Score.where(week_id: Week.last).all.each do |score|
       points_array << [score.game_a, score.game_b, score.user.username, score.points_for_week]
     end
       # This, below, takes the weekly leaderboard and orders it by weekly points (even
