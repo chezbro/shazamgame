@@ -75,6 +75,36 @@ def which_team_covered_spread
     self.save!
 end
 
+def game_reset
+  User.all.each do |user|
+    user.selections.each do |selection|
+      if selection.game_id == self.id && selection.game.week.id == Week.last.id
+        if selection.spread_pick_team == self.team_that_covered_spread
+          user.weekly_points -= 7
+          # user.total_weekly_points -= 7
+          user.weekly_points_game_b -= 7
+          user.cumulative_points -= 7
+          user.save!
+        end
+        if selection.pref_pick_team == self.team_that_won_straight_up
+          user.weekly_points -= selection.pref_pick_int
+          # user.total_weekly_points -= selection.pref_pick_int
+          user.weekly_points_game_a -= selection.pref_pick_int
+          user.cumulative_points -= selection.pref_pick_int
+          user.save!
+        end
+        if selection.game.tie_game == true
+          user.weekly_points -= 7
+          # user.total_weekly_points -= 7
+          user.weekly_points_game_b -= 7
+          user.cumulative_points -= 7
+          user.save!
+        end
+      end
+    end
+  end
+end
+
 def tally_points
   # Game A is Pref Pick (each straight up win == pref_pick_int)
   # Game B is Spread Pick (each correct pick against spread += 7)
@@ -106,6 +136,12 @@ def tally_points
     end
   end
 end
+
+def reset_has_game_been_scored
+    # We want the current user's selection on this Game
+    self.has_game_been_scored = false
+    self.save!
+  end
 
 def check_selection_and_tally_points
     # We want the current user's selection on this Game
