@@ -53,7 +53,7 @@ class GamesController < ApplicationController
       if @game.update(game_params)
         @game.check_selection_and_tally_points
         @game.tally_points
-        # dont want to reset the total_weekly_points, want to preserve them and only delete when she scores game winners 
+        # dont want to reset the total_weekly_points, want to preserve them and only delete when she scores game winners
         @game.has_game_been_scored = true
         @game.save!
         @game.reload
@@ -63,6 +63,17 @@ class GamesController < ApplicationController
         format.html { redirect_to(:back) }
         format.json { render json: @game.errors, status: :unprocessable_entity }
       end
+    end
+  end
+
+  def game_reset
+    @game = Game.find(params[:game].to_i)
+    @game.game_reset
+    @game.has_game_been_scored = false
+    @game.save!
+    respond_to do |format|
+      format.html { redirect_to root_url, alert: 'Game has been Reset.' }
+      format.json { head :no_content }
     end
   end
 

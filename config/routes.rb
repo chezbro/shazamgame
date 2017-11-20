@@ -33,6 +33,7 @@ Rails.application.routes.draw do
   get    "deactivate_profile"   => "users#deactivate_profile",         as: :deactivate_profile
   get    "reset_selections"   => "selections#reset_selections",         as: :reset_selections
   post   "send_reminder_email"   => "landings#send_reminder_email",         as: :send_reminder_email
+  get 'game_reset' => 'games#game_reset', as: :game_reset
 
   devise_for :users, controllers: {registrations: "users/registrations", sessions: "users/sessions", passwords: "users/passwords"}, skip: [:sessions, :registrations]
 
