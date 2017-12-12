@@ -27,13 +27,14 @@ class WeeksController < ApplicationController
   def new
     @team = Team.new
     @week = Week.new
-    # Build 13 games
+    # Build n-games for dev
     if Rails.env.development?
       2.times do
         games = @week.games.build
       end
     else
-      13.times do
+      # Build n-games for prod
+      26.times do
         games = @week.games.build
       end
     end
