@@ -1,7 +1,9 @@
 <table class="table table-bordered table-striped table-responsive">
   <thead>
     <tr>
-      <th>Rank</th>
+      <th>
+        Rank
+      </th>
       <th>
         Username
       </th>
@@ -12,64 +14,20 @@
   </thead>
   <tfoot>
     <tr>
-      <th class="text-align-center" colspan="3"><a href="/last-week">See Last Week's Leaderboard</a></th>
+      <th class="text-align-center" colspan="3"><a href="/last-week">See Full Leaderboard</a></th>
     </tr>
   </tfoot>
   <tbody>
+  <% @last_week_points.each_with_index do |score, i| %>
     <tr>
+      <td><%= i+1 %></td>
       <td>
-        1
+        <%= score[1] %>
       </td>
       <td>
-
-      </td>
-      <td>
-
+        <%= score[0] %>
       </td>
     </tr>
-    <tr>
-      <td>
-        2
-      </td>
-      <td>
-
-      </td>
-      <td>
-
-      </td>
-    </tr>
-    <tr>
-      <td>
-        3
-      </td>
-      <td>
-
-      </td>
-      <td>
-
-      </td>
-    </tr>
-    <tr>
-      <td>
-        4
-      </td>
-      <td>
-
-      </td>
-      <td>
-        
-      </td>
-    </tr>
-    <tr>
-      <td>
-        5
-      </td>
-      <td>
-
-      </td>
-      <td>
-
-      </td>
-    </tr>
+  <% end %>
   </tbody>
 </table>

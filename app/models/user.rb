@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-    # has_many :games
+  # has_many :games
 
   has_many :selections
   has_many :points
@@ -39,6 +39,8 @@ class User < ActiveRecord::Base
 
   def self.set_weekly_points_to_zero
     User.all.each do |user|
+      user.last_week_leaders_short
+      user.last_week_score = user.last_week_leaders_short
       user.weekly_points = 0
       user.weekly_points_game_a = 0
       user.weekly_points_game_b = 0
@@ -91,10 +93,26 @@ class User < ActiveRecord::Base
     end
   end
 
-  def self.last_week_leaders
+  def self.weekly_points
     points_array = []
     User.all.each do |user|
-      points_array << [user.total_weekly_points, user.username]
+      points_array << [user.weekly_points, user.username]
+    end
+      points_array.sort{|a,b| b<=>a}.take(5)
+  end
+
+  def self.last_week_leaders_short
+    points_array = []
+    User.all.each do |user|
+      points_array << [user.last_week_score, user.username]
+    end
+      points_array.sort{|a,b| b<=>a}.take(5)
+  end
+
+  def self.last_week_leaders_full
+    points_array = []
+    User.all.each do |user|
+      points_array << [user.last_week_score, user.username]
     end
       points_array.sort{|a,b| b<=>a}
   end

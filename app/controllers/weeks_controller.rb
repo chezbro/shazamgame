@@ -34,7 +34,7 @@ class WeeksController < ApplicationController
       end
     else
       # Build n-games for prod
-      1.times do
+      13.times do
         games = @week.games.build
       end
     end

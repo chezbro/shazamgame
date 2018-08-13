@@ -14,6 +14,7 @@ class LandingsController < ApplicationController
   end
 
   def activity
+    @last_week_points = User.last_week_leaders_short
     @weekly_points = User.weekly_points
     @cumulative_points = User.cumulative_points
     @week = Week.last
@@ -25,7 +26,7 @@ class LandingsController < ApplicationController
   end
 
   def last_week_leaders
-    @last_week_leaders = User.last_week_full_leaderboard
+    @last_week_leaders = User.last_week_leaders_full
   end
 
   def users
