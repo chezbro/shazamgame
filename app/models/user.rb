@@ -39,8 +39,7 @@ class User < ActiveRecord::Base
 
   def self.set_weekly_points_to_zero
     User.all.each do |user|
-      user.last_week_leaders_short
-      user.last_week_score = user.last_week_leaders_short
+      user.last_week_score = user.weekly_points
       user.weekly_points = 0
       user.weekly_points_game_a = 0
       user.weekly_points_game_b = 0
