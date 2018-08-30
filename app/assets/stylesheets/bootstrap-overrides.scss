@@ -1,0 +1,55 @@
+// All Buttons are Orange
+
+.alert{
+  background: #e2e2e2!important;
+}
+
+.btn-primary {
+  color: #fff!important;
+  background-color: #FF5A2F!important;
+  border-color: #fafafa!important;
+}
+
+// Remove Space between Navbar and Image
+.navbar{
+  margin-bottom: 0px!important;
+  border-radius: 0px!important;
+  border:0px!important;
+}
+
+// .alert-error{
+//   background: #E3CDF7!important;
+//   border-radius: 4px!important;
+// }
+
+// Orange Navbar
+.navbar-default{
+  background: #ff4b1f!important; /* fallback for old browsers */
+  background: -webkit-linear-gradient(to left, #ff4b1f , #ff9068)!important; /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to left, #ff4b1f , #ff9068)!important; /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+// White Links in Navbar
+.navbar-default .navbar-nav > li > a {
+  color: #fff!important;
+  font-size: 1.35em!important;
+  -webkit-font-smoothing: antialiased!important;
+}
+
+// White Shazam Text (Logo) in Navbar
+.navbar-default .navbar-brand {
+  color: #fff!important;
+
+  margin-left: 5px!important;
+  font-size: 1.6em!important;
+  -webkit-font-smoothing: antialiased!important;
+}
+
+// Give the links a little room to breathe dawg
+.navbar-default .navbar-nav {
+  margin: 0px 3px!important;
+}
+
+.table-bordered > tbody > tr > td{
+  height: 37px!important;
+}

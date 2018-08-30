@@ -39,8 +39,7 @@ gem 'spring',        group: :development
 # gem 'debugger', group: [:development, :test]
 
 gem 'bundler'
-
-gem 'bootstrap-sass', '3.3.5'
+gem 'bootstrap-sass', '~> 3.3.7'
 gem 'bootstrap-sass-extras'
 gem 'activeadmin', github: 'gregbell/active_admin'
 gem 'devise', github: 'plataformatec/devise'
