@@ -18,6 +18,9 @@ class LandingsController < ApplicationController
     @weekly_points = User.weekly_points
     @cumulative_points = User.cumulative_points
     @week = Week.last
+    @total_selections_for_pref_pick_team = Game.total_selections_for_pref_pick_team.sort_by {|a,b| b}.reverse
+    # @total_selections_for_spread_pick_team = Game.total_selections_for_spread_pick_team
+
   end
 
   def stats
@@ -28,7 +31,7 @@ class LandingsController < ApplicationController
   def fav_team
   end
 
-  
+
   def last_week_leaders
     @last_week_leaders = User.last_week_leaders_full
   end

@@ -92,6 +92,11 @@ class User < ActiveRecord::Base
     end
   end
 
+  def tally_picks_for_each_side
+    s = Selection.where(week_id: Week.last)
+    
+  end
+
   def self.weekly_points
     points_array = []
     User.all.each do |user|
@@ -104,7 +109,7 @@ class User < ActiveRecord::Base
     points_array = []
     User.all.each do |user|
       points_array << [user.last_week_score, user.username]
-    end 
+    end
       points_array.sort{|a,b| b<=>a}.take(5)
   end
 

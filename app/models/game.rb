@@ -60,6 +60,29 @@ def set_team_that_won_straight_up
 
 end
 
+def self.total_selections_for_pref_pick_team
+  pref_pick_array = []
+  last_week_selections = Selection.where(week_id: Week.last)
+  last_week_selections.all.each do |each_selection|
+      pref_pick_array.push([each_selection.pref_pick_team, each_selection.game_id])
+    end
+  pref_pick_hash = pref_pick_array.inject(Hash.new(0)) {|h,x| h[x]+=1;h}
+  # these work now just need to look up team using the first value in the Hash.
+  return pref_pick_hash
+end
+
+# def self.total_selections_for_spread_pick_team
+#   spread_pick_team_array = []
+#   last_week_selections = Selection.where(week_id: Week.last)
+#   last_week_selections.all.each do |each_selection|
+#       spread_pick_team_array.push(each_selection.spread_pick_team)
+#     end
+#   spread_pick_team_hash = spread_pick_team_array.inject(Hash.new(0)) {|h,x| h[x]+=1;h}
+#   return spread_pick_team_hash
+#   # these work now just need to look up team using the first value in the Hash.
+# end
+
+
 def which_team_covered_spread
   # Home Team Covered
   if ( (self.home_team_score + self.spread) > self.away_team_score )
