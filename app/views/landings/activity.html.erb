@@ -30,10 +30,8 @@
       <%= render partial: "layouts/last_week_leaderboard" %>
     </div>
     <div class="text-align-center col-xs-3 col-md-3">
-      <% if @week.active? == false %>
         <h4 class="text-underline">Total Selections Per Team </h4>
         <%= render partial: "layouts/total_pref_pick_selections" %>
-      <% end %>
     </div>
 
   </div>

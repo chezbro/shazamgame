@@ -12,15 +12,18 @@
   </thead>
   <tbody>
   <% @total_selections_for_pref_pick_team.each do |key, value| %>
-    <tr>
-      <td><%= "#{Game.find(key[1]).home_team.region}" " #{Game.find(key[1]).home_team.name}" " vs. " " #{Game.find(key[1]).away_team.region}" " #{Game.find(key[1]).away_team.name}"  %></td>
-      <td>
-        <%= "#{Team.find(key[0]).region} " "#{Team.find(key[0]).name}" %>
-      </td>
-      <td>
-        <%= value %>
-      </td>
-    </tr>
+    <% if Game.find(key[1]).active? == false %>
+      <tr>
+        <!--  Game.find(key[1]).active? -->
+        <td><%= "#{Game.find(key[1]).home_team.region}" " #{Game.find(key[1]).home_team.name}" " vs. " " #{Game.find(key[1]).away_team.region}" " #{Game.find(key[1]).away_team.name}"  %></td>
+        <td>
+          <%= "#{Team.find(key[0]).region} " "#{Team.find(key[0]).name}" %>
+        </td>
+        <td>
+          <%= value %>
+        </td>
+      </tr>
+    <% end %>
   <% end %>
   </tbody>
 </table>
