@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180817160418) do
+ActiveRecord::Schema.define(version: 20181024163312) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -124,8 +124,8 @@ ActiveRecord::Schema.define(version: 20180817160418) do
     t.integer  "user_id"
     t.boolean  "correct"
     t.boolean  "admin"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
     t.integer  "points"
     t.integer  "pref_pick_int"
     t.string   "pref_pick_str"
@@ -133,6 +133,8 @@ ActiveRecord::Schema.define(version: 20180817160418) do
     t.integer  "pref_pick_team"
     t.integer  "spread_pick_team"
     t.integer  "week_id"
+    t.boolean  "correct_spread_pick"
+    t.boolean  "correct_pref_pick"
   end
 
   create_table "teams", force: :cascade do |t|

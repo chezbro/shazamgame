@@ -73,7 +73,7 @@
     <div class="divTableCell"><h4 class="text-align-center">Spread Pick</h4></div>
   </div>
 
-  <%@selections.each do |selection| %>
+  <% @selections.each do |selection| %>
   <div class="divTableRow">
     <% if selection.game.present? && selection.game.week_id == Week.last.id %>
       <div class="divTableCell"><%= selection.game.week.week_number %></div>
@@ -82,7 +82,11 @@
       <div class="divTableCell"><%= selections_away_team_name(selection) %></div>
       <div class="divTableCell"><%= selection.pref_pick_int %></div>
       <div class="divTableCell"><%= selection_team(selection.pref_pick_team) %></div>
-      <div class="divTableCell"><%= selection_team(selection.spread_pick_team) %></div>
+      <% if selection.correct_spread_pick == true %>
+        <div style="color:green" class="divTableCell"><%= selection_team(selection.spread_pick_team) %></div>
+      <% else %>
+        <div style="color:red" class="divTableCell"><%= selection_team(selection.spread_pick_team) %></div>
+      <% end %>
     <% end %>
   </div>
   <% end %>

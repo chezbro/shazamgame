@@ -139,6 +139,8 @@ def tally_points
           # user.total_weekly_points += 7
           user.weekly_points_game_b += 7
           user.cumulative_points += 7
+          selection.correct_spread_pick = true
+          selection.save!
           user.save!
         end
         if selection.pref_pick_team == self.team_that_won_straight_up
@@ -146,6 +148,8 @@ def tally_points
           # user.total_weekly_points += selection.pref_pick_int
           user.weekly_points_game_a += selection.pref_pick_int
           user.cumulative_points += selection.pref_pick_int
+          selection.correct_pref_pick = true
+          selection.save!
           user.save!
         end
         if selection.game.tie_game == true
@@ -153,6 +157,8 @@ def tally_points
           # user.total_weekly_points += 7
           user.weekly_points_game_b += 7
           user.cumulative_points += 7
+          selection.correct_spread_pick = true
+          selection.save!
           user.save!
         end
       end
