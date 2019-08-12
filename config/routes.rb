@@ -32,6 +32,7 @@ Rails.application.routes.draw do
   get    "email_reminders_page"   => "landings#email_reminders_page",         as: :email_reminders_page
   get    "activate_profile"   => "users#activate_profile",         as: :activate_profile
   get    "deactivate_profile"   => "users#deactivate_profile",         as: :deactivate_profile
+  get    "delete_user"   => "users#delete_user",         as: :delete_user
   get    "reset_selections"   => "selections#reset_selections",         as: :reset_selections
   post   "send_reminder_email"   => "landings#send_reminder_email",         as: :send_reminder_email
   get 'game_reset' => 'games#game_reset', as: :game_reset

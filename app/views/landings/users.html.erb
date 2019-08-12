@@ -13,6 +13,9 @@
           <th>
             Status
           </th>
+          <th>
+            Delete
+          </th>
         </tr>
       </thead>
       <tbody>
@@ -26,6 +29,9 @@
           </td>
           <td>
             <%= user.active? == true ? (link_to "Active (Click to Deactivate User)", deactivate_profile_path(user_id: user)) : (link_to "Inactive (Click to Activate User)", activate_profile_path(user_id: user)) %>
+          </td>
+          <td>
+            <%= link_to 'Delete User', delete_user_path(user_id: user), data: { confirm: 'Are you sure?' } %>
           </td>
         </tr>
         <% end %>

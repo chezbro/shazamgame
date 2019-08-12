@@ -6,7 +6,7 @@
       </th>
       <th>
         Username
-    
+
       </th>
       <th>
         Total Points
@@ -19,7 +19,6 @@
     </tr>
   </tfoot>
   <tbody>
-    <!-- if @cumulative_points.present? <- this made nothing render, why? -->
     <% @cumulative_points.each_with_index do |score, i| %>
     <tr>
       <td><%= i+1 %></td>
