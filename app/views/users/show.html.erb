@@ -49,7 +49,7 @@
         </tbody>
       </table>
       <div class="col-md-10 col-md-offset-1">
-
+        <% if @week.present? %>
         <div class="divTable">
         <div class="divTableBody">
 
@@ -85,6 +85,7 @@
 
         </div>
         </div>
+        <% end %>
       </div>
     <% else %>
     <div class="top-100 position-relative col-md-10 col-md-offset-1">
