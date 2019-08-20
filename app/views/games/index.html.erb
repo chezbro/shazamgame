@@ -45,6 +45,7 @@
     <% @week.games.each do |game| %>
     <% check_existing_selection(game) %>
       <%= simple_form_for([game, @selection], remote: true) do |s| %>
+        <% if game.id == 734 %>
           <tr>
             <td>
               <%= s.label :pref_pick_team, game_home_team_name(game)  %>
@@ -81,8 +82,8 @@
             <%= s.hidden_field :user_id,  value: current_user.id %>
             <%= s.hidden_field :week_id,  value: game.week_id %>
         <% end %>
-          </tr>
-
+        </tr>
+    <% end %>
     <% end %>
   <% end %>
   </tbody>
