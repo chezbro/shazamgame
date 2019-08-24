@@ -1,0 +1,51 @@
+<div class="top-50 position-relative col-md-12">
+  <div class="flash">
+    <% if notice.present? %>
+      <%= render partial: "layouts/notice" %>
+    <% end %>
+  </div>
+  <h3>Hide and Unhide Games</h3>
+
+<table class="table table-bordered table-hover table-responsive">
+  <thead>
+    <tr>
+      <th colspan='3"'>Game </th>
+    </tr>
+    <tr>
+      <th>
+        Home Team
+      </th>
+      <th>
+        Away Team
+      </th>
+      <th>
+        Hidden?
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+  <% if @week.present? %>
+    <% @week.games.each do |game| %>
+      <tr>
+        <td>
+          <%= game_home_team_name(game)  %>
+        </td>
+        <td>
+          <%= game_away_team_name(game)  %>
+        </td>
+        <td>
+
+
+          <% if game.hidden? %>
+              <%= button_to "Unhide Game", unhide_games_path, class: "btn btn-primary", method: :post, params: { game: game.id }, data: { confirm: "Are you sure you want to Unhide this game?" } %>
+          <% else %>
+              <%= button_to "Hide Game", hide_games_path, class: "btn btn-primary", method: :post, params: { game: game.id }, data: { confirm: "Are you sure you want to Uide this game?" } %>
+          <% end %>
+        </td>
+          <!-- <td> s.submit "Hide", class: "btn btn-primary" + " selection-button-#{game.id}" </td>-->
+      <% end %>
+    <% end %>
+    </tr>
+  </tbody>
+</table>
+</div>

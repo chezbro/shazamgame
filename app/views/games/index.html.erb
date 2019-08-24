@@ -77,6 +77,8 @@
                   <%= s.submit "Submit", class: "btn btn-primary" + " selection-button-#{game.id}" %>
               <% end %>
             </td>
+            
+              <!-- <td> s.submit "Hide", class: "btn btn-primary" + " selection-button-#{game.id}" </td>-->
           <% end %>
             <%= s.hidden_field :game_id,  value: game.id %>
             <%= s.hidden_field :user_id,  value: current_user.id %>

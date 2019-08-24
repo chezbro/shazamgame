@@ -19,6 +19,9 @@ Rails.application.routes.draw do
   get 'selections' => 'selections#index', as: :selections
   post 'teams' => 'teams#create'
   get 'enable_disable_selections' => 'games#enable_disable_selections', as: :enable_disable_selections
+  get  'hide_and_unhide'   => 'games#hide_and_unhide',         as: :hide_and_unhide
+  post 'hide_games' => 'games#hide_games', as: :hide_games
+  post 'unhide_games' => 'games#unhide_games', as: :unhide_games
   post 'enable_picks' => 'games#enable_picks', as: :enable_picks
   post 'disable_picks' => 'games#disable_picks', as: :disable_picks
   get    "instructions"   => "landings#instructions",         as: :instructions

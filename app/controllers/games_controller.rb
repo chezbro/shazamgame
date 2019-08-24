@@ -77,6 +77,31 @@ class GamesController < ApplicationController
     end
   end
 
+  def hide_and_unhide
+    @weeks = Week.where(active: false)
+    @week = Week.last if Week.last.present?
+  end
+
+  def hide_games
+    g = Game.where(id:params[:game].to_i).first
+    g.hidden = true
+    g.save!
+    respond_to do |format|
+      format.html { redirect_to hide_and_unhide_path, alert: 'Game is now invisible' }
+      format.json { head :no_content }
+    end
+  end
+
+  def unhide_games
+    g = Game.where(id:params[:game].to_i).first
+    g.hidden = false
+    g.save!
+    respond_to do |format|
+      format.html { redirect_to hide_and_unhide_path, alert: 'Game is now visible' }
+      format.json { head :no_content }
+    end
+  end
+
   def enable_picks
     Game.where(active: false).each do |game|
       game.active = true
