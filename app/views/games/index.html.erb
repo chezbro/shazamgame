@@ -46,6 +46,7 @@
     <% check_existing_selection(game) %>
       <%= simple_form_for([game, @selection], remote: true) do |s| %>
         <!-- HIDE GAME < if game.id == 734 > -->
+        <% if !game.hidden? %>
           <tr>
             <td>
               <%= s.label :pref_pick_team, game_home_team_name(game)  %>
@@ -77,7 +78,7 @@
                   <%= s.submit "Submit", class: "btn btn-primary" + " selection-button-#{game.id}" %>
               <% end %>
             </td>
-            
+
               <!-- <td> s.submit "Hide", class: "btn btn-primary" + " selection-button-#{game.id}" </td>-->
           <% end %>
             <%= s.hidden_field :game_id,  value: game.id %>
@@ -85,6 +86,7 @@
             <%= s.hidden_field :week_id,  value: game.week_id %>
         <% end %>
         </tr>
+        <% end %>
     <% end %>
     <!-- END OF HIDE GAME < end > -->
   <% end %>
