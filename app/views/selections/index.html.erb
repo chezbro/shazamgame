@@ -66,6 +66,7 @@
   <div class="divTableRow">
     <div class="divTableCell"><h4 class="text-align-center">Week</h4></div>
     <div class="divTableCell"><h4 class="text-align-center">User</h4></div>
+    <div class="divTableCell"><h4 class="text-align-center">Date</h4></div>
     <div class="divTableCell"><h4 class="text-align-center">Home Team</h4></div>
     <div class="divTableCell"><h4 class="text-align-center">Away Team</h4></div>
     <div class="divTableCell"><h4 class="text-align-center">Preference Amount</h4></div>
@@ -78,8 +79,10 @@
     <% if selection.game.present? && selection.game.week_id == Week.last.id %>
       <div class="divTableCell"><%= selection.game.week.week_number %></div>
       <div class="divTableCell"><%= selection.user.username %></div>
+      <div class="divTableCell"><%= selection.updated_at.strftime(" %m/%d/%Y at %I:%M%p") %></div>
       <div class="divTableCell"><%= selections_home_team_name(selection) + " " + "(#{(spread_operator(selection.game)+selection.game.spread.to_s)})"   %></div>
       <div class="divTableCell"><%= selections_away_team_name(selection) %></div>
+
       <div class="divTableCell"><%= selection.pref_pick_int %></div>
       <div class="divTableCell"><%= selection_team(selection.pref_pick_team) %></div>
       <% if selection.correct_spread_pick == true %>
