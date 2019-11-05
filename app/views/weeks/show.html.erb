@@ -1,5 +1,9 @@
 <div class="top-100 position-relative col-md-10 col-md-offset-1">
   <h1><%= link_to "See All Weeks", weeks_path %></h1>
+
+  <%= link_to 'Reset Entire Week', reset_the_week_path,
+    :onclick => "return confirm('Are you sure you want to reset this entire week?')", style: "background-color: #f55555;", class: "margin-10-0-30-0 btn btn-primary" if( (current_user.admin? == true) && (Week.last.active == true) ) %>
+
     <div style="margin:30px 0px;" class="divTable">
       <div>
         <% if current_user.admin? %>
@@ -43,11 +47,10 @@
 
     <%= f.submit "Submit Selections", :onclick => "return confirm('Please Confirm These Scores Are Correct.')", class: "margin-10-0-30-0 btn btn-primary" if( (current_user.admin? == true) && (game.week.active == true) && (game.has_game_been_scored != true) ) %>
 
-    <%= link_to 'Reset Game', game_reset_path(game: game.id),
-        :onclick => "return confirm('Are you sure you want to reset this game?')", style: "background-color: #f55555;", class: "margin-10-0-30-0 btn btn-primary" if( (current_user.admin? == true) && (game.week.active == true) && (game.has_game_been_scored != false) ) %>
+    <!-- <#%= link_to 'Reset Game', game_reset_path(game: game.id),
+        :onclick => "return confirm('Are you sure you want to reset this game?')", style: "background-color: #f55555;", class: "margin-10-0-30-0 btn btn-primary" if( (current_user.admin? == true) && (game.week.active == true) && (game.has_game_been_scored != false) ) %> -->
     <% end %>
     <% end %>
     </div>
     </div>
-
 </div>

@@ -66,6 +66,36 @@ class GamesController < ApplicationController
     end
   end
 
+
+
+def reset_the_week
+  User.all.each do |u|
+  u.cumulative_points = u.cumulative_points - u.weekly_points
+  u.weekly_points = 0
+  u.weekly_points_game_a = 0
+  u.weekly_points_game_b = 0
+  u.save!
+
+  end
+
+  Game.where(week_id: Week.last).each do |g|
+    g.has_game_been_scored = false
+    g.active = true
+    g.team_that_won_straight_up = nil
+    g.team_that_covered_spread = nil
+    g.away_team_won_straight_up = nil
+    g.home_team_won_straight_up = nil
+    g.home_team_score = nil
+    g.away_team_score = nil
+
+    g.save!
+  end
+  respond_to do |format|
+    format.html { redirect_to root_url, alert: 'Week has been Reset.' }
+    format.json { head :no_content }
+  end
+end
+
   def game_reset
     @game = Game.find(params[:game].to_i)
     @game.game_reset

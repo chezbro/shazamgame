@@ -79,7 +79,7 @@
     <% if selection.game.present? && selection.game.week_id == Week.last.id %>
       <div class="divTableCell"><%= selection.game.week.week_number %></div>
       <div class="divTableCell"><%= selection.user.username %></div>
-      <div class="divTableCell"><%= selection.updated_at.strftime(" %m/%d/%Y at %I:%M%p") %></div>
+      <div class="divTableCell"><%= selection.updated_at.to_time.strftime(" %m/%d/%Y at %I:%M%p") %></div>
       <div class="divTableCell"><%= selections_home_team_name(selection) + " " + "(#{(spread_operator(selection.game)+selection.game.spread.to_s)})"   %></div>
       <div class="divTableCell"><%= selections_away_team_name(selection) %></div>
 

@@ -39,6 +39,7 @@ Rails.application.routes.draw do
   get    "reset_selections"   => "selections#reset_selections",         as: :reset_selections
   post   "send_reminder_email"   => "landings#send_reminder_email",         as: :send_reminder_email
   get 'game_reset' => 'games#game_reset', as: :game_reset
+  get 'reset_the_week' => 'games#reset_the_week', as: :reset_the_week
 
   devise_for :users, controllers: {registrations: "users/registrations", sessions: "users/sessions", passwords: "users/passwords"}, skip: [:sessions, :registrations]
 
