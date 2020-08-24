@@ -94,7 +94,7 @@ class User < ActiveRecord::Base
 
   def tally_picks_for_each_side
     s = Selection.where(week_id: Week.last)
-    
+
   end
 
   def self.weekly_points
