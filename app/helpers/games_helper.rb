@@ -1,4 +1,7 @@
 module GamesHelper
+  def list_teams
+    Team.all.map { |t| [t.region + " " + t.name, t.id] }.sort_by(&:first)
+  end
 
   def fave(game)
     if game.spread < 0
@@ -34,7 +37,7 @@ module GamesHelper
 
 
   def pref_pick(selection)
-    Team.find(selection.pref_pick_team).region + " " + Team.find(selection.pref_pick_team).name 
+    Team.find(selection.pref_pick_team).region + " " + Team.find(selection.pref_pick_team).name
   end
 
   def spread_pick(selection)
@@ -68,7 +71,7 @@ module GamesHelper
   def team_name(id)
     name = Team.find_by_id(id).try(:name)
     region = Team.find_by_id(id).try(:region)
-    return region + " " + name if region.present? 
+    return region + " " + name if region.present?
   end
 
   def pref_pick_integers
@@ -79,5 +82,5 @@ module GamesHelper
     game.selections.where(user_id:current_user).first
   end
 
-  
+
 end

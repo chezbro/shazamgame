@@ -14,7 +14,9 @@
       <th colspan='3"'>Game A</th>
       <th colspan='3"'>Game B</th>
       <th colspan='1"'>Selection <br> <%= link_to "Reset Selections", reset_selections_path %></th>
-
+      <% if current_user.admin? == true %>
+      <th>Edit Game</th>
+      <% end %>
     </tr>
     <tr>
       <th>
@@ -38,6 +40,9 @@
         <small>(Home Team)</small>
       </th>
       <th>* Must Submit*</th>
+      <% if current_user.admin? == true %>
+      <th>—</th>
+      <% end %>
     </tr>
   </thead>
   <tbody>
@@ -78,6 +83,9 @@
                   <%= s.submit "Submit", class: "btn btn-primary" + " selection-button-#{game.id}" %>
               <% end %>
             </td>
+            <% if current_user.admin? == true %>
+            <td><%= link_to "Edit this Game", edit_game_path(game.id)%></td>
+            <% end %>
 
               <!-- <td> s.submit "Hide", class: "btn btn-primary" + " selection-button-#{game.id}" </td>-->
           <% end %>
@@ -94,7 +102,7 @@
 </table>
 <div>
   <!-- <p><b>Game "A"</b> - Pick the teams that will win the games and rank them from 13-1. Each correct pick earns you points equal to the 13-1 ranking number you assigned it. You may not use the same ranking number (between 13 and 1) twice.</p> -->
-  <p><b>Game "A"</b> - You may not use the same Ranking number twice UNLESS IT IS FOR PICKING THE BOWLS then you must use each number twice and please double check. </p>  
+  <p><b>Game "A"</b> - You may not use the same Ranking number twice UNLESS IT IS FOR PICKING THE BOWLS then you must use each number twice and please double check. </p>
   <p><b>Game "B"</b> - Pick the teams that will beat the point spread. Each correct pick earns you 7 points. In a rush? Click the Select All Faves or Dogs link to quickly fill in all the Favorites or Underdogs for Game B.</p>
   <p></p>
   <p>*Please remember you must press the Submit button next to each Game in order to submit your picks.</p>

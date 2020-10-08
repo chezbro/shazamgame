@@ -1,16 +1,6 @@
-<%= form_for @game, :html => { :class => 'form-horizontal form-model' } do |f| %>
-  <div class="form-group">
-    <%= f.label :points, :class => 'control-label col-md-2' %>
-    <div class="col-md-10">
-      <%= f.number_field :points, :class => 'text-field form-control' %>
-    </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :is_home_team, :class => 'control-label col-md-2' %>
-    <div class="col-md-10">
-      <%= f.check_box :is_home_team, :class => 'text-field form-control' %>
-    </div>
-  </div>
+<%= form_for @game, url: url_for(action: "game_update", controller: "games"), method: "post" do |f| %>
+  <%= f.hidden_field :id, value: @game.id %>
+
   <div class="form-group">
     <%= f.label :spread, :class => 'control-label col-md-2' %>
     <div class="col-md-10">
@@ -20,82 +10,16 @@
   <div class="form-group">
     <%= f.label :home_team_id, :class => 'control-label col-md-2' %>
     <div class="col-md-10">
-      <%= f.number_field :home_team_id, :class => 'text-field form-control' %>
+      <%= f.select :home_team_id, list_teams, {include_blank: "Select Home Team"}, {class: "selectpicker"} %>
     </div>
   </div>
   <div class="form-group">
     <%= f.label :away_team_id, :class => 'control-label col-md-2' %>
     <div class="col-md-10">
-      <%= f.number_field :away_team_id, :class => 'text-field form-control' %>
-    </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :home_team_pref_pick, :class => 'control-label col-md-2' %>
-    <div class="col-md-10">
-      <%= f.number_field :home_team_pref_pick, :class => 'text-field form-control' %>
-    </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :away_team_pref_pick, :class => 'control-label col-md-2' %>
-    <div class="col-md-10">
-      <%= f.number_field :away_team_pref_pick, :class => 'text-field form-control' %>
-    </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :home_team_spread_pick, :class => 'control-label col-md-2' %>
-    <div class="col-md-10">
-      <%= f.check_box :home_team_spread_pick, :class => 'text-field form-control' %>
-    </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :away_team_spread_pick, :class => 'control-label col-md-2' %>
-    <div class="col-md-10">
-      <%= f.check_box :away_team_spread_pick, :class => 'text-field form-control' %>
+    <%= f.select :away_team_id, list_teams, {include_blank: "Select Away Team"}, {class: "selectpicker"} %>
     </div>
   </div>
 
-  <div class="form-group">
-    <%= f.label :home_team_covered_spread, :class => 'control-label col-md-2' %>
-    <div class="col-md-10">
-      <%= f.check_box :home_team_covered_spread, :class => 'text-field form-control' %>
-    </div>
-  </div>
-
-
-
-  <div class="form-group">
-    <%= f.label :home_team_score, :class => 'control-label col-md-2' %>
-    <div class="col-md-10">
-      <%= f.check_box :home_team_score, :class => 'text-field form-control' %>
-    </div>
-  </div>
-
-
-    <div class="form-group">
-    <%= f.label :away_team_score, :class => 'control-label col-md-2' %>
-    <div class="col-md-10">
-      <%= f.check_box :away_team_score, :class => 'text-field form-control' %>
-    </div>
-  </div>
-
-  <div class="form-group">
-    <%= f.label :away_team_covered_spread, :class => 'control-label col-md-2' %>
-    <div class="col-md-10">
-      <%= f.check_box :away_team_covered_spread, :class => 'text-field form-control' %>
-    </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :tie_game, :class => 'control-label col-md-2' %>
-    <div class="col-md-10">
-      <%= f.check_box :tie_game, :class => 'text-field form-control' %>
-    </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :game_selected_by_admin, :class => 'control-label col-md-2' %>
-    <div class="col-md-10">
-      <%= f.check_box :game_selected_by_admin, :class => 'text-field form-control' %>
-    </div>
-  </div>
 
   <div class="form-group">
     <div class='col-md-offset-2 col-md-10'>
