@@ -40,9 +40,6 @@
         <small>(Home Team)</small>
       </th>
       <th>* Must Submit*</th>
-      <% if current_user.admin? == true %>
-      <th>—</th>
-      <% end %>
     </tr>
   </thead>
   <tbody>
@@ -83,9 +80,6 @@
                   <%= s.submit "Submit", class: "btn btn-primary" + " selection-button-#{game.id}" %>
               <% end %>
             </td>
-            <% if current_user.admin? == true %>
-            <td><%= link_to "Edit this Game", edit_game_path(game.id)%></td>
-            <% end %>
 
               <!-- <td> s.submit "Hide", class: "btn btn-primary" + " selection-button-#{game.id}" </td>-->
           <% end %>
