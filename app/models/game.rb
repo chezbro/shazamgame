@@ -154,9 +154,11 @@ def tally_points
         end
         if selection.game.tie_game == true
           user.weekly_points += 7
-          # user.total_weekly_points += 7
-          user.weekly_points_game_b += 7
           user.cumulative_points += 7
+          user.weekly_points_game_a += selection.pref_pick_int
+          user.weekly_points_game_b += 7
+          user.weekly_points += selection.pref_pick_int
+          user.cumulative_points += selection.pref_pick_int
           selection.correct_spread_pick = true
           selection.save!
           user.save!

@@ -56,6 +56,7 @@ gem 'announcements'
 gem 'rails_12factor', group: :production
 gem 'bootstrap-select-rails'
 gem 'whenever'
+gem 'rb-readline'
 
 group :development do
   gem 'byebug'
