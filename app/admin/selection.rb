@@ -1,4 +1,6 @@
 ActiveAdmin.register Selection do
+  config.sort_order = "name_asc"
+  
   permit_params :game_id, :user_id, :pref_pick_int, :pref_pick_team, :spread_pick_team, :created_at, :updated_at
 
 
@@ -41,7 +43,7 @@ form do |f|
 end
 
 
-  
+
   remove_filter :correct
   remove_filter :admin
 
