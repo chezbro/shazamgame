@@ -4,7 +4,7 @@
   <div class="form-group">
     <%= f.label :spread, :class => 'control-label col-md-2' %>
     <div class="col-md-10">
-      <%= f.number_field :spread, :step => 0.5, :class => 'text-field form-control' %>
+      <%= f.number_field :spread, :class => 'text-field form-control' %>
     </div>
   </div>
   <div class="form-group">
@@ -31,3 +31,6 @@
 <% end %>
 
 
+<%= f.number_field :spread, :class => 'text-field form-control' %>
+
+<%= f.select :spread, options_for_select( (-100..100).step(0.5).map{|n| n%1 == 0 ? n.to_i : n} ), {include_blank: "Edit Spread"}, {class: "selectpicker"} %>
