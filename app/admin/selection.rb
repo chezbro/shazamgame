@@ -1,5 +1,5 @@
 ActiveAdmin.register Selection do
-  config.sort_order = "name_asc"
+  # config.sort_order = "name_asc"
   
   permit_params :game_id, :user_id, :pref_pick_int, :pref_pick_team, :spread_pick_team, :created_at, :updated_at
 
@@ -15,9 +15,9 @@ ActiveAdmin.register Selection do
       full_game_name(game) if game != nil
     end
 
-    # column :user_id do |selection|
-    #   selection.user.name + " (#{selection.user.username})"
-    # end
+    column :user_id do |selection|
+      selection.user.name + " (#{selection.user.username})"
+    end
 
     column :pref_pick_team do |selection|
       team = Team.find(selection.pref_pick_team)
