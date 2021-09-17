@@ -15,9 +15,9 @@ ActiveAdmin.register Selection do
       full_game_name(game) if game != nil
     end
 
-    column :user_id do |selection|
-      selection.user.name + " (#{selection.user.username})"
-    end
+    # column :user_id do |selection|
+    #   selection.user.name + " (#{selection.user.username})"
+    # end
 
     column :pref_pick_team do |selection|
       team = Team.find(selection.pref_pick_team)
