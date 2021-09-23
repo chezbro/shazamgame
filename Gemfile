@@ -58,6 +58,7 @@ gem 'bootstrap-select-rails'
 gem 'whenever'
 gem 'rb-readline'
 
+
 group :development do
   gem 'byebug'
   gem 'quiet_assets'
