@@ -77,25 +77,25 @@ config.action_mailer.default_url_options = { :host => 'http://shazam13.com' }
 
 config.action_mailer.delivery_method = :smtp
 
-config.action_mailer.smtp_settings = {
-address: "smtp.sendgrid.net",
-port: 25,
-domain: "shazam13.com",
-authentication: "plain",
-enable_starttls_auto: true,
-user_name: 'app54209875@heroku.com',
-password:'C0mmissari01957*'
-}
-
-# ActionMailer::Base.smtp_settings = {
-# :user_name => 'apikey', # This is the string literal 'apikey', NOT the ID of your API key
-# :password => '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', # This is the secret sendgrid API key which was issued during API key creation
-# :domain => 'shazam13.com',
-# :address => 'smtp.sendgrid.net',
-# :port => 587,
-# :authentication => :plain,
-# :enable_starttls_auto => true
+# config.action_mailer.smtp_settings = {
+# address: "smtp.sendgrid.net",
+# port: 25,
+# domain: "shazam13.com",
+# authentication: "plain",
+# enable_starttls_auto: true,
+# user_name: 'app54209875@heroku.com',
+# password:'C0mmissari01957*'
 # }
+
+config.action_mailer.smtp_settings = {
+  :user_name => 'apikey', # This is the string literal 'apikey', NOT the ID of your API key
+  :password => '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', # This is the secret sendgrid API key which was issued during API key creation
+  :domain => 'shazam13.com',
+  :address => 'smtp.sendgrid.net',
+  :port => 587,
+  :authentication => :plain,
+  :enable_starttls_auto => true
+}
 
 
 
