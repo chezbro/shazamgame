@@ -89,7 +89,7 @@ config.action_mailer.delivery_method = :smtp
 
 config.action_mailer.smtp_settings = {
   :user_name => 'apikey', # This is the string literal 'apikey', NOT the ID of your API key
-  :password => ENV["sendgrid_password"],
+  :password => ENV["SENDGRID_PASSWORD"],
   :domain => 'shazam13.com',
   :address => 'smtp.sendgrid.net',
   :port => 587,
