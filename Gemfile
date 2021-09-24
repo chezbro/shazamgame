@@ -57,6 +57,7 @@ gem 'rails_12factor', group: :production
 gem 'bootstrap-select-rails'
 gem 'whenever'
 gem 'rb-readline'
+gem 'figaro'
 
 
 group :development do
