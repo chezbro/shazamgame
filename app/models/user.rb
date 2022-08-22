@@ -133,7 +133,12 @@ class User < ActiveRecord::Base
 
   def self.delete_weekly_scores
     User.all.each do |user|
-      user.weekly_points.delete
+      user.weekly_points = 0
+      user.weekly_points_game_a =0
+      user.weekly_points_game_b = 0
+      user.cumulative_points =0 
+      user.last_week_score = 0
+      user.save!
     end
   end
 

@@ -1,5 +1,5 @@
 class Users::RegistrationsController < Devise::RegistrationsController
-  http_basic_authenticate_with :name => "shazam2019", :password => "shazam2019", only: :new
+  # http_basic_authenticate_with :name => "shazam2019", :password => "shazam2019", only: :new
 
   include ApplicationHelper
 
