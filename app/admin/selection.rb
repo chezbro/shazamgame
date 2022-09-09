@@ -35,9 +35,9 @@ ActiveAdmin.register Selection do
 
 form do |f|
   f.inputs do
-     f.input :pref_pick_team, :label => 'Preference Pick Team', :as => :select, :collection => Team.all.map{|t| ["#{t.region + " " + t.name}", t.id]}, selected: selection.pref_pick_team
+     f.input :pref_pick_team, :label => 'Preference Pick Team', :as => :select, :collection => Team.order('region ASC').all.map{|t| ["#{t.region + " " + t.name}", t.id]}, selected: selection.pref_pick_team
     f.input :pref_pick_int
-     f.input :spread_pick_team, :label => 'Spread Pick Team', :as => :select, :collection => Team.all.map{|t| ["#{t.region + " " + t.name}", t.id]}, selected: selection.spread_pick_team
+     f.input :spread_pick_team, :label => 'Spread Pick Team', :as => :select, :collection => Team.order('region ASC').all.map{|t| ["#{t.region + " " + t.name}", t.id]}, selected: selection.spread_pick_team
     f.submit
   end
 end
