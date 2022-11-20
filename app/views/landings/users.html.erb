@@ -19,7 +19,7 @@
         </tr>
       </thead>
       <tbody>
-        <% User.all.each do |user| %>
+        <% User.order("name ASC").all.each do |user| %>
         <tr>
           <td>
             <%= link_to "#{user.username}", user_path(user.id) %>
