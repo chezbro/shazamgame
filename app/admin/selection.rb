@@ -15,16 +15,16 @@ ActiveAdmin.register Selection do
       full_game_name(game) if game != nil
     end
 
-    column :user_id do |selection|
+    column :user_id, sortable: true do |selection|
       selection.user.name + " (#{selection.user.username})"
     end
 
-    column :pref_pick_team do |selection|
+    column :pref_pick_team, sortable: true do |selection|
       team = Team.find(selection.pref_pick_team)
       team.region
     end
 
-    column :pref_pick_int
+    column :pref_pick_int, sortable: true
 
     column :spread_pick_team do |selection|
       team = Team.find(selection.spread_pick_team)
