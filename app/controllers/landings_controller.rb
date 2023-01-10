@@ -15,8 +15,8 @@ class LandingsController < ApplicationController
 
   def activity
     @last_week_points = User.last_week_leaders_short
-    @weekly_points = User.weekly_points
-    @cumulative_points = User.cumulative_points
+    @weekly_points = User.try(:weekly_points)
+    @cumulative_points = User.try(:cumulative_points)
     @week = Week.last
     @total_selections_for_pref_pick_team = Game.total_selections_for_pref_pick_team.sort_by {|a,b| b}.reverse
     # @total_selections_for_spread_pick_team = Game.total_selections_for_spread_pick_team
