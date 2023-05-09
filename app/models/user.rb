@@ -100,7 +100,7 @@ class User < ActiveRecord::Base
   def self.weekly_points
     points_array = []
     User.all.each do |user|
-      points_array << [user.try(:weekly_points), user.username]
+      points_array << [user.weekly_points, user.username]
     end
       points_array.sort{|a,b| b<=>a}.take(5)
   end
