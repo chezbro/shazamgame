@@ -1,5 +1,5 @@
 class LandingsController < ApplicationController
-  before_filter :check_if_admin, only: [:users]
+  before_action :check_if_admin, only: [:users]
 
   def index
   end

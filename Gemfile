@@ -1,16 +1,18 @@
 source 'https://rubygems.org'
 
-ruby "2.4.4"
+
+
+ruby "2.7.2"
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.2.8'
+gem 'rails', '~> 5.2', '>= 5.2.4'
 # Use postgresql as the database for Active Record
-gem 'pg', '~> 0.20.0'
+gem 'pg', '~> 1.5.3'
 # Use SCSS for stylesheets
-gem 'sass-rails', '~> 5.0.0'
+gem 'sass-rails'
 # Use Uglifier as compressor for JavaScript assets
-gem 'uglifier', '>= 1.3.0'
+gem 'uglifier'
 # Use CoffeeScript for .js.coffee assets and views
-gem 'coffee-rails', '~> 4.1.0'
+gem 'coffee-rails'
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer',  platforms: :ruby
 
@@ -19,15 +21,15 @@ gem 'jquery-rails'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 # gem 'turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 2.0'
+gem 'jbuilder'
 # bundle exec rake doc:rails generates the API under doc/api.
-gem 'sdoc', '~> 0.4.0',          group: :doc
+gem 'sdoc'
 
 # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
 gem 'spring',        group: :development
 
 # Use ActiveModel has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
+# gem 'bcrypt'
 
 # Use unicorn as the app server
 # gem 'unicorn'
@@ -38,11 +40,11 @@ gem 'spring',        group: :development
 # Use debugger
 # gem 'debugger', group: [:development, :test]
 
-gem 'bundler'
-gem 'bootstrap-sass', '~> 3.3.7'
+gem 'bundler', '~> 2.4.12'
+gem 'bootstrap-sass'
 gem 'bootstrap-sass-extras'
-gem 'activeadmin', github: 'gregbell/active_admin'
-gem 'devise', github: 'plataformatec/devise'
+gem 'activeadmin'
+gem 'devise', '~> 4.9', '>= 4.9.2'
 gem 'bootstrap-toggle-rails'
 gem 'binding_of_caller'
 gem 'rails_config'
@@ -58,11 +60,15 @@ gem 'bootstrap-select-rails'
 gem 'whenever'
 gem 'rb-readline'
 gem 'figaro'
-
+gem 'railties', '~> 5.2.4'
+gem 'inherited_resources', '~> 1.10'
+gem 'actionpack', '~> 5.0', '>= 5.0.7.2'
+gem 'psych', '~> 3.2'
+gem 'sprockets-rails', '2.3.3'
 
 group :development do
   gem 'byebug'
-  gem 'quiet_assets'
+  # gem 'quiet_assets', '~> 1.1'
   gem 'better_errors'
   gem 'pry-rails'
 end

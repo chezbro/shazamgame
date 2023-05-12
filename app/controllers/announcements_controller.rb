@@ -1,5 +1,5 @@
 class AnnouncementsController < ApplicationController
-  # before_filter :disable_navbar, only: [:index]
+  # before_action :disable_navbar, only: [:index]
 
   def new
     @announcement = Announcement.new
