@@ -85,7 +85,6 @@ class User < ActiveRecord::Base
       points_array.sort{|a,b| b<=>a}
   end
 
-
   def self.set_weekly_scores
     User.all.each do |user|
       Score.create(week_id: Week.last.id, user_id: user.id, game_a: user.weekly_points_game_a, game_b: user.weekly_points_game_b, points_for_week: user.weekly_points_game_a + user.weekly_points_game_b)
