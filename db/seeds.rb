@@ -25,8 +25,6 @@ case Rails.env
 
 
   when "production"
-    
-    Team.destroy_all
 
     teams = JSON.parse(File.read('teams.json'))
 
