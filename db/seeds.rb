@@ -24,7 +24,7 @@ case Rails.env
     # User.create(email: "chezbro@example.com", username: "chezbro", password: "password", password_confirmation: "password", address: "123 Chezbro Street", fav_teams: "Detroit Pistons, Detroit Red Wings", cell_phone_number: "313-123-2345", admin: false)
 
 
-  when "development"
+  when "production"
 
     teams = JSON.parse(File.read('teams.json'))
 
