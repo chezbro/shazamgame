@@ -25,6 +25,8 @@ case Rails.env
 
 
   when "production"
+    
+    Team.destroy_all
 
     teams = JSON.parse(File.read('teams.json'))
 
@@ -42,7 +44,7 @@ case Rails.env
         )
     end
     
-    # Week.create(week_number: "1", year: "2016", active: true)
+    Week.create(week_number: "1", year: "2023", active: true)
 
 
 
