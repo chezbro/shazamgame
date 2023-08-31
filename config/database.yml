@@ -1,3 +1,6 @@
+default: &default
+  host: <%= ENV.fetch('DATABASE_HOST', 'localhost') %>
+  port: <%= ENV.fetch('DATABASE_PORT', 5432) %>
 # PostgreSQL. Versions 8.2 and up are supported.
 #
 # Install the pg driver:
@@ -80,6 +83,6 @@ test:
 #
 production:
   <<: *default
-  database: shazamgame_production
-  username: shazamgame
-  password: <%= ENV['SHAZAMGAME_DATABASE_PASSWORD'] %>
+  # database: shazamgame_production
+  # username: shazamgame
+  # password: <%= ENV['SHAZAMGAME_DATABASE_PASSWORD'] %>

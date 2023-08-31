@@ -7,11 +7,11 @@
     <%= f.fields_for :games do |ff, index| %>
     <div class="margin-20-0">
       <h4>Game <%= ff.options[:child_index] + 1 %>:</h4>
-      <%= ff.select :home_team_id, list_teams, {include_blank: "Select Home Team"}, {class: ""} %> 
+      <%= ff.select :home_team_id, list_teams, {include_blank: "Select Home Team"}, {class: "select-class"} %> 
 
-      <%= ff.select :away_team_id, list_teams, {include_blank: "Select Away Team" }, {class: ""} %>
+      <%= ff.select :away_team_id, list_teams, {include_blank: "Select Away Team" }, {class: "select-class"} %>
 
-      <%= ff.select :spread, options_for_select( (-100..100).step(0.5).map{|n| n%1 == 0 ? n.to_i : n} ), {include_blank: "Select Home Team Spread"}, {class: ""} %>
+      <%= ff.select :spread, options_for_select( (-100..100).step(0.5).map{|n| n%1 == 0 ? n.to_i : n} ), {include_blank: "Select Home Team Spread"}, {class: "select-class"} %>
       <%= ff.hidden_field :game_selected_by_admin, value: true %>
       <%= ff.hidden_field :active, value: true %>
     </div>

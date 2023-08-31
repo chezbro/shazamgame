@@ -15,20 +15,6 @@ ActiveRecord::Schema.define(version: 2019_08_22_192827) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "active_admin_comments", force: :cascade do |t|
-    t.string "namespace"
-    t.text "body"
-    t.string "resource_id", null: false
-    t.string "resource_type", null: false
-    t.integer "author_id"
-    t.string "author_type"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.index ["author_type", "author_id"], name: "index_active_admin_comments_on_author_type_and_author_id"
-    t.index ["namespace"], name: "index_active_admin_comments_on_namespace"
-    t.index ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id"
-  end
-
   create_table "admin_users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -56,8 +42,8 @@ ActiveRecord::Schema.define(version: 2019_08_22_192827) do
   end
 
   create_table "games", force: :cascade do |t|
-    t.integer "week_id"
-    t.integer "user_id"
+    t.bigint "week_id"
+    t.bigint "user_id"
     t.integer "points"
     t.boolean "is_home_team"
     t.float "spread"
@@ -71,8 +57,8 @@ ActiveRecord::Schema.define(version: 2019_08_22_192827) do
     t.boolean "away_team_covered_spread"
     t.boolean "tie_game"
     t.boolean "game_selected_by_admin"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.boolean "game_is_active"
     t.integer "home_team_spread"
     t.integer "home_team_score"
@@ -92,8 +78,8 @@ ActiveRecord::Schema.define(version: 2019_08_22_192827) do
   create_table "messages", force: :cascade do |t|
     t.integer "user_id"
     t.string "body"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "points", force: :cascade do |t|
@@ -112,8 +98,8 @@ ActiveRecord::Schema.define(version: 2019_08_22_192827) do
     t.integer "game_a"
     t.integer "game_b"
     t.integer "points_for_week"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "selections", force: :cascade do |t|
@@ -144,8 +130,8 @@ ActiveRecord::Schema.define(version: 2019_08_22_192827) do
     t.string "city"
     t.string "state"
     t.float "latitude"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|
@@ -184,8 +170,8 @@ ActiveRecord::Schema.define(version: 2019_08_22_192827) do
     t.string "week_number"
     t.string "year"
     t.datetime "year_in_datetime"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.boolean "active"
   end
 
