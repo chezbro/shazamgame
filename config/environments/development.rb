@@ -46,10 +46,23 @@ Rails.application.configure do
         :address => "smtp.gmail.com",
         :port => 587,
         :domain => 'localhost:9292',
-        :user_name => "shazamcheryl+1@gmail.com",
-        :password => "ckcimd17",
+        :user_name => "shazam13cheryl@gmail.com",
+        :password => "jllkapmtqzjannoj",
         :authentication => :plain,
         :enable_starttls_auto => true
     }
+
+#   DEFAULT_FROM_EMAIL = 'shazam13cheryl@gmail.com'
+
+#   config.action_mailer.delivery_method = :smtp
+#   config.action_mailer.smtp_settings = {
+#   :user_name => 'apikey', # This is the string literal 'apikey', NOT the ID of your API key
+#   :password => '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',
+#   :domain => 'shazam13.com',
+#   :address => 'smtp.sendgrid.net',
+#   :port => 587,
+#   :authentication => :plain,
+#   :enable_starttls_auto => true,
+# }
 
 end

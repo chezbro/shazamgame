@@ -87,16 +87,29 @@ config.action_mailer.delivery_method = :smtp
 # password:'C0mmissari01957*'
 # }
 
+config.action_mailer.perform_deliveries = true
+config.action_mailer.raise_delivery_errors = true
+config.action_mailer.default :charset => "utf-8"
 config.action_mailer.smtp_settings = {
-  :user_name => 'apikey', # This is the string literal 'apikey', NOT the ID of your API key
-  :password => ENV["SENDGRID_PASSWORD"],
-  :domain => 'shazam13.com',
-  :address => 'smtp.sendgrid.net',
-  :port => 587,
-  :authentication => :plain,
-  :enable_starttls_auto => true
-  # :DEFAULT_FROM_EMAIL = 'you@domain.com'
+    :address => "smtp.gmail.com",
+    :port => 587,
+    :domain => 'shazam13.com',
+    :user_name => "shazam13cheryl@gmail.com",
+    :password => "jllkapmtqzjannoj",
+    :authentication => :plain,
+    :enable_starttls_auto => true
 }
+
+# config.action_mailer.smtp_settings = {
+#   :user_name => 'apikey', # This is the string literal 'apikey', NOT the ID of your API key
+#   :password => ENV["SENDGRID_PASSWORD"],
+#   :domain => 'shazam13.com',
+#   :address => 'smtp.sendgrid.net',
+#   :port => 587,
+#   :authentication => :plain,
+#   :enable_starttls_auto => true
+#   # :DEFAULT_FROM_EMAIL = 'you@domain.com'
+# }
 
 
 
