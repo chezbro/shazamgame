@@ -83,6 +83,17 @@ class GamesController < ApplicationController
   end
 
 
+def team_selections
+  @game = Game.find(params[:game_id].to_i)
+end
+
+def home_team_selections
+  @game = Game.find(params[:game_id].to_i)
+end
+
+def away_team_selections
+  @game = Game.find(params[:game_id].to_i)
+end
 
 def reset_the_week
   User.all.each do |u|

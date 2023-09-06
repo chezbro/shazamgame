@@ -1,34 +1,31 @@
-<div class="top-100 position-relative row">
-  <div class="col-sm-10 col-sm-offset-1">
-    <table class="table table-bordered table-striped table-responsive">
-      <thead>
-        <tr>
-          <th>
-            Name
-          </th>
-          <th>
-            Username
-          </th>
-          <th>
-            See Picks
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <% User.all.each do |user| %>
-        <tr>
-          <td>
-            <%= user.name %>
-          </td>
-          <td>
-            <%= user.username %>
-          </td>
-          <td>
-            <%= link_to "See #{user.name}'s Selections this Week", user_path(user) %>
-          </td>
-        </tr>
+<div class="top-100 position-relative col-md-10 col-md-offset-1">
+
+    <div style="margin:30px 0px;" class="divTable">
+      <div>
+        <% if current_user.admin? %>
+          <h3>Choose Winners for Week <%= @week.week_number %></h3>
+        <% else %>
+          <h3>Scores for Week <%= @week.week_number %></h3>
         <% end %>
-      </tbody>
-</table>
-  </div>
+      </div>
+    <div class="divTableBody">
+    <div class="divTableRow">
+
+    <div class="divTableCell"><h4 class="text-align-center">Home Team</h4></div>
+    <div class="divTableCell"><h4 class="text-align-center">Away Team</h4></div>
+    <div class="divTableCell"><h4 class="text-align-center">Spread</h4></div>
+
+    </div>
+
+    <% @all_weeks.each do |week| %>
+ 
+
+    <%= f.submit "Submit Selections", :onclick => "return confirm('Please Confirm These Scores Are Correct.')", class: "margin-10-0-30-0 btn btn-primary" if( (current_user.admin? == true) && (game.week.active == true) && (game.has_game_been_scored != true) ) %>
+
+    <!-- <#%= link_to 'Reset Game', game_reset_path(game: game.id),
+        :onclick => "return confirm('Are you sure you want to reset this game?')", style: "background-color: #f55555;", class: "margin-10-0-30-0 btn btn-primary" if( (current_user.admin? == true) && (game.week.active == true) && (game.has_game_been_scored != false) ) %> -->
+    <% end %>
+    <% end %>
+    </div>
+    </div>
 </div>

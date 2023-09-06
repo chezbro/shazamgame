@@ -42,6 +42,10 @@ class LandingsController < ApplicationController
   def player_selections
   end
 
+  def team_selections
+    @games = Game.where(week_id: Week.last)
+  end
+
   def instructions
   end
 

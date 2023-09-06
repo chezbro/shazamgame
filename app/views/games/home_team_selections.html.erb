@@ -1,0 +1,24 @@
+<div class="top-100 position-relative row">
+    <div class="col-sm-10 col-sm-offset-1">
+      <table class="table table-bordered table-striped table-responsive">
+        <thead>
+          <tr>
+            <th>
+                Spread Picks for: <%= @game.home_team.region %> <%= @game.home_team.name %>
+            </th>
+          </tr>
+        </thead>
+        <tbody>    
+          <tr>
+            <td>            
+            <% @game.selections.where(spread_pick_team: @game.home_team_id).each do |home_picks|  %>
+            <% if home_picks.spread_pick_team == @game.home_team_id %>
+                <%= home_picks.user.name %>
+            <% end %>
+            <% end %>
+            </td>           
+          </tr>
+        </tbody>
+  </table>
+    </div>
+</div>

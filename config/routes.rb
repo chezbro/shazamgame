@@ -11,6 +11,9 @@ Rails.application.routes.draw do
   resources :games do
 
     resources :selections, except: :index
+    get    "home_team_selections"   => "games#home_team_selections",         as: :home_team_selections
+    get    "away_team_selections"   => "games#away_team_selections",         as: :away_team_selections
+
   end
 
   resources :announcements
@@ -31,6 +34,8 @@ Rails.application.routes.draw do
   get    "last-week"   => "landings#last_week_leaders",         as: :last_week_leaders
   get    "users"   => "landings#users",         as: :users
   get    "player_selections"   => "landings#player_selections",         as: :player_selections
+  get    "team_selections"   => "landings#team_selections",         as: :team_selections
+  
   get    "real_time_scores"   => "landings#real_time_scores",         as: :real_time_scores
   get    "activity"   => "landings#activity",         as: :activity
   get    "email_reminders_page"   => "landings#email_reminders_page",         as: :email_reminders_page

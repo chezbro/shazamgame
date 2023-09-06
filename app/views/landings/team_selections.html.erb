@@ -1,0 +1,33 @@
+<div class="top-100 position-relative row">
+  <div class="col-sm-10 col-sm-offset-1">
+    <table class="table table-bordered table-striped table-responsive">
+      <thead>
+        <tr>
+          <th>
+            Home Team
+          </th>
+          <th>
+            Away Team
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @games.all.each do |game| %>
+        <tr>
+          <td>
+            <%= link_to game.home_team.region, game_home_team_selections_path(game.id) %>
+          </td>
+          <td>
+            <%= link_to game.away_team.region, game_away_team_selections_path(game.id) %>
+          </td>
+          <td>
+            <%#= link_to "See #{user.name}'s Selections this Week", user_path(user) %>
+          </td>
+        </tr>
+        <% end %>
+      </tbody>
+</table>
+  </div>
+</div>
+
+
