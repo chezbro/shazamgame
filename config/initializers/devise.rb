@@ -145,7 +145,7 @@ Devise.setup do |config|
   config.remember_for = 2.weeks
   config.extend_remember_period = true
   config.rememberable_options = { secure: true }
-  config.timeout_in = 2.weeks
+  # config.timeout_in = 2.weeks
   # config.expire_auth_token_on_timeout = false
 
   # Invalidates all the remember me tokens when the user signs out.
