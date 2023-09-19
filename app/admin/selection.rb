@@ -1,13 +1,13 @@
 ActiveAdmin.register Selection do
-  # config.sort_order = "name_asc"
   
-  permit_params :game_id, :user_id, :pref_pick_int, :pref_pick_team, :spread_pick_team, :created_at, :updated_at
+  
+  permit_params :game_id, :name, :week_id, :user_id, :pref_pick_int, :pref_pick_team, :spread_pick_team, :created_at, :updated_at
 
 
   index do
 
     column :week, sortable: true do |selection|
-      selection.game.week.week_number if selection.game.present?
+      selection.game.week.try(:week_number) if selection.game.present?
     end
 
     column :game_id do |selection|
@@ -33,6 +33,9 @@ ActiveAdmin.register Selection do
     actions
   end
 
+  
+
+
 form do |f|
   f.inputs do
      f.input :pref_pick_team, :label => 'Preference Pick Team', :as => :select, :collection => Team.order('region ASC').all.map{|t| ["#{t.region + " " + t.name}", t.id]}, selected: selection.pref_pick_team
@@ -42,9 +45,29 @@ form do |f|
   end
 end
 
+  filter :user, label: 'User', collection: User.order('name desc')
+  # filter :game, :collection => Selection.all.where(week_id: Week.last).map(&:game).map(&:home_team)
+  
 
+  
+
+
+  
 
   remove_filter :correct
   remove_filter :admin
+  remove_filter :created_at
+  remove_filter :updated_at
+  remove_filter :points
+  remove_filter :pref_pick_int
+  remove_filter :pref_pick_str
+  remove_filter :spread_pick
+  remove_filter :spread_pick_team
+  remove_filter :pref_pick_team
+  
+
+  
+
+
 
 end
