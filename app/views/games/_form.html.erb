@@ -3,23 +3,23 @@
 
   <div class="form-group">
     <%= f.label :spread, :class => 'control-label col-md-2' %>
-    <div class="col-md-10">
+    <div class="col-md-12">
       <%= f.number_field :spread, :step => 0.5, :class => 'text-field form-control' %>
     </div>
   </div>
   <div class="form-group">
     <%= f.label :home_team_id, :class => 'control-label col-md-2' %>
-    <div class="col-md-10">
-      <%= f.select :home_team_id, list_teams, {include_blank: "Select Home Team"}, {class: "selectpicker"} %>
-    </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :away_team_id, :class => 'control-label col-md-2' %>
-    <div class="col-md-10">
-    <%= f.select :away_team_id, list_teams, {include_blank: "Select Away Team"}, {class: "selectpicker"} %>
+    <div class="col-md-12">
+      <%= f.select :home_team_id, list_teams, {include_blank: "Select Home Team"}, {class: ""} %>
     </div>
   </div>
 
+  <div class="form-group">
+    <%= f.label :away_team_id, :class => 'control-label col-md-2' %>
+    <div class="col-md-12">
+    <%= f.select :away_team_id, list_teams, {include_blank: "Select Away Team"}, {class: ""} %>
+    </div>
+  </div>
 
   <div class="form-group">
     <div class='col-md-offset-2 col-md-10'>

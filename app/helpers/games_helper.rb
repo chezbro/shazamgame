@@ -3,6 +3,10 @@ module GamesHelper
     Team.all.map { |t| [t.region + " " + t.name, t.id] }.sort_by(&:first)
   end
 
+  def teams
+    Team.all.map { |t| [t.region + " " + t.name, t.id] }
+  end
+
   def fave(game)
     if game.spread < 0
       game.home_team.region + " " + game.home_team.name
