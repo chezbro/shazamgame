@@ -32,7 +32,6 @@ ActiveAdmin.register Selection do
     end
     actions
   end
-
   
 
 
@@ -46,13 +45,16 @@ form do |f|
 end
 
   filter :user, label: 'User', collection: User.order('name asc')
-  # filter :game, :collection => Selection.all.where(week_id: Week.last).map(&:game).map(&:home_team)
-  
+  # filter :game, :collection => Selection.all.where(week_id: Week.last).map(&:game)
+  filter :game_id, as: :select, collection: proc {
+  Game.where(week_id: Week.last.id).map { |game| 
+    home_team = Team.find_by(id: game.home_team_id)
+    away_team = Team.find_by(id: game.away_team_id)
+    ["#{home_team.name} vs #{away_team.name}", game.id]
+  }
+}
 
-  
 
-
-  
 
   remove_filter :correct
   remove_filter :admin
