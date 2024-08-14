@@ -161,7 +161,8 @@ GEM
     mini_mime (1.1.5)
     mini_portile2 (2.8.7)
     minitest (5.25.0)
-    multi_xml (0.6.0)
+    multi_xml (0.7.1)
+      bigdecimal (~> 3.1)
     net-http (0.4.1)
       uri
     net-imap (0.4.14)
@@ -348,7 +349,7 @@ DEPENDENCIES
   whenever
 
 RUBY VERSION
-   ruby 3.0.0p0
+   ruby 3.2.2p53
 
 BUNDLED WITH
-   2.4.12
+   2.4.22
