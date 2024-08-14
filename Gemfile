@@ -4,9 +4,9 @@ source 'https://rubygems.org'
 
 ruby "3.2.2"
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.2', '>= 5.2.4'
+gem 'rails', '~> 6.1', '>= 6.1.5'
 # Use postgresql as the database for Active Record
-gem 'pg', '~> 1.5.3'
+gem 'pg'
 # Use SCSS for stylesheets
 gem 'sass-rails'
 # Use Uglifier as compressor for JavaScript assets
@@ -40,11 +40,11 @@ gem 'spring',        group: :development
 # Use debugger
 # gem 'debugger', group: [:development, :test]
 
-gem 'bundler', '~> 2.4.12'
+gem 'bundler'
 gem 'bootstrap-sass'
 gem 'bootstrap-sass-extras'
 gem 'activeadmin'
-gem 'devise', '~> 4.9', '>= 4.9.2'
+gem 'devise'
 gem 'bootstrap-toggle-rails'
 gem 'binding_of_caller'
 gem 'rails_config'
@@ -60,11 +60,11 @@ gem 'bootstrap-select-rails'
 gem 'whenever'
 gem 'rb-readline'
 gem 'figaro'
-gem 'railties', '~> 5.2.4'
-gem 'inherited_resources', '~> 1.10'
-gem 'actionpack', '~> 5.0', '>= 5.0.7.2'
-gem 'psych', '~> 3.2'
-gem 'sprockets-rails', '2.3.3'
+gem 'railties'
+gem 'inherited_resources'
+gem 'actionpack'
+gem 'psych'
+gem 'sprockets-rails'
 
 group :development do
   gem 'byebug'
