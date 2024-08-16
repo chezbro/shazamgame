@@ -65,6 +65,7 @@ gem 'inherited_resources'
 gem 'actionpack'
 gem 'psych'
 gem 'sprockets-rails'
+gem "recaptcha"
 
 group :development do
   gem 'byebug'
