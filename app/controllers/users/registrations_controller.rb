@@ -3,7 +3,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   include ApplicationHelper
   prepend_before_action :check_captcha, only: [:create]
 
-  def create
+
     def create
       if verify_recaptcha
         super
@@ -12,10 +12,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
         clean_up_passwords(resource)
         flash.now[:alert] = "There was an error with the recaptcha code below. Please re-enter the code."
         flash.delete :recaptcha_error
-        render :new
+        redirect_to root
       end
     end
-  end
+
 
   def new
     super
