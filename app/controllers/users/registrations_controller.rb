@@ -29,7 +29,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def check_captcha
     unless verify_recaptcha
       self.resource = resource_class.new sign_up_params
-      respond_with_navigational(resource) { redirect_to :back }
+      respond_with_navigational(resource) { redirect_back }
     end 
   end
 
