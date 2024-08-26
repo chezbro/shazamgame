@@ -12,7 +12,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
         clean_up_passwords(resource)
         flash.now[:alert] = "There was an error with the recaptcha code below. Please re-enter the code."
         flash.delete :recaptcha_error
-        redirect_to root_url
+        render :new
       end
     end
 
