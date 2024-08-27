@@ -69,12 +69,7 @@
 
        
     <div class="form-group">
-      <div style="float:right;">
-      <%# START add reCAPTCHA %>
-        <%= flash[:recaptcha_error] %>
-        <%= recaptcha_tags %>
-      <%# END add reCAPTCHA %>
-      </div>
+
       <div class="col-md-offset-4 col-md-8">
         <%= f.submit "Sign Up", class: "btn btn-primary" %>
       </div>
