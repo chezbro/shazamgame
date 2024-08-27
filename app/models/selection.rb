@@ -9,6 +9,14 @@ class Selection < ActiveRecord::Base
   validates_presence_of :pref_pick_team
   validates_presence_of :spread_pick_team
 
+  def self.ransackable_attributes(auth_object = nil)
+    authorizable_ransackable_attributes
+  end
+
+  def self.ransackable_associations(auth_object = nil)
+    authorizable_ransackable_associations
+  end
+  
   # before_save :pref_pick_unique
 # private
 
