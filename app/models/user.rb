@@ -182,4 +182,12 @@ class User < ActiveRecord::Base
 
 
   devise authentication_keys: [:login]
+
+  def self.ransackable_associations(auth_object = nil)
+    ["selections", "points", "messages"]
+  end
+
+  def self.ransackable_attributes(auth_object = nil)
+    ["cumulative_points", "email", "id", "name", "nickname", "username", "weekly_points", "created_at", "updated_at"]
+  end
 end

@@ -1,48 +1,43 @@
 ActiveAdmin.register User do
-  permit_params :email, :encrypted_password, :reset_password_token, :reset_password_sent_at, :remember_created_at, :sign_in_count, :current_sign_in_at, :last_sign_in_at, :current_sign_in_ip, :last_sign_in_ip, :name, :nickname, :name, :weekly_points, :cumulative_points, :fav_teams
+  permit_params :email, :name, :nickname, :username, :weekly_points, :cumulative_points
 
-# See permitted parameters documentation:
-# https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
-#
-# permit_params :list, :of, :attributes, :on, :model
-#
-# or
-#
-# permit_params do
-#   permitted = [:permitted, :attributes]
-#   permitted << :other if params[:action] == 'create' && current_user.admin?
-#   permitted
-# end
+  # Remove or comment out the existing index block
+  # index do
+  #   ...
+  # end
+
+  filter :email
+  filter :username
+  filter :name
+  filter :nickname
+  filter :weekly_points
+  filter :cumulative_points
+  filter :created_at
+  filter :updated_at
+
   index do
-
-    column :name do |user|
-      user.name + " (#{user.username})"
-    end
-
-    column :weekly_points do |user|
-      user.weekly_points
-    end
-
-    column :cumulative_points do |user|
-      user.cumulative_points
-    end
-
-    column :favorite_teams do |user|
-      user.fav_teams
-    end
+    selectable_column
+    id_column
+    column :email
+    column :username
+    column :name
+    column :nickname
+    column :weekly_points
+    column :cumulative_points
+    column :created_at
+    column :updated_at
     actions
   end
 
-form do |f|
-  f.inputs do
-    f.input :name, :input_html => {:readonly =>
-true}
-    f.input :weekly_points, label: "Weekly Points"
-    f.input :cumulative_points, label: "Cumulative Points"
-    f.input :fav_teams, label: "Favorite Teams"
-    f.submit
+  form do |f|
+    f.inputs do
+      f.input :email
+      f.input :name
+      f.input :nickname
+      f.input :username
+      f.input :weekly_points
+      f.input :cumulative_points
+    end
+    f.actions
   end
-end
-
-
 end
