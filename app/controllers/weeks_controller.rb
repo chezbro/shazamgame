@@ -4,7 +4,7 @@ class WeeksController < ApplicationController
   # GET /weeks
   # GET /weeks.json
   def index
-    @weeks = Week.all.order(:week_number, :bowl_game)
+    @weeks = Week.all.order(Arel.sql("CAST(week_number AS INTEGER), bowl_game DESC"))
     @game = Game.new
     @games = Game.where(week_id: 1).where(game_selected_by_admin: true)
 
