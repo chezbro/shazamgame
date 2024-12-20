@@ -4,7 +4,11 @@ Rails.application.routes.draw do
 
   resources :points
 
-  resources :weeks
+  resources :weeks do
+    member do
+      patch :close_week
+    end
+  end
 
   resources :users, only: [:show]
 

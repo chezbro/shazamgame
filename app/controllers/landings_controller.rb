@@ -40,6 +40,24 @@ class LandingsController < ApplicationController
   end
 
   def player_selections
+    # Find the active week(s)
+    @week = Week.where(active: true).first
+    
+    if @week.nil?
+      # Fallback to last week if no active week
+      @week = Week.last
+    end
+    
+    # Get all weeks
+    @all_weeks = Week.all.order(created_at: :desc)
+    
+    # Get games for this week
+    @games = Game.where(week_id: @week.id).where(game_selected_by_admin: true) if @week
+    
+    # Add logging to help debug
+    Rails.logger.info "Week: #{@week.inspect}"
+    Rails.logger.info "Games count: #{@games&.count}"
+    Rails.logger.info "All weeks count: #{@all_weeks&.count}"
   end
 
   def team_selections

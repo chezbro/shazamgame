@@ -4,7 +4,7 @@ class WeeksController < ApplicationController
   # GET /weeks
   # GET /weeks.json
   def index
-    @weeks = Week.all
+    @weeks = Week.all.order(:week_number, :bowl_game)
     @game = Game.new
     @games = Game.where(week_id: 1).where(game_selected_by_admin: true)
 
@@ -29,7 +29,7 @@ class WeeksController < ApplicationController
     @week = Week.new
     # Build n-games for dev
     if Rails.env.development?
-      13.times do
+      2.times do
         games = @week.games.build
       end
     else
@@ -48,45 +48,55 @@ class WeeksController < ApplicationController
   # POST /weeks.json
   def create
     @week = Week.new(week_params)
-    @week.games.new(params[:games_attributes])
-    # extra game is created above
+    @team = Team.new # needed for the form
 
     respond_to do |format|
       if @week.save
         week_number = Week.all.count.to_s
         @week.week_number = week_number
-        # User.set_weekly_scores
-        # here for week to week leaderboard (Score.create(week,user,points_for_week)  )
-        User.set_weekly_points_to_zero
-        Week.where(active: true).each do |week|
-          week.active = false
-          week.save!
+        
+        if @week.bowl_game
+          # For bowl weeks, keep other bowl weeks active
+          # Only deactivate regular season weeks
+          Week.where(active: true, bowl_game: false).each do |week|
+            week.active = false
+            week.save!
+          end
+        else
+          # For regular season weeks, deactivate all other weeks
+          Week.where(active: true).each do |week|
+            week.active = false
+            week.save!
+          end
         end
+
         @week.active = true
         @week.save!
 
-        Game.last.delete
-        # this is needed ^
+        # Add this section to ensure games are properly set up
+        @week.games.each do |game|
+          game.active = true
+          game.has_game_been_scored = false
+        end
+        @week.save!
 
-        # User.delete_weekly_points
+        # Only remove extra game if it wasn't properly associated
+        last_game = Game.last
+        if last_game && last_game.week_id.nil?
+          last_game.delete
+        end
+
         format.html { redirect_to root_url, notice: "New Week successfully created" }
         format.json { head :no_content }
       else
-        format.html { redirect_to root_url, notice: "Unable to Create Week" }
-        format.json { head :no_content }
+        # Render the form again with errors
+        format.html { 
+          render :new, 
+          alert: "Unable to create week: #{@week.errors.full_messages.join(', ')}" 
+        }
+        format.json { render json: @week.errors, status: :unprocessable_entity }
       end
     end
-
-    # respond_to do |format|
-    #   if @week.save
-    #     format.html { redirect_to @week, notice: 'Week was successfully created.' }
-    #     format.json { render :show, status: :created, location: @week }
-    #   else
-    #     format.html { render :new }
-    #     format.json { render json: @week.errors, status: :unprocessable_entity }
-    #   end
-    # end
-
   end
 
   # PATCH/PUT /weeks/1
@@ -113,6 +123,16 @@ class WeeksController < ApplicationController
     end
   end
 
+  def close_week
+    @week = Week.find(params[:id])
+    
+    if @week.update(active: false)
+      redirect_to weeks_path, notice: "Week #{@week.week_number} #{@week.bowl_game? ? '(Bowl Games)' : ''} has been closed."
+    else
+      redirect_to weeks_path, alert: "Error closing week."
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_week
@@ -121,7 +141,22 @@ class WeeksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def week_params
-      params.require(:week).permit(:week_number, :active, :year, :year_in_datetime, games_attributes: [:id , :home_team_id, :away_team_id,:home_team_spread, :spread, :game_selected_by_admin, :active ])
+      params.require(:week).permit(
+        :bowl_game,
+        :week_number,
+        :active,
+        :year,
+        games_attributes: [
+          :id,
+          :home_team_id,
+          :away_team_id,
+          :home_team_spread,
+          :spread,
+          :game_selected_by_admin,
+          :active,
+          :bowl_game_name
+        ]
+      )
     end
 
 end

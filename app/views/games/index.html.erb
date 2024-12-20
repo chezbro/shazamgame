@@ -8,101 +8,116 @@
 
 <!-- New Table -->
 
-<table class="table table-bordered table-hover table-responsive">
-  <thead>
-    <tr>
-      <th colspan='3"'>Game A</th>
-      <th colspan='3"'>Game B</th>
-      <th colspan='1"'>Selection <br> <%= link_to "Reset Selections", reset_selections_path %></th>
-      <% if current_user.admin? == true %>
-      <th>Edit Game</th>
+<% @active_weeks.each do |week| %>
+  <% week_games = @games.select { |g| g.week_id == week.id } %>
+  <% if week_games.any? %>
+    <h4 class="mt-4 mb-3">
+      <% if week.bowl_game? %>
+        Bowl Games Week <%= week.week_number %>
+      <% else %>
+        Week <%= week.week_number %>
       <% end %>
-    </tr>
-    <tr>
-      <th>
-        Home Team
-      </th>
-      <th>
-        Away Team
-      </th>
-      <th>
-        Pref Pick Amount
-      </th>
-      <th>
-        Fave <%= link_to "Select All Faves", "#", class: "all_favorites", onclick: "faves()" %>
-      </th>
-      <th>
-        Dog <%= link_to "Select All Dogs", "#", class: "all_dogs", onclick: "dogs()" %>
-      </th>
-      <th>
-        Spread
-        <br>
-        <small>(Home Team)</small>
-      </th>
-      <th>* Must Submit*</th>
-      <% if current_user.admin? == true %>
-      <th>—</th>
-      <% end %>
-    </tr>
-  </thead>
-  <tbody>
-  <% if @week.present? %>
-    <% @week.games.each do |game| %>
-    <% check_existing_selection(game) %>
-      <%= simple_form_for([game, @selection], remote: true) do |s| %>
-        <!-- HIDE GAME < if game.id == 734 > -->
-        <% if !game.hidden? %>
-          <tr>
-            <td>
-              <%= s.label :pref_pick_team, game_home_team_name(game)  %>
-              <%= s.radio_button :pref_pick_team, game.home_team_id  %>
-            </td>
-            <td>
-              <%= s.label :pref_pick_team, game_away_team_name(game)  %>
-              <%= s.radio_button :pref_pick_team, game.away_team_id  %>
-            </td>
-            <td>
-              <%= s.select( :pref_pick_int, pref_pick_integers, {:include_blank => "Select an Amount"}, { class: "pref_pick_int"} )%>
-            </td>
-            <td>
-              <%= s.label :spread_pick_team, fave(game) %>
-              <%= s.radio_button :spread_pick_team, fave_selected(game), class: "radio_favorites" %>
-            </td>
-            <td>
-              <%= s.label :spread_pick_team, dog(game)  %>
-              <%= s.radio_button :spread_pick_team, dog_selected(game), class: "radio_dogs" %>
-            </td>
-            <td>
-              <%= spread_operator(game) + game.spread.to_s %>
-            </td>
-            <td>
-              <% if game.active? %>
-                <% if Selection.where(user_id: current_user).where(game_id: game.id).present? %>
-                  <%= s.submit "Update Selection", class: "btn btn-warning" + " selection-button-#{game.id}" %>
-                <% else %>
-                  <%= s.submit "Submit", class: "btn btn-primary" + " selection-button-#{game.id}" %>
-              <% end %>
-            </td>
-            <% if current_user.admin? == true %>
-            <td><%= link_to "Edit this Game", edit_game_path(game.id)%></td>
-            <% end %>
+    </h4>
 
-              <!-- <td> s.submit "Hide", class: "btn btn-primary" + " selection-button-#{game.id}" </td>-->
+    <table class="table table-bordered table-hover table-responsive">
+      <thead>
+        <tr>
+          <th colspan='3"'>Game A</th>
+          <th colspan='3"'>Game B</th>
+          <th colspan='1"'>Selection <br> <%= link_to "Reset Selections", reset_selections_path %></th>
+          <% if current_user.admin? == true %>
+          <th>Edit Game</th>
           <% end %>
-            <%= s.hidden_field :game_id,  value: game.id %>
-            <%= s.hidden_field :user_id,  value: current_user.id %>
-            <%= s.hidden_field :week_id,  value: game.week_id %>
-        <% end %>
         </tr>
+        <tr>
+          <th>
+            Home Team
+          </th>
+          <th>
+            Away Team
+          </th>
+          <th>
+            Pref Pick Amount
+          </th>
+          <th>
+            Fave <%= link_to "Select All Faves", "#", class: "all_favorites", onclick: "faves()" %>
+          </th>
+          <th>
+            Dog <%= link_to "Select All Dogs", "#", class: "all_dogs", onclick: "dogs()" %>
+          </th>
+          <th>
+            Spread
+            <br>
+            <small>(Home Team)</small>
+          </th>
+          <th>* Must Submit*</th>
+          <% if current_user.admin? == true %>
+          <th>—</th>
+          <% end %>
+        </tr>
+      </thead>
+      <tbody>
+        <% week_games.each do |game| %>
+          <% check_existing_selection(game) %>
+          <%= simple_form_for([game, @selection], remote: true) do |s| %>
+            <% if !game.hidden? %>
+              <tr>
+                <td>
+                  <%= s.label :pref_pick_team, game_home_team_name(game)  %>
+                  <%= s.radio_button :pref_pick_team, game.home_team_id  %>
+                </td>
+                <td>
+                  <%= s.label :pref_pick_team, game_away_team_name(game)  %>
+                  <%= s.radio_button :pref_pick_team, game.away_team_id  %>
+                </td>
+                <td>
+                  <%= s.select( :pref_pick_int, pref_pick_integers, {:include_blank => "Select an Amount"}, { class: "pref_pick_int"} )%>
+                </td>
+                <td>
+                  <%= s.label :spread_pick_team, fave(game) %>
+                  <%= s.radio_button :spread_pick_team, fave_selected(game), class: "radio_favorites" %>
+                </td>
+                <td>
+                  <%= s.label :spread_pick_team, dog(game)  %>
+                  <%= s.radio_button :spread_pick_team, dog_selected(game), class: "radio_dogs" %>
+                </td>
+                <td>
+                  <%= spread_operator(game) + game.spread.to_s %>
+                </td>
+                <td>
+                  <% if game.active? %>
+                    <% if Selection.where(user_id: current_user).where(game_id: game.id).present? %>
+                      <%= s.submit "Update Selection", class: "btn btn-warning" + " selection-button-#{game.id}" %>
+                    <% else %>
+                      <%= s.submit "Submit", class: "btn btn-primary" + " selection-button-#{game.id}" %>
+                  <% end %>
+                </td>
+                <% if current_user.admin? == true %>
+                <td><%= link_to "Edit this Game", edit_game_path(game.id)%></td>
+                <% end %>
+
+                  <!-- <td> s.submit "Hide", class: "btn btn-primary" + " selection-button-#{game.id}" </td>-->
+              <% end %>
+                <%= s.hidden_field :game_id,  value: game.id %>
+                <%= s.hidden_field :user_id,  value: current_user.id %>
+                <%= s.hidden_field :week_id,  value: game.week_id %>
+            <% end %>
+            </tr>
+          <% end %>
         <% end %>
-    <% end %>
-    <!-- END OF HIDE GAME < end > -->
+      </tbody>
+    </table>
   <% end %>
-  </tbody>
-</table>
+<% end %>
+
 <div>
-  <!-- <p><b>Game "A"</b> - Pick the teams that will win the games and rank them from 13-1. Each correct pick earns you points equal to the 13-1 ranking number you assigned it. You may not use the same ranking number (between 13 and 1) twice.</p> -->
-  <p><b>Game "A"</b> - You may not use the same Ranking number twice UNLESS IT IS FOR PICKING THE BOWLS then you must use each number twice and please double check. </p>
+  <p><b>Game "A"</b> - 
+    <% if @active_weeks.any?(&:bowl_game?) %>
+      For Bowl Games: You must use each ranking number (1-13) twice since there are more games.
+    <% else %>
+      Pick the teams that will win the games and rank them from 13-1. You may not use the same ranking number twice.
+    <% end %>
+  </p>
   <p><b>Game "B"</b> - Pick the teams that will beat the point spread. Each correct pick earns you 7 points. In a rush? Click the Select All Faves or Dogs link to quickly fill in all the Favorites or Underdogs for Game B.</p>
   <p></p>
   <p>*Please remember you must press the Submit button next to each Game in order to submit your picks.</p>

@@ -4,17 +4,37 @@
   </div>
 
   <%= simple_form_for @week, url: url_for(action: "create", controller: "weeks"), method: "post" do |f| %>
-    <%= f.fields_for :games do |ff, index| %>
+    <% if @week.errors.any? %>
+      <div class="alert alert-danger">
+        <h4><%= pluralize(@week.errors.count, "error") %> prohibited this week from being saved:</h4>
+        <ul>
+          <% @week.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+    
     <div class="margin-20-0">
-      <h4>Game <%= ff.options[:child_index] + 1 %>:</h4>
-      <%= ff.select :home_team_id, list_teams, {include_blank: "Select Home Team"}, {class: "select-class"} %> 
-
-      <%= ff.select :away_team_id, list_teams, {include_blank: "Select Away Team" }, {class: "select-class"} %>
-
-      <%= ff.select :spread, options_for_select( (-100..100).step(0.5).map{|n| n%1 == 0 ? n.to_i : n} ), {include_blank: "Select Home Team Spread"}, {class: "select-class"} %>
-      <%= ff.hidden_field :game_selected_by_admin, value: true %>
-      <%= ff.hidden_field :active, value: true %>
+      <%= f.input :bowl_game, as: :boolean, label: 'Bowl Game Week?' %>
     </div>
+    
+    <%= f.fields_for :games do |ff, index| %>
+      <div class="margin-20-0">
+        <h4>
+          <% if @week.bowl_game? %>
+            <%= ff.select :bowl_game_name, bowl_game_names, { prompt: "Select Bowl Game" }, class: "select-class" %>
+          <% else %>
+            Game <%= ff.options[:child_index] + 1 %>:
+          <% end %>
+        </h4>
+        
+        <%= ff.select :home_team_id, list_teams, {include_blank: "Select Home Team"}, {class: "select-class"} %>
+        <%= ff.select :away_team_id, list_teams, {include_blank: "Select Away Team"}, {class: "select-class"} %>
+        <%= ff.select :spread, options_for_select((-100..100).step(0.5).map{|n| n%1 == 0 ? n.to_i : n}), {include_blank: "Select Home Team Spread"}, {class: "select-class"} %>
+        <%= ff.hidden_field :game_selected_by_admin, value: true %>
+        <%= ff.hidden_field :active, value: true %>
+      </div>
     <% end %>
     <%= f.submit "Create New Week", data: { confirm: 'Are you sure you want to create a New Week?' }, class: "btn btn-primary" %>
   <% end %>

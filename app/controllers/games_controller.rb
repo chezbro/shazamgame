@@ -11,9 +11,26 @@ class GamesController < ApplicationController
   # GET /games.json
 
   def index
-    @weeks = Week.where(active: false)
-    @week = Week.last if Week.last.present?
-    # @selection = Selection.new
+    # Find all active weeks
+    @active_weeks = Week.where(active: true)
+    
+    if @active_weeks.empty?
+      @active_weeks = [Week.last] if Week.last.present?
+    end
+    
+    # Set @week to the first active week (or last week if no active weeks)
+    @week = @active_weeks.first
+    
+    # Get games for all active weeks that haven't been scored
+    @games = Game.where(week_id: @active_weeks.pluck(:id))
+             .where(game_selected_by_admin: true)
+             .where(has_game_been_scored: false)
+             .includes(:week) # Eager load weeks to avoid N+1 queries
+             .order("weeks.week_number DESC") # Order by week number descending
+             
+    Rails.logger.info "Active weeks: #{@active_weeks&.map(&:week_number)}"
+    Rails.logger.info "Week: #{@week&.week_number}"
+    Rails.logger.info "Games count: #{@games&.count}"
   end
 
   # GET /games/1
@@ -51,18 +68,37 @@ class GamesController < ApplicationController
   # PATCH/PUT /games/1
   # PATCH/PUT /games/1.json
   def update
+    @game = Game.find(params[:id])
+    
     respond_to do |format|
-        if @game.update(game_params)
+      if @game.update(game_params)
+        # Reset game if it was previously scored
+        if @game.has_game_been_scored?
+          @game.game_reset
+        end
+        
+        begin
           @game.check_selection_and_tally_points
-          @game.tally_points
-          # dont want to reset the total_weekly_points, want to preserve them and only delete when she scores game winners
           @game.has_game_been_scored = true
-        @game.save!
-        @game.reload
-        format.html { redirect_to Week.last, notice: 'Score was successfully added.' }
+          @game.save!
+
+          format.html { redirect_to week_path(@game.week), notice: 'Scores updated successfully.' }
+          format.json { render :show, status: :ok, location: @game }
+        rescue => e
+          Rails.logger.error "Error updating game scores: #{e.message}"
+          Rails.logger.error e.backtrace.join("\n")
+          format.html { 
+            redirect_to week_path(@game.week), 
+            alert: "Unable to update scores: #{e.message}" 
+          }
+          format.json { render json: { error: e.message }, status: :unprocessable_entity }
+        end
       else
-        flash[:success] = "Error"
-        format.html { redirect_to(:back) }
+        Rails.logger.error "Game update failed: #{@game.errors.full_messages.join(', ')}"
+        format.html { 
+          redirect_to week_path(@game.week), 
+          alert: "Unable to update scores: #{@game.errors.full_messages.join(', ')}" 
+        }
         format.json { render json: @game.errors, status: :unprocessable_entity }
       end
     end
@@ -191,6 +227,20 @@ end
     end
   end
 
+  def player_selections
+    # Find all active weeks
+    @active_weeks = Week.where(active: true)
+    
+    # Get games for all active weeks that haven't been scored yet
+    @games = Game.where(week_id: @active_weeks.pluck(:id))
+               .where(game_selected_by_admin: true)
+               .where(has_game_been_scored: false)
+               .includes(:week)
+    
+    Rails.logger.info "Active weeks: #{@active_weeks.map(&:week_number)}"
+    Rails.logger.info "Games count: #{@games&.count}"
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_game
@@ -203,6 +253,30 @@ end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def game_params
-      params.require(:game).permit(:game_update,:week_id, :user_id, :points, :is_home_team, :spread, :home_team_id, :away_team_id, :home_team_pref_pick, :away_team_pref_pick, :home_team_spread_pick, :away_team_spread_pick, :home_team_covered_spread, :away_team_covered_spread, :tie_game, :game_selected_by_admin, :home_team_score, :away_team_score, :home_team_won_straight_up, :away_team_won_straight_up, :team_that_won_straight_up, :team_that_covered_spread, selections_attributes: [:id, :pref_pick_team, :pref_pick_int, :spread_pick_team, :user_id, :game_id])
+      params.require(:game).permit(
+        :home_team_score, 
+        :away_team_score,
+        :has_game_been_scored,
+        :bowl_game_name,
+        :team_that_won_straight_up,
+        :team_that_covered_spread,
+        :home_team_won_straight_up,
+        :away_team_won_straight_up,
+        :tie_game,
+        :active,
+        :spread,
+        :week_id,
+        :home_team_id,
+        :away_team_id,
+        selections_attributes: [
+          :id,
+          :pref_pick_team,
+          :pref_pick_int,
+          :spread_pick_team,
+          :user_id,
+          :game_id,
+          :week_id
+        ]
+      )
     end
 end

@@ -5,12 +5,15 @@ class SelectionsController < ApplicationController
   # GET /selections
   # GET /selections.json
   def index
-    if current_user.admin? == true
-      @selections = Selection.joins(:game).order("games.week_id DESC").order("user_id DESC").order("pref_pick_int ASC").all
-    else
-      @selections = Selection.where(user_id: current_user).joins(:game).order("games.week_id DESC").order("pref_pick_int ASC").all
-    end
-
+    # Get selections for current user only
+    @selections = Selection.where(user_id: current_user.id)
+                         .joins(:game)
+                         .includes(:game)
+                         .order("games.week_id DESC, games.id")
+                         .all
+                         
+    # Group selections by week for easier display
+    @selections_by_week = @selections.group_by { |s| s.game.week }
   end
 
   # GET /selections/1

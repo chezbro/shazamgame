@@ -19,6 +19,12 @@ class Game < ActiveRecord::Base
   # validates_presence_of :away_team_id
   # validates_presence_of :game_selected_by_admin
 
+  # validates :bowl_game_name, presence: true, if: -> { week&.bowl_game? }
+
+  validates :home_team_id, presence: true
+  validates :away_team_id, presence: true
+  validates :spread, presence: true
+
 # def validate_pref_pick(params)
 #   initial_arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
 #   removed_arr = []
@@ -129,43 +135,62 @@ def game_reset
 end
 
 def tally_points
-  # Game A is Pref Pick (each straight up win == pref_pick_int)
-  # Game B is Spread Pick (each correct pick against spread += 7)
+  Rails.logger.info "Tallying points for game #{id} (#{bowl_game_name if week&.bowl_game?})"
+  
   User.all.each do |user|
     user.selections.each do |selection|
-      if selection.game_id == self.id && selection.game.week.id == Week.last.id
+      if selection.game_id == self.id && selection.game.week.id == self.week.id
+        Rails.logger.info "Processing selection for user #{user.id} (#{user.username})"
+        
+        # Set spread pick result (Game B)
         if selection.spread_pick_team == self.team_that_covered_spread
           user.weekly_points += 7
-          # user.total_weekly_points += 7
           user.weekly_points_game_b += 7
           user.cumulative_points += 7
           selection.correct_spread_pick = true
           selection.save!
           user.save!
+          Rails.logger.info "User #{user.username} got spread pick correct"
+        else
+          selection.correct_spread_pick = false
+          selection.save!
+          Rails.logger.info "User #{user.username} got spread pick incorrect"
         end
+
+        # Set preference pick result (Game A)
         if selection.pref_pick_team == self.team_that_won_straight_up
           user.weekly_points += selection.pref_pick_int
-          # user.total_weekly_points += selection.pref_pick_int
           user.weekly_points_game_a += selection.pref_pick_int
           user.cumulative_points += selection.pref_pick_int
           selection.correct_pref_pick = true
           selection.save!
           user.save!
+          Rails.logger.info "User #{user.username} got pref pick correct"
+        else
+          selection.correct_pref_pick = false
+          selection.save!
+          Rails.logger.info "User #{user.username} got pref pick incorrect"
         end
-        if selection.game.tie_game == true
-          user.weekly_points += 7
-          user.cumulative_points += 7
+
+        # Handle tie games
+        if self.tie_game == true
+          points_to_add = 7 + selection.pref_pick_int
+          user.weekly_points += points_to_add
+          user.cumulative_points += points_to_add
           user.weekly_points_game_a += selection.pref_pick_int
           user.weekly_points_game_b += 7
-          user.weekly_points += selection.pref_pick_int
-          user.cumulative_points += selection.pref_pick_int
           selection.correct_spread_pick = true
           selection.save!
           user.save!
+          Rails.logger.info "Game was a tie, user #{user.username} got points"
         end
       end
     end
   end
+  
+  # Mark game as scored
+  self.has_game_been_scored = true
+  self.save!
 end
 
 def reset_has_game_been_scored
@@ -175,16 +200,23 @@ def reset_has_game_been_scored
   end
 
 def check_selection_and_tally_points
-    # We want the current user's selection on this Game
-    self.set_team_that_won_straight_up
-    self.save!
-    self.which_team_covered_spread
-    self.save!
-    self.reload
-    self.active = false
-    self.save!
-    self.reload
-  end
+  Rails.logger.info "Starting to score game #{id}"
+  self.set_team_that_won_straight_up
+  self.save!
+  Rails.logger.info "Team that won straight up: #{team_that_won_straight_up}"
+  
+  self.which_team_covered_spread
+  self.save!
+  Rails.logger.info "Team that covered spread: #{team_that_covered_spread}"
+  
+  self.reload
+  self.active = false unless week.bowl_game?
+  self.save!
+  self.reload
+  
+  self.tally_points
+  Rails.logger.info "Game #{id} scored: has_game_been_scored=#{has_game_been_scored}"
+end
 
 
 
@@ -232,5 +264,12 @@ def check_selection_and_tally_points
 #   end
 # end
 
+def display_name
+  if week&.bowl_game? && bowl_game_name.present?
+    bowl_game_name
+  else
+    "Week #{week.week_number} - #{home_team.region} vs #{away_team.region}"
+  end
+end
 
 end

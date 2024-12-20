@@ -49,11 +49,13 @@ module GamesHelper
   end
 
   def game_home_team_name(game)
-    game.home_team.region + " " + game.home_team.name
+    return "No team selected" unless game.home_team
+    "#{game.home_team.region} #{game.home_team.name}"
   end
 
   def game_away_team_name(game)
-    game.away_team.region + " " + game.away_team.name
+    return "No team selected" unless game.away_team
+    "#{game.away_team.region} #{game.away_team.name}"
   end
 
   def full_game_name(game)

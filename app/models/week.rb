@@ -5,8 +5,19 @@ class Week < ActiveRecord::Base
   has_many :selections
   accepts_nested_attributes_for  :games
 
+  # Add bowl_game flag
+  after_initialize :set_defaults
 
-# This will run after all the Selections are given points or not.
+  # Remove or modify this line
+  # validates :bowl_game_name, uniqueness: true, if: :bowl_game?
+
+  private
+
+  def set_defaults
+    self.bowl_game ||= false
+  end
+
+  # This will run after all the Selections are given points or not.
   # def close_week_and_tally_points(week, user)
   #   w = Week.find(week)
   #   user.weekly_points = 0

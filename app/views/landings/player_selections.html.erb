@@ -17,14 +17,19 @@
 
     </div>
 
-    <% @all_weeks.each do |week| %>
- 
-
-    <%= f.submit "Submit Selections", :onclick => "return confirm('Please Confirm These Scores Are Correct.')", class: "margin-10-0-30-0 btn btn-primary" if( (current_user.admin? == true) && (game.week.active == true) && (game.has_game_been_scored != true) ) %>
-
-    <!-- <#%= link_to 'Reset Game', game_reset_path(game: game.id),
-        :onclick => "return confirm('Are you sure you want to reset this game?')", style: "background-color: #f55555;", class: "margin-10-0-30-0 btn btn-primary" if( (current_user.admin? == true) && (game.week.active == true) && (game.has_game_been_scored != false) ) %> -->
-    <% end %>
+    <% @games.each do |game| %>
+      <div class="divTableRow">
+        <div class="divTableCell"><%= game.home_team.region %></div>
+        <div class="divTableCell"><%= game.away_team.region %></div>
+        <div class="divTableCell"><%= game.spread %></div>
+        <% if current_user.admin? && game.week.active && !game.has_game_been_scored %>
+          <%= form_for game do |f| %>
+            <%= f.submit "Submit Selections", 
+                onclick: "return confirm('Please Confirm These Scores Are Correct.')", 
+                class: "margin-10-0-30-0 btn btn-primary" %>
+          <% end %>
+        <% end %>
+      </div>
     <% end %>
     </div>
     </div>

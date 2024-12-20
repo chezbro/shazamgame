@@ -4,32 +4,23 @@
   <% else %>
     <h3>Please Select Week:</h3>
   <% end %>
-  <div class="divTable">
-  <div class="divTableBody">
-
-  <div class="divTableRow">
-    <div class="divTableCell"><h4 class="text-align-center">Week Number</h4></div>
-    <div class="divTableCell"><h4 class="text-align-center">Scores</h4></div>
-  </div>
   
-  <% @weeks.order(:id).each do |week| %>
-    <div class="divTableRow">
-      <div class="divTableCell"><%= "#{week.week_number}" %></div>
-      <% if current_user.admin? %>
-        <% if week.active? %>
-          <div class="divTableCell"><%= link_to "Add Scores for Week #{week.week_number}", week_path(week) %></div>
-        <% else %>
-           <div class="divTableCell"><%= link_to "View Scores for Week #{week.week_number}", week_path(week) %></div>
-        <% end %>
-      <% else %>
-        <% if week.active? %>
-          <div class="divTableCell"><%= link_to "View Scores for this Week", week_path(week) %></div>
-        <% else %>
-        <div class="divTableCell"><%= link_to "View Scores for Week #{week.week_number}", week_path(week) %></div>
-        <% end %>
+  <div class="divTable">
+    <div class="divTableBody">
+      <% @weeks.each do |week| %>
+        <div class="divTableRow">
+          <div class="divTableCell">
+            <%= link_to week_path(week) do %>
+              <% if week.bowl_game? %>
+                Bowl Games Week <%= week.week_number %>
+              <% else %>
+                Week <%= week.week_number %>
+              <% end %>
+              <%= "(Active)" if week.active? %>
+            <% end %>
+          </div>
+        </div>
       <% end %>
     </div>
-  <% end %>
-</div>
-</div>
+  </div>
 </div>

