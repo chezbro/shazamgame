@@ -1,134 +1,146 @@
 <p id="notice"><%= notice %></p>
-<style media="screen">
-// DIV Tables
 
-/* DivTable.com */
+<% content_for :head do %>
+  <style>
+    /* Admin Selections Table Styles */
+    .admin-selections-table {
+      background: white;
+      border: 1px solid #dee2e6;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      font-family: inherit;
+    }
 
-.orangeGamesTable{
-  background: linear-gradient(to left, #ff6540, #fb7140)!important;
-  color: #fff;
-  a{
-    color: #fff;
-  }
-  .divTableCell, .divTableHead {
-    border: 1px solid #f78760;
-  }
-}
+    .admin-selections-table thead {
+      background: #ffcabc !important;
+      border-bottom: 2px solid #dee2e6;
+    }
 
-.divTable{
-  display: table;
-  width: 100%;
+    .admin-selections-table th {
+      font-weight: 600;
+      color: #2c3e50;
+      padding: 1rem;
+      border-bottom: none;
+      font-size: 1rem;
+      font-family: inherit;
+    }
 
-}
-.divTableRow {
-  display: table-row;
-}
-.divTableHeading {
-  background-color: #EEE;
-  display: table-header-group;
-}
-.divTableCell, .divTableHead {
-  border: 1px solid #999999;
-  display: table-cell;
-  padding: 10px 10px;
+    .admin-selections-table td {
+      padding: 1rem;
+      vertical-align: middle;
+      border-color: #edf2f7;
+      font-size: 1rem;
+      font-family: inherit;
+    }
 
-  a{
-    // color: #fff;
-  }
-}
-.divTableCell select{
-  width: 160px;
-}
-.divTableHeading {
-  background-color: #EEE;
-  display: table-header-group;
-  font-weight: bold;
-}
-.divTableFoot {
-  background-color: #EEE;
-  display: table-footer-group;
-  font-weight: bold;
-}
-.divTableBody {
-  display: table-row-group;
-}
+    .preference-number {
+      display: inline-block;
+      min-width: 2.5rem;
+      padding: 0.4rem 0.8rem;
+      font-weight: bold;
+      text-align: center;
+      background: #2c3e50;
+      border-radius: 6px;
+      color: white;
+      margin-left: 0.75rem;
+      font-size: 1.2rem;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
 
-</style>
+    .team-name {
+      font-weight: 600;
+      color: #2c3e50;
+      font-size: 1.1rem;
+    }
+
+    .status-pending { color: #f39c12; font-weight: 600; }
+    .status-success { color: #27ae60; font-weight: 600; }
+    .status-danger { color: #e74c3c; font-weight: 600; }
+  </style>
+<% end %>
+
 <div class="top-100 position-relative col-md-10 col-md-offset-1">
-  <h3>My Selections</h3>
+  <h3><%= current_user.admin? ? "All Users' Selections" : "My Selections" %></h3>
 
   <% @selections_by_week.each do |week, selections| %>
-    <h4 class="mt-4">Week <%= week.week_number %> <%= "(Bowl Games)" if week.bowl_game? %></h4>
+    <h4 class="week-header">
+      Week <%= week.week_number %> 
+      <%= "(Bowl Games)" if week.bowl_game? %>
+    </h4>
     
-    <% selections.group_by(&:game).each do |game, game_selections| %>
-      <div class="card mb-4">
-        <div class="card-header">
-          <strong><%= game_home_team_name(game) %> vs <%= game_away_team_name(game) %></strong>
-          <span class="float-right">Spread: <%= spread_operator(game) + game.spread.to_s %></span>
-        </div>
-        
-        <div class="table-responsive">
-          <table class="table table-bordered mb-0">
-            <thead>
+    <% if current_user.admin? %>
+      <div class="table-responsive">
+        <table class="table admin-selections-table">
+          <thead>
+            <tr>
+              <th>User</th>
+              <th>Game</th>
+              <th>Game A - Preference Pick</th>
+              <th>Game B - Spread Pick</th>
+              <th>Results</th>
+              <th>Date Selected</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% selections.sort_by { |s| [s.pref_pick_int.to_i, s.user.name] }.each do |selection| %>
               <tr>
-                <th>Game A - Preference</th>
-                <th>Game A - Points</th>
-                <th>Game B - Spread Pick</th>
-                <th>Game B - Result</th>
-                <th>Game B - Points</th>
-                <th>Date Selected</th>
-              </tr>
-            </thead>
-            <tbody>
-              <% game_selections.each do |selection| %>
-                <tr>
-                  <td>
-                    <%= selection_team(selection.pref_pick_team) %>
-                    (<%= selection.pref_pick_int %>)
-                  </td>
-                  <td>
+                <td>
+                  <strong><%= selection.user.name %></strong>
+                </td>
+                <td>
+                  <div><%= game_home_team_name(selection.game) %> vs <%= game_away_team_name(selection.game) %></div>
+                  <div class="game-spread">
+                    Spread: <%= spread_operator(selection.game) + selection.game.spread.to_s %>
+                  </div>
+                </td>
+                <td>
+                  <span class="team-name"><%= selection_team(selection.pref_pick_team) %></span>
+                  <span class="preference-number">#<%= selection.pref_pick_int %></span>
+                  <div>
                     <% if selection.correct_pref_pick.nil? %>
-                      <span class="text-warning">Pending</span>
+                      <small class="status-pending">Pending</small>
                     <% elsif selection.correct_pref_pick %>
-                      <span class="text-success"><%= selection.pref_pick_int %></span>
+                      <small class="status-success">Won <%= selection.pref_pick_int %> points</small>
                     <% else %>
-                      <span class="text-danger">0</span>
+                      <small class="status-danger">Lost</small>
                     <% end %>
-                  </td>
-                  <td>
-                    <%= selection_team(selection.spread_pick_team) %>
-                  </td>
-                  <td>
+                  </div>
+                </td>
+                <td>
+                  <%= selection_team(selection.spread_pick_team) %>
+                  <div>
                     <% if selection.correct_spread_pick.nil? %>
-                      <span class="text-warning">Pending</span>
+                      <small class="status-pending">Pending</small>
                     <% elsif selection.correct_spread_pick %>
-                      <span class="text-success">Won</span>
+                      <small class="status-success">Won 7 points</small>
                     <% else %>
-                      <span class="text-danger">Lost</span>
+                      <small class="status-danger">Lost</small>
                     <% end %>
-                  </td>
-                  <td>
-                    <% if selection.correct_spread_pick == true %>
-                      <span class="text-success">7</span>
-                    <% elsif selection.correct_spread_pick == false %>
-                      <span class="text-danger">0</span>
-                    <% else %>
-                      Pending
-                    <% end %>
-                  </td>
-                  <td><%= selection.updated_at.in_time_zone('Central Time (US & Canada)').strftime("%m/%d/%Y %I:%M%p") %></td>
-                </tr>
-              <% end %>
-            </tbody>
-          </table>
-        </div>
+                  </div>
+                </td>
+                <td>
+                  <% total_points = 0 %>
+                  <% total_points += selection.pref_pick_int if selection.correct_pref_pick %>
+                  <% total_points += 7 if selection.correct_spread_pick %>
+                  <strong class="<%= total_points > 0 ? 'status-success' : 'status-pending' %>">
+                    <%= total_points > 0 ? "#{total_points} points" : "Pending" %>
+                  </strong>
+                </td>
+                <td>
+                  <%= selection.updated_at.in_time_zone('Central Time (US & Canada)').strftime("%m/%d/%Y %I:%M%p") %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
       </div>
+    <% else %>
+      <%= render partial: 'user_selections', locals: { selections: selections } %>
     <% end %>
   <% end %>
 
   <% if @selections_by_week.empty? %>
     <div class="alert alert-info">
-      You haven't made any selections yet.
+      <%= current_user.admin? ? "No selections found." : "You haven't made any selections yet." %>
     </div>
   <% end %>
 </div>

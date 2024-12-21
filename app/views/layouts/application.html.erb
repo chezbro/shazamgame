@@ -2,11 +2,14 @@
 <html>
 <head>
   <title>Shazam13</title>
-  <%= stylesheet_link_tag    'application', media: 'all' %>
+  <%= stylesheet_link_tag 'application', media: 'all' %>
   <%= javascript_include_tag 'application' %>
   <%= favicon_link_tag 'favicon.ico' %>
   <%= csrf_meta_tags %>
-<meta name="viewport" content="width=device-width, initial-scale=1"/></head>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <%= yield :head %>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
 <body>
   <div class="app-border min-height-100 col-md-12 col-xs-12 margin-all-0 padding-all-0">
     <div class="row">

@@ -1,0 +1,62 @@
+<% selections.group_by(&:game).each do |game, game_selections| %>
+  <div class="card mb-4">
+    <div class="card-header">
+      <strong><%= game_home_team_name(game) %> vs <%= game_away_team_name(game) %></strong>
+      <span class="float-right">Spread: <%= spread_operator(game) + game.spread.to_s %></span>
+    </div>
+    
+    <div class="table-responsive">
+      <table class="table table-bordered mb-0">
+        <thead>
+          <tr>
+            <th>Game A - Preference</th>
+            <th>Game A - Points</th>
+            <th>Game B - Spread Pick</th>
+            <th>Game B - Result</th>
+            <th>Game B - Points</th>
+            <th>Date Selected</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% game_selections.each do |selection| %>
+            <tr>
+              <td>
+                <%= selection_team(selection.pref_pick_team) %>
+                (<%= selection.pref_pick_int %>)
+              </td>
+              <td>
+                <% if selection.correct_pref_pick.nil? %>
+                  <span class="text-warning">Pending</span>
+                <% elsif selection.correct_pref_pick %>
+                  <span class="text-success"><%= selection.pref_pick_int %></span>
+                <% else %>
+                  <span class="text-danger">0</span>
+                <% end %>
+              </td>
+              <td><%= selection_team(selection.spread_pick_team) %></td>
+              <td>
+                <% if selection.correct_spread_pick.nil? %>
+                  <span class="text-warning">Pending</span>
+                <% elsif selection.correct_spread_pick %>
+                  <span class="text-success">Won</span>
+                <% else %>
+                  <span class="text-danger">Lost</span>
+                <% end %>
+              </td>
+              <td>
+                <% if selection.correct_spread_pick == true %>
+                  <span class="text-success">7</span>
+                <% elsif selection.correct_spread_pick == false %>
+                  <span class="text-danger">0</span>
+                <% else %>
+                  Pending
+                <% end %>
+              </td>
+              <td><%= selection.updated_at.in_time_zone('Central Time (US & Canada)').strftime("%m/%d/%Y %I:%M%p") %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+<% end %> 

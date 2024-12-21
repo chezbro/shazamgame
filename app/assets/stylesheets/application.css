@@ -1,0 +1,50 @@
+/*
+ *= require_self
+ *= require selections
+ *= require_tree .
+ */ 
+
+/* Admin action buttons - with more specific selectors */
+.btn-group .btn.btn-lg {
+  padding: 6px 12px;  /* Even smaller padding */
+  font-size: 13px;    /* Smaller font */
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+}
+
+.btn-group .btn.btn-lg.btn-danger {
+  background-color: #dc3545 !important;
+  border-color: #dc3545 !important;
+  color: #ffffff !important;
+}
+
+.btn-group .btn.btn-lg.btn-danger:hover {
+  background-color: #c82333 !important;
+  border-color: #bd2130 !important;
+  color: #ffffff !important;
+}
+
+.btn-group .btn.btn-lg.btn-warning {
+  background-color: #f4b619 !important;
+  border-color: #f4b619 !important;
+  color: #ffffff !important;  /* Changed to white for better contrast */
+}
+
+.btn-group .btn.btn-lg.btn-warning:hover {
+  background-color: #e0a800 !important;
+  border-color: #d39e00 !important;
+  color: #ffffff !important;
+}
+
+.ms-2 {
+  margin-left: 0.5rem;
+}
+
+/* Add some spacing between buttons when they wrap */
+.btn-group {
+  gap: 10px;
+  flex-wrap: wrap;
+} 
