@@ -1,7 +1,7 @@
 $(function() {
   $('#load-more-btn').on('click', function() {
-    const btn = $(this);
-    const oldestWeekId = btn.data('oldest-week');
+    var btn = $(this);
+    var oldestWeekId = btn.data('oldest-week');
     
     btn.prop('disabled', true)
        .html('Loading...');
@@ -14,7 +14,7 @@ $(function() {
       if (response.trim().length > 0) {
         $('#selections-container').append(response);
         // Update the oldest week ID for next load
-        const newOldestWeekId = btn.data('new-oldest-week');
+        var newOldestWeekId = btn.data('new-oldest-week');
         if (newOldestWeekId) {
           btn.data('oldest-week', newOldestWeekId);
         } else {
