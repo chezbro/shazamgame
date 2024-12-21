@@ -1,0 +1,20 @@
+<% @selections_by_week.each do |week, selections| %>
+  <h4 class="week-header">
+    Week <%= week.week_number %> 
+    <%= "(Bowl Games)" if week.bowl_game? %>
+  </h4>
+  
+  <div class="table-responsive">
+    <table class="admin-selections-table">
+      <tbody>
+        <%= render partial: "selection_row", collection: selections, as: :selection %>
+      </tbody>
+    </table>
+  </div>
+<% end %>
+
+<% if @next_week %>
+  <script>
+    $('#load-more-btn').data('new-oldest-week', '<%= @next_week.id %>');
+  </script>
+<% end %> 

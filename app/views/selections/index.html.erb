@@ -61,86 +61,43 @@
 <div class="top-100 position-relative col-md-10 col-md-offset-1">
   <h3><%= current_user.admin? ? "All Users' Selections" : "My Selections" %></h3>
 
-  <% @selections_by_week.each do |week, selections| %>
-    <h4 class="week-header">
-      Week <%= week.week_number %> 
-      <%= "(Bowl Games)" if week.bowl_game? %>
-    </h4>
-    
-    <% if current_user.admin? %>
-      <div class="table-responsive">
-        <table class="table admin-selections-table">
-          <thead>
-            <tr>
-              <th>User</th>
-              <th>Game</th>
-              <th>Game A - Preference Pick</th>
-              <th>Game B - Spread Pick</th>
-              <th>Results</th>
-              <th>Date Selected</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% selections.sort_by { |s| [s.pref_pick_int.to_i, s.user&.name.to_s] }.each do |selection| %>
+  <div id="selections-container">
+    <% @selections_by_week.each do |week, selections| %>
+      <h4 class="week-header">
+        Week <%= week.week_number %> 
+        <%= "(Bowl Games)" if week.bowl_game? %>
+      </h4>
+      
+      <% if current_user.admin? %>
+        <div class="table-responsive">
+          <table class="admin-selections-table">
+            <thead>
               <tr>
-                <td>
-                  <strong><%= selection.user&.name || 'Unknown User' %></strong>
-                </td>
-                <td>
-                  <div><%= game_home_team_name(selection.game) %> vs <%= game_away_team_name(selection.game) %></div>
-                  <div class="game-spread">
-                    Spread: <%= spread_operator(selection.game) + selection.game.spread.to_s %>
-                  </div>
-                </td>
-                <td>
-                  <span class="team-name"><%= selection_team(selection.pref_pick_team) %></span>
-                  <span class="preference-number">#<%= selection.pref_pick_int %></span>
-                  <div>
-                    <% if selection.correct_pref_pick.nil? %>
-                      <small class="status-pending">Pending</small>
-                    <% elsif selection.correct_pref_pick %>
-                      <small class="status-success">Won <%= selection.pref_pick_int %> points</small>
-                    <% else %>
-                      <small class="status-danger">Lost</small>
-                    <% end %>
-                  </div>
-                </td>
-                <td>
-                  <%= selection_team(selection.spread_pick_team) %>
-                  <div>
-                    <% if selection.correct_spread_pick.nil? %>
-                      <small class="status-pending">Pending</small>
-                    <% elsif selection.correct_spread_pick %>
-                      <small class="status-success">Won 7 points</small>
-                    <% else %>
-                      <small class="status-danger">Lost</small>
-                    <% end %>
-                  </div>
-                </td>
-                <td>
-                  <% total_points = 0 %>
-                  <% total_points += selection.pref_pick_int if selection.correct_pref_pick %>
-                  <% total_points += 7 if selection.correct_spread_pick %>
-                  <strong class="<%= total_points > 0 ? 'status-success' : 'status-pending' %>">
-                    <%= total_points > 0 ? "#{total_points} points" : "Pending" %>
-                  </strong>
-                </td>
-                <td>
-                  <%= selection.updated_at.in_time_zone('Central Time (US & Canada)').strftime("%m/%d/%Y %I:%M%p") %>
-                </td>
+                <th>User</th>
+                <th>Game</th>
+                <th>Game A - Preference Pick</th>
+                <th>Game B - Spread Pick</th>
+                <th>Results</th>
+                <th>Date Selected</th>
               </tr>
-            <% end %>
-          </tbody>
-        </table>
-      </div>
-    <% else %>
-      <%= render partial: 'user_selections', locals: { selections: selections } %>
+            </thead>
+            <tbody>
+              <%= render partial: "selection_row", collection: selections, as: :selection %>
+            </tbody>
+          </table>
+        </div>
+      <% else %>
+        <%= render partial: 'user_selections', locals: { selections: selections } %>
+      <% end %>
     <% end %>
-  <% end %>
+  </div>
 
-  <% if @selections_by_week.empty? %>
-    <div class="alert alert-info">
-      <%= current_user.admin? ? "No selections found." : "You haven't made any selections yet." %>
+  <% if current_user.admin? %>
+    <div class="text-center mt-4 mb-4">
+      <button id="load-more-btn" class="btn btn-primary" 
+              data-oldest-week="<%= @weeks.last.try(:id) %>">
+        Load More Selections
+      </button>
     </div>
   <% end %>
 </div>

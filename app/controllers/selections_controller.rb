@@ -6,21 +6,18 @@ class SelectionsController < ApplicationController
   # GET /selections.json
   def index
     if current_user.admin?
-      # Get all selections for admins
+      @weeks = Week.order(id: :desc).limit(4)
       @selections = Selection.joins(:game)
                            .includes(:game, :user)
+                           .where(games: { week_id: @weeks.pluck(:id) })
                            .order("games.week_id DESC, users.name, selections.pref_pick_int ASC")
-                           .all
     else
-      # Keep existing logic for regular users
       @selections = Selection.where(user_id: current_user.id)
                            .joins(:game)
                            .includes(:game)
                            .order("games.week_id DESC, games.id")
-                           .all
     end
                          
-    # Group selections by week for easier display
     @selections_by_week = @selections.group_by { |s| s.game.week }
   end
 

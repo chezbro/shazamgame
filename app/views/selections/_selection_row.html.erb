@@ -1,0 +1,47 @@
+<tr>
+  <td>
+    <strong><%= selection.user&.name || 'Unknown User' %></strong>
+  </td>
+  <td>
+    <div><%= game_home_team_name(selection.game) %> vs <%= game_away_team_name(selection.game) %></div>
+    <div class="game-spread">
+      Spread: <%= spread_operator(selection.game) + selection.game.spread.to_s %>
+    </div>
+  </td>
+  <td>
+    <span class="team-name"><%= selection_team(selection.pref_pick_team) %></span>
+    <span class="preference-number">#<%= selection.pref_pick_int %></span>
+    <div>
+      <% if selection.correct_pref_pick.nil? %>
+        <small class="status-pending">Pending</small>
+      <% elsif selection.correct_pref_pick %>
+        <small class="status-success">Won <%= selection.pref_pick_int %> points</small>
+      <% else %>
+        <small class="status-danger">Lost</small>
+      <% end %>
+    </div>
+  </td>
+  <td>
+    <%= selection_team(selection.spread_pick_team) %>
+    <div>
+      <% if selection.correct_spread_pick.nil? %>
+        <small class="status-pending">Pending</small>
+      <% elsif selection.correct_spread_pick %>
+        <small class="status-success">Won 7 points</small>
+      <% else %>
+        <small class="status-danger">Lost</small>
+      <% end %>
+    </div>
+  </td>
+  <td>
+    <% total_points = 0 %>
+    <% total_points += selection.pref_pick_int if selection.correct_pref_pick %>
+    <% total_points += 7 if selection.correct_spread_pick %>
+    <strong class="<%= total_points > 0 ? 'status-success' : 'status-pending' %>">
+      <%= total_points > 0 ? "#{total_points} points" : "Pending" %>
+    </strong>
+  </td>
+  <td>
+    <%= selection.updated_at.in_time_zone('Central Time (US & Canada)').strftime("%m/%d/%Y %I:%M%p") %>
+  </td>
+</tr> 
