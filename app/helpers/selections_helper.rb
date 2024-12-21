@@ -5,7 +5,7 @@ module SelectionsHelper
   # end
 
   def pref_pick_integers
-    [13,12,11,10,9,8,7,6,5,4,3,2,1]
+    (1..13).to_a
   end
 
   def bowl_game_names

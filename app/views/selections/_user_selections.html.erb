@@ -17,7 +17,7 @@
           </tr>
         </thead>
         <tbody>
-          <% user_selections.sort_by(&:pref_pick_int).reverse.each do |selection| %>
+          <% user_selections.sort_by(&:pref_pick_int).each do |selection| %>
             <tr>
               <td>
                 <%= selection_team(selection.pref_pick_team) %>
