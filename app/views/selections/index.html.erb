@@ -62,7 +62,7 @@
   <h3><%= current_user.admin? ? "All Users' Selections" : "My Selections" %></h3>
 
   <div id="selections-container">
-    <% @selections_by_week.each do |week, selections| %>
+    <% @selections_by_week.sort_by { |week, _| week.week_number }.each do |week, selections| %>
       <h4 class="week-header">
         Week <%= week.week_number %> 
         <%= "(Bowl Games)" if week.bowl_game? %>
