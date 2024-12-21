@@ -6,11 +6,16 @@ class SelectionsController < ApplicationController
   # GET /selections.json
   def index
     if current_user.admin?
-      @weeks = Week.order(id: :desc).limit(4)
+      @weeks = Week.order(id: :desc)
+      Rails.logger.debug "Found weeks: #{@weeks.map { |w| "Week #{w.week_number} (ID: #{w.id})" }.join(', ')}"
+      
       @selections = Selection.joins(:game)
                            .includes(:game, :user)
                            .where(games: { week_id: @weeks.pluck(:id) })
                            .order("games.week_id DESC, users.name, selections.pref_pick_int DESC")
+      
+      Rails.logger.debug "Found selections: #{@selections.count}"
+      Rails.logger.debug "Weeks with selections: #{@selections.map { |s| s.game.week.week_number }.uniq.sort}"
     else
       @selections = Selection.where(user_id: current_user.id)
                            .joins(:game)
@@ -19,6 +24,7 @@ class SelectionsController < ApplicationController
     end
                          
     @selections_by_week = @selections.group_by { |s| s.game.week }
+    Rails.logger.debug "Grouped weeks: #{@selections_by_week.keys.map(&:week_number).sort}"
   end
 
   # GET /selections/1
@@ -51,6 +57,12 @@ class SelectionsController < ApplicationController
     else
       @selection = Selection.new(selection_params)
     end
+    
+    # Add debugging
+    Rails.logger.debug "Creating selection: #{selection_params.inspect}"
+    Rails.logger.debug "For game: #{Game.find(params[:selection][:game_id]).inspect}"
+    Rails.logger.debug "In week: #{Game.find(params[:selection][:game_id]).week.inspect}"
+    
     @errors = false
     @game = params[:selection][:game_id]
     respond_to do |format|
