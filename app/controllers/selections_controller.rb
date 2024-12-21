@@ -10,12 +10,12 @@ class SelectionsController < ApplicationController
       @selections = Selection.joins(:game)
                            .includes(:game, :user)
                            .where(games: { week_id: @weeks.pluck(:id) })
-                           .order("games.week_id DESC, users.name, selections.pref_pick_int ASC")
+                           .order("games.week_id DESC, users.name, selections.pref_pick_int DESC")
     else
       @selections = Selection.where(user_id: current_user.id)
                            .joins(:game)
                            .includes(:game)
-                           .order("games.week_id DESC, games.id")
+                           .order("games.week_id DESC, selections.pref_pick_int DESC")
     end
                          
     @selections_by_week = @selections.group_by { |s| s.game.week }

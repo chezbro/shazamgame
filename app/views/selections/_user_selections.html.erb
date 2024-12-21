@@ -1,8 +1,7 @@
-<% selections.group_by(&:game).each do |game, game_selections| %>
+<% selections.group_by(&:user).each do |user, user_selections| %>
   <div class="card mb-4">
     <div class="card-header">
-      <strong><%= game_home_team_name(game) %> vs <%= game_away_team_name(game) %></strong>
-      <span class="float-right">Spread: <%= spread_operator(game) + game.spread.to_s %></span>
+      <strong><%= user.name %></strong>
     </div>
     
     <div class="table-responsive">
@@ -18,7 +17,7 @@
           </tr>
         </thead>
         <tbody>
-          <% game_selections.each do |selection| %>
+          <% user_selections.sort_by(&:pref_pick_int).reverse.each do |selection| %>
             <tr>
               <td>
                 <%= selection_team(selection.pref_pick_team) %>
