@@ -81,10 +81,10 @@
             </tr>
           </thead>
           <tbody>
-            <% selections.sort_by { |s| [s.pref_pick_int.to_i, s.user.name] }.each do |selection| %>
+            <% selections.sort_by { |s| [s.pref_pick_int.to_i, s.user&.name.to_s] }.each do |selection| %>
               <tr>
                 <td>
-                  <strong><%= selection.user.name %></strong>
+                  <strong><%= selection.user&.name || 'Unknown User' %></strong>
                 </td>
                 <td>
                   <div><%= game_home_team_name(selection.game) %> vs <%= game_away_team_name(selection.game) %></div>

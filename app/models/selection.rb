@@ -8,6 +8,7 @@ class Selection < ActiveRecord::Base
   validates_presence_of :pref_pick_int
   validates_presence_of :pref_pick_team
   validates_presence_of :spread_pick_team
+  validates :user, presence: true
 
   def self.ransackable_attributes(auth_object = nil)
     authorizable_ransackable_attributes
