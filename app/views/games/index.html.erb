@@ -87,22 +87,21 @@
                 <td>
                   <% if game.active? %>
                     <% if Selection.where(user_id: current_user).where(game_id: game.id).present? %>
-                      <%= s.submit "Update Selection", class: "btn btn-warning" + " selection-button-#{game.id}" %>
+                      <%= s.submit "Update Selection", class: "btn btn-warning selection-button-#{game.id}" %>
                     <% else %>
-                      <%= s.submit "Submit", class: "btn btn-primary" + " selection-button-#{game.id}" %>
+                      <%= s.submit "Submit", class: "btn btn-primary selection-button-#{game.id}" %>
+                    <% end %>
                   <% end %>
                 </td>
                 <% if current_user.admin? == true %>
-                <td><%= link_to "Edit this Game", edit_game_path(game.id)%></td>
+                  <td><%= link_to "Edit this Game", edit_game_path(game.id)%></td>
                 <% end %>
-
-                  <!-- <td> s.submit "Hide", class: "btn btn-primary" + " selection-button-#{game.id}" </td>-->
-              <% end %>
-                <%= s.hidden_field :game_id,  value: game.id %>
-                <%= s.hidden_field :user_id,  value: current_user.id %>
-                <%= s.hidden_field :week_id,  value: game.week_id %>
+                
+                <%= s.hidden_field :game_id, value: game.id %>
+                <%= s.hidden_field :user_id, value: current_user.id %>
+                <%= s.hidden_field :week_id, value: game.week_id %>
+              </tr>
             <% end %>
-            </tr>
           <% end %>
         <% end %>
       </tbody>

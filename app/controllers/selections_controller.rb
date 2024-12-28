@@ -65,6 +65,7 @@ class SelectionsController < ApplicationController
     
     @errors = false
     @game = params[:selection][:game_id]
+    Rails.logger.debug "Setting @game to: #{@game}"
     respond_to do |format|
       if @selection.save
         format.html

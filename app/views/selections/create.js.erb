@@ -1,20 +1,13 @@
-
+console.log("AJAX response received");
 $(".flash").html('<%= j render partial: "layouts/notice" %>');
 
-  <% unless @errors == true %>
+<% unless @errors == true %>
+  console.log("Game ID: <%= @game %>");
+  var button = $(".selection-button-<%= @game %>");
+  console.log("Found button:", button.length > 0);
+  button.replaceWith('<input type="submit" name="commit" value="Update Selection" class="btn btn-warning selection-button-<%= @game %>" data-disable-with="Update Selection">');
+<% end %>
 
-    $(".selection-button-"+<%= @game %>).removeClass("btn btn-primary")
-
-    $(".selection-button-"+<%= @game %>).addClass("btn btn-warning")
-
-    $(".selection-button-"+<%= @game %>).val("Update Selection")
-
-  <% end %>
-
-  $('.alert').delay(7000).fadeOut(function() {
-
-  });
-  $('.flash').delay(7000).fadeOut(function() {
-
-   });
+$('.alert').delay(7000).fadeOut();
+$('.flash').delay(7000).fadeOut();
 
