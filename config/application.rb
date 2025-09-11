@@ -10,11 +10,14 @@ Bundler.require(*Rails.groups)
 require 'yaml'
 require 'erb'
 
-# Load application.yml
-app_config = YAML.load(ERB.new(File.read(File.expand_path('../application.yml', __FILE__))).result)
-if app_config[Rails.env]
-  app_config[Rails.env].each do |key, value|
-    ENV[key.upcase] = value.to_s
+# Load application.yml (if it exists)
+application_yml_path = File.expand_path('../application.yml', __FILE__)
+if File.exist?(application_yml_path)
+  app_config = YAML.load(ERB.new(File.read(application_yml_path)).result)
+  if app_config[Rails.env]
+    app_config[Rails.env].each do |key, value|
+      ENV[key.upcase] = value.to_s
+    end
   end
 end
 
