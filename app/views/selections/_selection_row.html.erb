@@ -34,12 +34,16 @@
     </div>
   </td>
   <td>
-    <% total_points = 0 %>
-    <% total_points += selection.pref_pick_int if selection.correct_pref_pick %>
-    <% total_points += 7 if selection.correct_spread_pick %>
-    <strong class="<%= total_points > 0 ? 'status-success' : 'status-pending' %>">
-      <%= total_points > 0 ? "#{total_points} points" : "Pending" %>
-    </strong>
+    <% if selection.correct_pref_pick.nil? || selection.correct_spread_pick.nil? %>
+      <strong class="status-pending">Pending</strong>
+    <% else %>
+      <% total_points = 0 %>
+      <% total_points += selection.pref_pick_int if selection.correct_pref_pick %>
+      <% total_points += 7 if selection.correct_spread_pick %>
+      <strong class="<%= total_points > 0 ? 'status-success' : 'status-danger' %>">
+        <%= total_points > 0 ? "#{total_points} points" : "0 points" %>
+      </strong>
+    <% end %>
   </td>
   <td>
     <%= selection.updated_at.in_time_zone('Central Time (US & Canada)').strftime("%m/%d/%Y %I:%M%p") %>

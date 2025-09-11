@@ -1,0 +1,56 @@
+{
+  "timestamp": "2025-09-11 17:22:11 UTC",
+  "environment": "development",
+  "users": [
+    {
+      "id": 1,
+      "username": "eric",
+      "email": "ericchesbrough@gmail.com",
+      "weekly_points": 40,
+      "weekly_points_game_a": 19,
+      "weekly_points_game_b": 21,
+      "cumulative_points": 148,
+      "last_week_score": 36
+    },
+    {
+      "id": 2,
+      "username": "eric1",
+      "email": "ericchesbrough+1@gmail.com",
+      "weekly_points": 0,
+      "weekly_points_game_a": 0,
+      "weekly_points_game_b": 0,
+      "cumulative_points": 84,
+      "last_week_score": 28
+    },
+    {
+      "id": 3,
+      "username": "admineric",
+      "email": "eric@example.com",
+      "weekly_points": 0,
+      "weekly_points_game_a": 0,
+      "weekly_points_game_b": 0,
+      "cumulative_points": 0,
+      "last_week_score": 0
+    },
+    {
+      "id": 4,
+      "username": "eric2",
+      "email": "eric1@gmail.com",
+      "weekly_points": 0,
+      "weekly_points_game_a": 0,
+      "weekly_points_game_b": 0,
+      "cumulative_points": 0,
+      "last_week_score": 0
+    },
+    {
+      "id": 5,
+      "username": "erererere",
+      "email": "brough@gmail.com",
+      "weekly_points": 0,
+      "weekly_points_game_a": 0,
+      "weekly_points_game_b": 0,
+      "cumulative_points": 48,
+      "last_week_score": 16
+    }
+  ]
+}

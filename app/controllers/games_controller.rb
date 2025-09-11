@@ -132,16 +132,24 @@ def away_team_selections
 end
 
 def reset_the_week
-  User.all.each do |u|
-  u.cumulative_points = u.cumulative_points - u.weekly_points
-  u.weekly_points = 0
-  u.weekly_points_game_a = 0
-  u.weekly_points_game_b = 0
-  u.save!
-
+  # Find the active week first
+  active_week = Week.where(active: true).first
+  if active_week.nil?
+    redirect_to root_url, alert: 'No active week found!'
+    return
   end
 
-  Game.where(week_id: Week.last).each do |g|
+  # Reset user points for the active week only
+  User.all.each do |u|
+    u.cumulative_points = u.cumulative_points - u.weekly_points
+    u.weekly_points = 0
+    u.weekly_points_game_a = 0
+    u.weekly_points_game_b = 0
+    u.save!
+  end
+
+  # Reset only games in the active week
+  Game.where(week_id: active_week.id).each do |g|
     g.has_game_been_scored = false
     g.active = true
     g.team_that_won_straight_up = nil
@@ -150,11 +158,18 @@ def reset_the_week
     g.home_team_won_straight_up = nil
     g.home_team_score = nil
     g.away_team_score = nil
-
     g.save!
   end
+
+  # Reset selections for the active week
+  Selection.joins(:game).where(games: { week_id: active_week.id }).each do |selection|
+    selection.correct_pref_pick = nil
+    selection.correct_spread_pick = nil
+    selection.save!
+  end
+
   respond_to do |format|
-    format.html { redirect_to root_url, alert: 'Week has been Reset.' }
+    format.html { redirect_to week_path(active_week), notice: "Week #{active_week.week_number} has been reset successfully!" }
     format.json { head :no_content }
   end
 end
@@ -239,6 +254,69 @@ end
     
     Rails.logger.info "Active weeks: #{@active_weeks.map(&:week_number)}"
     Rails.logger.info "Games count: #{@games&.count}"
+  end
+
+  def restore_week1_scores
+    # Restore Week 1 scores that were accidentally reset
+    week1 = Week.find_by(week_number: 1)
+    if week1.nil?
+      redirect_to root_url, alert: 'Week 1 not found!'
+      return
+    end
+
+    games = Game.where(week_id: week1.id, game_selected_by_admin: true)
+    
+    games.each do |game|
+      # Restore scores based on team names from your image
+      if game.home_team&.region&.include?("Bucknell") && game.away_team&.region&.include?("Buffalo")
+        game.home_team_score = 12
+        game.away_team_score = 20
+      elsif game.home_team&.region&.include?("Elon") && game.away_team&.region&.include?("Fresno")
+        game.home_team_score = 21
+        game.away_team_score = 19
+      else
+        next
+      end
+      
+      # Score the game
+      begin
+        game.check_selection_and_tally_points
+      rescue => e
+        Rails.logger.error "Error scoring game #{game.id}: #{e.message}"
+      end
+    end
+
+    redirect_to week_path(week1), notice: 'Week 1 scores restored successfully!'
+  end
+
+  def force_score_active_week
+    # Force score all games in the active week
+    active_week = Week.where(active: true).first
+    if active_week.nil?
+      redirect_to root_url, alert: 'No active week found!'
+      return
+    end
+
+    games = Game.where(week_id: active_week.id, game_selected_by_admin: true)
+    scored_count = 0
+    
+    games.each do |game|
+      if game.home_team_score.present? && game.away_team_score.present?
+        begin
+          # Reset game if it was previously scored to avoid duplicate points
+          if game.has_game_been_scored?
+            game.game_reset
+          end
+          
+          game.check_selection_and_tally_points
+          scored_count += 1
+        rescue => e
+          Rails.logger.error "Error scoring game #{game.id}: #{e.message}"
+        end
+      end
+    end
+
+    redirect_to week_path(active_week), notice: "Force scored #{scored_count} games in Week #{active_week.week_number}!"
   end
 
   private

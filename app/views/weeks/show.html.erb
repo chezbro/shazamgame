@@ -2,11 +2,28 @@
   <h1><%= link_to "See All Weeks", weeks_path %></h1>
 
   <div class="btn-group" role="group" style="margin: 20px 0;">
-    <% if current_user.admin? && Week.last.active? %>
-      <%= link_to reset_the_week_path,
+    <% if current_user.admin? %>
+      <%= link_to reset_week_week_path(@week),
+          method: :patch,
           class: "btn btn-danger btn-lg",
-          data: { confirm: 'Are you sure you want to reset this entire week?' } do %>
-        <i class="fas fa-redo-alt"></i> Reset Entire Week
+          data: { confirm: "Are you sure you want to reset Week #{@week.week_number}?" } do %>
+        <i class="fas fa-redo-alt"></i> Reset Week <%= @week.week_number %>
+      <% end %>
+    <% end %>
+
+    <% if current_user.admin? && @week.week_number == 1 %>
+      <%= link_to restore_week1_scores_path,
+          class: "btn btn-success btn-lg",
+          data: { confirm: 'Are you sure you want to restore Week 1 scores?' } do %>
+        <i class="fas fa-undo"></i> Restore Week 1 Scores
+      <% end %>
+    <% end %>
+
+    <% if current_user.admin? && @week.active? %>
+      <%= link_to force_score_active_week_path,
+          class: "btn btn-info btn-lg",
+          data: { confirm: 'Are you sure you want to force score all games in this week?' } do %>
+        <i class="fas fa-calculator"></i> Force Score All Games
       <% end %>
     <% end %>
 
@@ -36,6 +53,7 @@
   <div class="divTableCell"><h4 class="text-align-center">Spread</h4></div>
   <div class="divTableCell"><h4 class="">Home Team Score</h4></div>
   <div class="divTableCell"><h4 class="">Away Team Score</h4></div>
+  <div class="divTableCell"><h4 class="text-align-center">Action</h4></div>
 
   </div>
 
@@ -45,27 +63,29 @@
     <div class="divTableCell"><%= game_away_team_name(game) %></div>
     <div class="divTableCell"><%= game.home_team.region + " " + spread_operator(game) + game.spread.to_s %></div>
     <div class="divTableCell">
-      <%= simple_form_for game do |f| %>
       <% if current_user.admin? == true && game.week.active == true %>
-        <%= f.input :home_team_score, placeholder: "Enter Home Team Score", required: true, label: false %>
-        <% else %>
-          <%= game.home_team_score %>
+        <%= simple_form_for game, html: { style: "margin: 0; display: inline-block;" } do |f| %>
+          <%= f.input :home_team_score, placeholder: "Enter Home Team Score", required: true, label: false %>
+          <%= f.input :away_team_score, placeholder: "Enter Away Team Score", required: true, label: false %>
+          <% if game.has_game_been_scored != true %>
+            <%= f.submit "Submit Scores", :onclick => "return confirm('Please Confirm These Scores Are Correct.')", class: "btn btn-primary" %>
+          <% end %>
         <% end %>
+      <% else %>
+        <%= game.home_team_score %>
+      <% end %>
     </div>
     <div class="divTableCell">
       <% if current_user.admin? == true && game.week.active == true %>
-        <%= f.input :away_team_score, placeholder: "Enter Away Twam Score", required: true, label: false %>
+        <!-- Away team score is now in the form above -->
       <% else %>
         <%= game.away_team_score %>
       <% end %>
     </div>
+    <div class="divTableCell">
+      <!-- Submit button is now in the form above -->
+    </div>
   </div>
-
-  <%= f.submit "Submit Selections", :onclick => "return confirm('Please Confirm These Scores Are Correct.')", class: "margin-10-0-30-0 btn btn-primary" if( (current_user.admin? == true) && (game.week.active == true) && (game.has_game_been_scored != true) ) %>
-
-  <!-- <#%= link_to 'Reset Game', game_reset_path(game: game.id),
-      :onclick => "return confirm('Are you sure you want to reset this game?')", style: "background-color: #f55555;", class: "margin-10-0-30-0 btn btn-primary" if( (current_user.admin? == true) && (game.week.active == true) && (game.has_game_been_scored != false) ) %> -->
-  <% end %>
   <% end %>
   </div>
   </div>

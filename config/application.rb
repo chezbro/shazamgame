@@ -6,11 +6,26 @@ require 'rails/all'
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
+# Load environment variables from application.yml
+require 'yaml'
+require 'erb'
+
+# Load application.yml
+app_config = YAML.load(ERB.new(File.read(File.expand_path('../application.yml', __FILE__))).result)
+if app_config[Rails.env]
+  app_config[Rails.env].each do |key, value|
+    ENV[key.upcase] = value.to_s
+  end
+end
+
 module Shazamgame
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
+    
+    # Set default from address for all mailers
+    config.action_mailer.default_options = { from: 'shazam13app@gmail.com' }
 
     # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.
     # Run "rake -D time" for a list of tasks for finding time zone names. Default is UTC.

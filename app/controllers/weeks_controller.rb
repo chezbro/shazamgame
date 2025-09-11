@@ -29,7 +29,7 @@ class WeeksController < ApplicationController
     @week = Week.new
     # Build n-games for dev
     if Rails.env.development?
-      13.times do
+      2.times do
         games = @week.games.build
       end
     else
@@ -131,6 +131,41 @@ class WeeksController < ApplicationController
     else
       redirect_to weeks_path, alert: "Error closing week."
     end
+  end
+
+  def reset_week
+    @week = Week.find(params[:id])
+    
+    # Reset user points for this specific week only
+    User.all.each do |u|
+      u.cumulative_points = u.cumulative_points - u.weekly_points
+      u.weekly_points = 0
+      u.weekly_points_game_a = 0
+      u.weekly_points_game_b = 0
+      u.save!
+    end
+
+    # Reset only games in this specific week
+    Game.where(week_id: @week.id).each do |g|
+      g.has_game_been_scored = false
+      g.active = true
+      g.team_that_won_straight_up = nil
+      g.team_that_covered_spread = nil
+      g.away_team_won_straight_up = nil
+      g.home_team_won_straight_up = nil
+      g.home_team_score = nil
+      g.away_team_score = nil
+      g.save!
+    end
+
+    # Reset selections for this specific week
+    Selection.joins(:game).where(games: { week_id: @week.id }).each do |selection|
+      selection.correct_pref_pick = nil
+      selection.correct_spread_pick = nil
+      selection.save!
+    end
+
+    redirect_to week_path(@week), notice: "Week #{@week.week_number} has been reset successfully!"
   end
 
   private

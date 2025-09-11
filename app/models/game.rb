@@ -90,12 +90,15 @@ end
 
 
 def which_team_covered_spread
+  # Don't calculate spread if it's already a tie game
+  return if self.tie_game == true
+  
   # Home Team Covered
   if ( (self.home_team_score + self.spread) > self.away_team_score )
     self.team_that_covered_spread = self.home_team.id
 
   elsif ( ( (self.home_team_score + self.spread ) - self.away_team_score ) == 0 )
-    self.tie_game = true
+    # Push (tie) on spread - both teams get points
     self.team_that_covered_spread = nil
   else
   # Away Team Covered
@@ -136,14 +139,27 @@ end
 
 def tally_points
   Rails.logger.info "Tallying points for game #{id} (#{bowl_game_name if week&.bowl_game?})"
+  Rails.logger.info "Team that won straight up: #{self.team_that_won_straight_up}"
+  Rails.logger.info "Team that covered spread: #{self.team_that_covered_spread}"
   
   User.all.each do |user|
     user.selections.each do |selection|
       if selection.game_id == self.id && selection.game.week.id == self.week.id
         Rails.logger.info "Processing selection for user #{user.id} (#{user.username})"
+        Rails.logger.info "Selection pref pick team: #{selection.pref_pick_team}"
+        Rails.logger.info "Selection spread pick team: #{selection.spread_pick_team}"
         
         # Set spread pick result (Game B)
-        if selection.spread_pick_team == self.team_that_covered_spread
+        if self.team_that_covered_spread.nil? && !self.tie_game
+          # Push (tie) on spread - both teams get points
+          user.weekly_points += 7
+          user.weekly_points_game_b += 7
+          user.cumulative_points += 7
+          selection.correct_spread_pick = true
+          selection.save!
+          user.save!
+          Rails.logger.info "User #{user.username} got spread pick correct (push)"
+        elsif selection.spread_pick_team == self.team_that_covered_spread
           user.weekly_points += 7
           user.weekly_points_game_b += 7
           user.cumulative_points += 7
@@ -180,10 +196,13 @@ def tally_points
           user.weekly_points_game_a += selection.pref_pick_int
           user.weekly_points_game_b += 7
           selection.correct_spread_pick = true
+          selection.correct_pref_pick = true
           selection.save!
           user.save!
           Rails.logger.info "Game was a tie, user #{user.username} got points"
         end
+        
+        Rails.logger.info "Final selection values - Pref: #{selection.correct_pref_pick}, Spread: #{selection.correct_spread_pick}"
       end
     end
   end

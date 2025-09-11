@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   resources :weeks do
     member do
       patch :close_week
+      patch :reset_week
     end
   end
 
@@ -51,6 +52,8 @@ Rails.application.routes.draw do
   get 'game_reset' => 'games#game_reset', as: :game_reset
   post 'game_update' => 'games#game_update', as: :game_update
   get 'reset_the_week' => 'games#reset_the_week', as: :reset_the_week
+  get 'restore_week1_scores' => 'games#restore_week1_scores', as: :restore_week1_scores
+  get 'force_score_active_week' => 'games#force_score_active_week', as: :force_score_active_week
 
   devise_for :users, controllers: {registrations: "users/registrations", sessions: "users/sessions", passwords: "users/passwords"}, skip: [:sessions, :registrations]
 
