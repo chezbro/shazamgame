@@ -325,7 +325,7 @@ namespace :audit do
       puts "🎉 ALL SCORES ARE CORRECT!"
     else
       puts "⚠️  ERRORS DETECTED!"
-      puts "Run 'rake audit:scores' to fix them."
+      puts "Run 'git rake audit:scores' to fix them."
     end
     puts "=" * 80
   end
