@@ -127,6 +127,8 @@ class WeeksController < ApplicationController
     @week = Week.find(params[:id])
     
     if @week.update(active: false)
+      # Save current weekly scores to last_week_score before resetting
+      User.set_weekly_points_to_zero
       redirect_to weeks_path, notice: "Week #{@week.week_number} #{@week.bowl_game? ? '(Bowl Games)' : ''} has been closed."
     else
       redirect_to weeks_path, alert: "Error closing week."
