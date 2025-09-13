@@ -53,8 +53,37 @@ class User < ActiveRecord::Base
 
   def self.weekly_points
     points_array = []
+    
+    # Find the current active week
+    active_week = Week.where(active: true).first
+    if active_week.nil?
+      # Fallback to cumulative scores if no active week
+      User.all.each do |user|
+        points_array << [user.weekly_points, user.username]
+      end
+      return points_array.sort{|a,b| b<=>a}.take(5)
+    end
+    
     User.all.each do |user|
-      points_array << [user.weekly_points, user.username]
+      # Calculate points for the current active week only
+      current_week_points = 0
+      
+      user.selections.joins(:game).where(games: { week_id: active_week.id }).each do |selection|
+        game = selection.game
+        next unless game.has_game_been_scored?
+        
+        # Game A points (preference picks)
+        if selection.correct_pref_pick == true
+          current_week_points += selection.pref_pick_int
+        end
+        
+        # Game B points (spread picks)
+        if selection.correct_spread_pick == true
+          current_week_points += 7
+        end
+      end
+      
+      points_array << [current_week_points, user.username]
     end
       points_array.sort{|a,b| b<=>a}.take(5)
   end
@@ -69,8 +98,39 @@ class User < ActiveRecord::Base
 
   def self.full_weekly_points
     points_array = []
+    
+    # Find the current active week
+    active_week = Week.where(active: true).first
+    if active_week.nil?
+      # Fallback to cumulative scores if no active week
+      User.all.each do |user|
+        points_array << [user.weekly_points_game_a, user.weekly_points_game_b, user.username, user.weekly_points]
+      end
+      return points_array.sort_by{|k|k[3]}.reverse
+    end
+    
     User.all.each do |user|
-      points_array << [user.weekly_points_game_a, user.weekly_points_game_b, user.username, user.weekly_points]
+      # Calculate Game A and Game B points for the current active week only
+      current_week_game_a = 0
+      current_week_game_b = 0
+      
+      user.selections.joins(:game).where(games: { week_id: active_week.id }).each do |selection|
+        game = selection.game
+        next unless game.has_game_been_scored?
+        
+        # Game A points (preference picks)
+        if selection.correct_pref_pick == true
+          current_week_game_a += selection.pref_pick_int
+        end
+        
+        # Game B points (spread picks)
+        if selection.correct_spread_pick == true
+          current_week_game_b += 7
+        end
+      end
+      
+      current_week_total = current_week_game_a + current_week_game_b
+      points_array << [current_week_game_a, current_week_game_b, user.username, current_week_total]
     end
       # This, below, takes the weekly leaderboard and orders it by weekly points (even
       # though this attr isn't shown in the view/table), not by game a or game b.
@@ -98,8 +158,37 @@ class User < ActiveRecord::Base
 
   def self.weekly_points
     points_array = []
+    
+    # Find the current active week
+    active_week = Week.where(active: true).first
+    if active_week.nil?
+      # Fallback to cumulative scores if no active week
+      User.all.each do |user|
+        points_array << [user.weekly_points, user.username]
+      end
+      return points_array.sort{|a,b| b<=>a}.take(5)
+    end
+    
     User.all.each do |user|
-      points_array << [user.weekly_points, user.username]
+      # Calculate points for the current active week only
+      current_week_points = 0
+      
+      user.selections.joins(:game).where(games: { week_id: active_week.id }).each do |selection|
+        game = selection.game
+        next unless game.has_game_been_scored?
+        
+        # Game A points (preference picks)
+        if selection.correct_pref_pick == true
+          current_week_points += selection.pref_pick_int
+        end
+        
+        # Game B points (spread picks)
+        if selection.correct_spread_pick == true
+          current_week_points += 7
+        end
+      end
+      
+      points_array << [current_week_points, user.username]
     end
       points_array.sort{|a,b| b<=>a}.take(5)
   end
