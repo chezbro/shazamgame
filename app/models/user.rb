@@ -54,7 +54,7 @@ class User < ActiveRecord::Base
   def self.weekly_points
     points_array = []
     User.all.each do |user|
-      points_array << [user.last_week_score, user.username]
+      points_array << [user.weekly_points, user.username]
     end
       points_array.sort{|a,b| b<=>a}.take(5)
   end
@@ -69,57 +69,12 @@ class User < ActiveRecord::Base
 
   def self.full_weekly_points
     points_array = []
-    
-    # Find the most recent completed week (not active)
-    completed_weeks = Week.where(active: false).order(created_at: :desc)
-    if completed_weeks.empty?
-      # Fallback to current cumulative scores if no completed weeks
-      User.all.each do |user|
-        points_array << [user.weekly_points_game_a, user.weekly_points_game_b, user.username, user.weekly_points]
-      end
-      return points_array.sort_by{|k|k[3]}.reverse
-    end
-    
-    prior_week = completed_weeks.first
-    
     User.all.each do |user|
-      # Try to get prior week scores from Score table
-      score_record = Score.find_by(week_id: prior_week.id, user_id: user.id)
-      
-      if score_record
-        # Use the stored score record for prior week
-        game_a_points = score_record.game_a
-        game_b_points = score_record.game_b
-        total_points = score_record.points_for_week
-      else
-        # Calculate from selections if no score record exists
-        game_a_points = 0
-        game_b_points = 0
-        
-        user.selections.joins(:game).where(games: { week_id: prior_week.id }).each do |selection|
-          game = selection.game
-          next unless game.has_game_been_scored?
-          
-          # Game A points (preference picks)
-          if selection.correct_pref_pick == true
-            game_a_points += selection.pref_pick_int
-          end
-          
-          # Game B points (spread picks)
-          if selection.correct_spread_pick == true
-            game_b_points += 7
-          end
-        end
-        
-        total_points = game_a_points + game_b_points
-      end
-      
-      points_array << [game_a_points, game_b_points, user.username, total_points]
+      points_array << [user.weekly_points_game_a, user.weekly_points_game_b, user.username, user.weekly_points]
     end
-    
-    # This, below, takes the weekly leaderboard and orders it by weekly points (even
-    # though this attr isn't shown in the view/table), not by game a or game b.
-    return points_array.sort_by{|k|k[3]}.reverse
+      # This, below, takes the weekly leaderboard and orders it by weekly points (even
+      # though this attr isn't shown in the view/table), not by game a or game b.
+      return points_array.sort_by{|k|k[3]}.reverse
   end
 
   def self.full_cumulative_points
@@ -144,7 +99,7 @@ class User < ActiveRecord::Base
   def self.weekly_points
     points_array = []
     User.all.each do |user|
-      points_array << [user.last_week_score, user.username]
+      points_array << [user.weekly_points, user.username]
     end
       points_array.sort{|a,b| b<=>a}.take(5)
   end
