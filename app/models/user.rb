@@ -195,16 +195,78 @@ class User < ActiveRecord::Base
 
   def self.last_week_leaders_short
     points_array = []
+    
+    # Find the most recent completed week (active: false)
+    completed_weeks = Week.where(active: false).order(created_at: :desc)
+    if completed_weeks.empty?
+      # Fallback to last_week_score if no completed weeks
+      User.all.each do |user|
+        points_array << [user.last_week_score, user.username]
+      end
+      return points_array.sort{|a,b| b<=>a}.take(5)
+    end
+    
+    prior_week = completed_weeks.first
+    
     User.all.each do |user|
-      points_array << [user.last_week_score, user.username]
+      # Calculate points for the prior week only
+      prior_week_points = 0
+      
+      user.selections.joins(:game).where(games: { week_id: prior_week.id }).each do |selection|
+        game = selection.game
+        next unless game.has_game_been_scored?
+        
+        # Game A points (preference picks)
+        if selection.correct_pref_pick == true
+          prior_week_points += selection.pref_pick_int
+        end
+        
+        # Game B points (spread picks)
+        if selection.correct_spread_pick == true
+          prior_week_points += 7
+        end
+      end
+      
+      points_array << [prior_week_points, user.username]
     end
       points_array.sort{|a,b| b<=>a}.take(5)
   end
 
   def self.last_week_leaders_full
     points_array = []
+    
+    # Find the most recent completed week (active: false)
+    completed_weeks = Week.where(active: false).order(created_at: :desc)
+    if completed_weeks.empty?
+      # Fallback to last_week_score if no completed weeks
+      User.all.each do |user|
+        points_array << [user.last_week_score, user.username]
+      end
+      return points_array.sort{|a,b| b<=>a}
+    end
+    
+    prior_week = completed_weeks.first
+    
     User.all.each do |user|
-      points_array << [user.last_week_score, user.username]
+      # Calculate points for the prior week only
+      prior_week_points = 0
+      
+      user.selections.joins(:game).where(games: { week_id: prior_week.id }).each do |selection|
+        game = selection.game
+        next unless game.has_game_been_scored?
+        
+        # Game A points (preference picks)
+        if selection.correct_pref_pick == true
+          prior_week_points += selection.pref_pick_int
+        end
+        
+        # Game B points (spread picks)
+        if selection.correct_spread_pick == true
+          prior_week_points += 7
+        end
+      end
+      
+      points_array << [prior_week_points, user.username]
     end
       points_array.sort{|a,b| b<=>a}
   end
