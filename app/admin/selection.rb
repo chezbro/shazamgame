@@ -44,7 +44,7 @@ form do |f|
   end
 end
 
-  filter :user, label: 'User', collection: User.order('name asc')
+  filter :user, label: 'User', collection: proc { User.order('name asc') }
   # filter :game, :collection => Selection.all.where(week_id: Week.last).map(&:game)
   filter :game_id, as: :select, collection: proc {
   Game.where(week_id: Week.last.id).map { |game| 

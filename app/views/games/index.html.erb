@@ -87,9 +87,9 @@
                 <td>
                   <% if game.active? %>
                     <% if Selection.where(user_id: current_user).where(game_id: game.id).present? %>
-                      <%= s.submit "Update Selection", class: "btn btn-warning selection-button-#{game.id}" %>
+                      <%= s.submit "Update Selection", class: "btn btn-warning selection-button-#{game.id}", data: { bowl_game: week.bowl_game? ? 'true' : 'false' } %>
                     <% else %>
-                      <%= s.submit "Submit", class: "btn btn-primary selection-button-#{game.id}" %>
+                      <%= s.submit "Submit", class: "btn btn-primary selection-button-#{game.id}", data: { bowl_game: week.bowl_game? ? 'true' : 'false' } %>
                     <% end %>
                   <% end %>
                 </td>

@@ -29,20 +29,20 @@ case Rails.env
     teams = JSON.parse(File.read('teams.json'))
 
     teams["teams"].each do |t|
-      Team.create(
-          tid: t["tid"],
-          cid: t["cid"],
-          did: t["did"],
-          region: t["region"],
-          name: t["name"],
-          abbrev: t["abbrev"],
-          city: t["city"],
-          state: t["state"],
-          latitude: t["latitude"],
-        )
+      Team.find_or_create_by(region: t["region"], name: t["name"]) do |team|
+        team.tid = t["tid"]
+        team.cid = t["cid"]
+        team.did = t["did"]
+        team.abbrev = t["abbrev"]
+        team.city = t["city"]
+        team.state = t["state"]
+        team.latitude = t["latitude"]
+      end
     end
     
-    Week.create(week_number: "1", year: "2023", active: true)
+    Week.find_or_create_by(week_number: "1", year: "2023") do |week|
+      week.active = true
+    end
 
 
 
