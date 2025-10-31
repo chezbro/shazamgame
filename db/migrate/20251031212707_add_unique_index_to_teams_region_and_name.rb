@@ -21,6 +21,13 @@ class AddUniqueIndexToTeamsRegionAndName < ActiveRecord::Migration[6.1]
         execute("UPDATE games SET away_team_id = #{keep_id} WHERE away_team_id = #{duplicate_id}")
       end
       
+      # Update selections (user picks) that reference duplicate teams to point to the kept team
+      # This preserves all user selections and picks
+      ids_to_delete.each do |duplicate_id|
+        execute("UPDATE selections SET pref_pick_team = #{keep_id} WHERE pref_pick_team = #{duplicate_id}")
+        execute("UPDATE selections SET spread_pick_team = #{keep_id} WHERE spread_pick_team = #{duplicate_id}")
+      end
+      
       # Now safe to delete the duplicates
       execute("DELETE FROM teams WHERE id IN (#{ids_to_delete.join(',')})") if ids_to_delete.any?
     end
