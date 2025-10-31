@@ -53,7 +53,7 @@ class SelectionsController < ApplicationController
   def create
     if Selection.where(user_id: current_user).where(game_id: params[:selection][:game_id]).present?
       @selection = Selection.where(user_id: current_user).where(game_id: params[:selection][:game_id]).first
-      @selection.update(selection_params)
+      @selection.assign_attributes(selection_params)
     else
       @selection = Selection.new(selection_params)
     end
@@ -72,8 +72,9 @@ class SelectionsController < ApplicationController
         format.js { flash.now[:notice] = "Selection successfully submitted." }
       else
         @errors = true
+        error_message = @selection.errors.full_messages.first || "You must fill out each Selection."
         format.html
-        format.js { flash.now[:notice] = "Error: You must fill out each Selection." }
+        format.js { flash.now[:notice] = "Error: #{error_message}" }
       end
     end
   end
@@ -84,12 +85,11 @@ class SelectionsController < ApplicationController
     respond_to do |format|
         @game = Game.find(params[:game_id])
      if @selection.update(selection_params)
-        @selection.save!
-        @selection.reload
         format.js { flash.now[:notice] = "Selection successfully submitted." }
         # format.html { redirect_to games_path, :notice => "Selection has been saved successfully." }
       else
-        format.js { flash.now[:notice] = "Error: You must fill out each Selection." }
+        error_message = @selection.errors.full_messages.first || "You must fill out each Selection."
+        format.js { flash.now[:notice] = "Error: #{error_message}" }
       end
     end
   end

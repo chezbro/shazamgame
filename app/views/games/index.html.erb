@@ -61,7 +61,7 @@
           <% check_existing_selection(game) %>
           <%= simple_form_for([game, @selection], remote: true) do |s| %>
             <% if !game.hidden? %>
-              <tr>
+              <tr data-bowl-game="<%= week.bowl_game? ? 'true' : 'false' %>">
                 <td>
                   <%= s.label :pref_pick_team, game_home_team_name(game)  %>
                   <%= s.radio_button :pref_pick_team, game.home_team_id  %>
