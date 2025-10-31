@@ -1,5 +1,10 @@
 $("#flash").html('<%= j render partial: "layouts/notice" %>');
 
+<% if @selection && @selection.errors.any? %>
+  // Show alert for errors including duplicate pref pick validation
+  alert('<%= j flash.now[:notice] %>');
+<% end %>
+
 $('.alert').delay(5000).fadeOut(function() {
   $(this).remove(); 
 });

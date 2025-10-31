@@ -1,7 +1,10 @@
 console.log("AJAX response received");
 $(".flash").html('<%= j render partial: "layouts/notice" %>');
 
-<% unless @errors == true %>
+<% if @errors == true %>
+  // Show alert for errors including duplicate pref pick validation
+  alert('<%= j flash.now[:notice] %>');
+<% else %>
   console.log("Game ID: <%= @game %>");
   var button = $(".selection-button-<%= @game %>");
   console.log("Found button:", button.length > 0);
