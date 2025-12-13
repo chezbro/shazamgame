@@ -27,26 +27,47 @@ class WeeksController < ApplicationController
   def new
     @team = Team.new
     @week = Week.new
-    # Build n-games for dev
-    if Rails.env.development?
-      2.times do
-        games = @week.games.build
-      end
-    else
-      # Build n-games for prod
-      13.times do
-        games = @week.games.build
-      end
+    # Build maximum number of games (13) so form always has enough fields
+    # JavaScript will show/hide based on number_of_games input
+    13.times do
+      games = @week.games.build
     end
   end
 
   # GET /weeks/1/edit
   def edit
+    # Ensure we have at least 13 game fields for the form (JavaScript will show/hide based on number_of_games)
+    # This ensures the form always has enough fields even if the week has fewer games
+    current_games = @week.games.count
+    if current_games < 13
+      (13 - current_games).times do
+        @week.games.build
+      end
+    end
   end
 
   # POST /weeks
   # POST /weeks.json
   def create
+    # Convert checkbox array to comma-separated string if present
+    if params[:week] && params[:week][:available_points_checkboxes].present?
+      params[:week][:available_points] = params[:week][:available_points_checkboxes].sort { |a, b| b.to_i <=> a.to_i }.join(',')
+      params[:week].delete(:available_points_checkboxes) # Remove the non-attribute parameter
+    end
+    
+    # Filter out empty games (games without teams/spreads) before creating
+    # This prevents validation errors for hidden games that weren't filled in
+    if params[:week] && params[:week][:games_attributes].present?
+      filtered_games = {}
+      params[:week][:games_attributes].each do |key, game_attrs|
+        # Only include games that have at least one field filled (home_team, away_team, or spread)
+        unless game_attrs[:home_team_id].blank? && game_attrs[:away_team_id].blank? && game_attrs[:spread].blank?
+          filtered_games[key] = game_attrs
+        end
+      end
+      params[:week][:games_attributes] = filtered_games
+    end
+    
     @week = Week.new(week_params)
     @team = Team.new # needed for the form
 
@@ -54,6 +75,34 @@ class WeeksController < ApplicationController
       if @week.save
         week_number = Week.all.count.to_s
         @week.week_number = week_number
+        
+        # Adjust number of games based on number_of_games after initial save
+        current_game_count = @week.games.reload.count
+        target_game_count = @week.number_of_games || 13
+        
+        if current_game_count < target_game_count
+          # Add more games
+          (target_game_count - current_game_count).times do
+            @week.games.create(active: true, has_game_been_scored: false, game_selected_by_admin: true)
+          end
+        elsif current_game_count > target_game_count
+          # Remove extra games (prefer removing games without teams selected)
+          games_to_remove_count = current_game_count - target_game_count
+          empty_games = @week.games.where(home_team_id: nil, away_team_id: nil)
+          empty_games_count = empty_games.count
+          
+          if empty_games_count >= games_to_remove_count
+            # Remove enough empty games
+            empty_games.limit(games_to_remove_count).destroy_all
+          else
+            # Remove all empty games, then remove from the end if needed
+            empty_games.destroy_all
+            remaining_to_remove = games_to_remove_count - empty_games_count
+            if remaining_to_remove > 0
+              @week.games.order(:id).last(remaining_to_remove).each(&:destroy)
+            end
+          end
+        end
         
         if @week.bowl_game
           # For bowl weeks, keep other bowl weeks active
@@ -102,8 +151,62 @@ class WeeksController < ApplicationController
   # PATCH/PUT /weeks/1
   # PATCH/PUT /weeks/1.json
   def update
+    # Convert checkbox array to comma-separated string if present
+    if params[:week] && params[:week][:available_points_checkboxes].present?
+      params[:week][:available_points] = params[:week][:available_points_checkboxes].sort { |a, b| b.to_i <=> a.to_i }.join(',')
+      params[:week].delete(:available_points_checkboxes) # Remove the non-attribute parameter
+    end
+    
+    # Filter out empty games (games without teams/spreads) before updating
+    # This prevents validation errors for hidden games that weren't filled in
+    if params[:week] && params[:week][:games_attributes].present?
+      filtered_games = {}
+      params[:week][:games_attributes].each do |key, game_attrs|
+        # Keep games marked for destruction
+        if game_attrs[:_destroy] == '1' || game_attrs[:_destroy] == 'true'
+          filtered_games[key] = game_attrs
+        # Keep existing games (they have an id)
+        elsif game_attrs[:id].present?
+          filtered_games[key] = game_attrs
+        # Only include new games that have at least one field filled
+        elsif game_attrs[:home_team_id].present? || game_attrs[:away_team_id].present? || game_attrs[:spread].present?
+          filtered_games[key] = game_attrs
+        end
+        # Otherwise, skip empty new games
+      end
+      params[:week][:games_attributes] = filtered_games
+    end
+    
     respond_to do |format|
       if @week.update(week_params)
+        # Adjust number of games based on number_of_games after update
+        current_game_count = @week.games.reload.count
+        target_game_count = @week.number_of_games || 13
+        
+        if current_game_count < target_game_count
+          # Add more games
+          (target_game_count - current_game_count).times do
+            @week.games.create(active: true, has_game_been_scored: false, game_selected_by_admin: true)
+          end
+        elsif current_game_count > target_game_count
+          # Remove extra games (prefer removing games without teams selected)
+          games_to_remove_count = current_game_count - target_game_count
+          empty_games = @week.games.where(home_team_id: nil, away_team_id: nil)
+          empty_games_count = empty_games.count
+          
+          if empty_games_count >= games_to_remove_count
+            # Remove enough empty games
+            empty_games.limit(games_to_remove_count).destroy_all
+          else
+            # Remove all empty games, then remove from the end if needed
+            empty_games.destroy_all
+            remaining_to_remove = games_to_remove_count - empty_games_count
+            if remaining_to_remove > 0
+              @week.games.order(:id).last(remaining_to_remove).each(&:destroy)
+            end
+          end
+        end
+        
         format.html { redirect_to @week, notice: 'Week was successfully updated.' }
         format.json { render :show, status: :ok, location: @week }
       else
@@ -183,6 +286,8 @@ class WeeksController < ApplicationController
         :week_number,
         :active,
         :year,
+        :number_of_games,
+        :available_points,
         games_attributes: [
           :id,
           :home_team_id,

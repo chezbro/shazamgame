@@ -298,7 +298,7 @@ class User < ActiveRecord::Base
       
       # Calculate required selections based on week type
       selections_needed = active_weeks.sum do |week| 
-        week.bowl_game? ? week.games.count : 13
+        week.bowl_game? ? week.games.count : (week.number_of_games || week.games.count || 13)
       end
       
       actual_selections = self.selections

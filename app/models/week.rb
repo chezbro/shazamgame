@@ -11,10 +11,22 @@ class Week < ActiveRecord::Base
   # Remove or modify this line
   # validates :bowl_game_name, uniqueness: true, if: :bowl_game?
 
+  # Get available points as an array of integers
+  def available_points_array
+    if available_points.present?
+      available_points.split(',').map(&:strip).map(&:to_i).sort.reverse
+    else
+      # Default to 1-13 if not set
+      (1..13).to_a.reverse
+    end
+  end
+
   private
 
   def set_defaults
     self.bowl_game ||= false
+    self.number_of_games ||= 13 if new_record?
+    self.available_points ||= (1..13).to_a.join(',') if new_record? && available_points.blank?
   end
 
   # This will run after all the Selections are given points or not.

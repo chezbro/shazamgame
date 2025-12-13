@@ -4,8 +4,13 @@ module SelectionsHelper
   #   Selection.where(user_id: user).where(game_id: game)
   # end
 
-  def pref_pick_integers
-    (1..13).to_a
+  def pref_pick_integers(week = nil)
+    if week && week.available_points.present?
+      week.available_points_array
+    else
+      # Default to 1-13 if no week or no available_points set
+      (1..13).to_a.reverse
+    end
   end
 
   def bowl_game_names

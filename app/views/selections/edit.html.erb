@@ -8,7 +8,7 @@
       <div class="col-sm-4 col-sm-offset-3">
         <%= f.label :pref_pick_int, "Preference Pick Amount" %>
         <div class="field">
-          <%= f.select :pref_pick_int,  pref_pick_integers, {:prompt => 'Points Wagered'}, {class: "selectpicker"} %>
+          <%= f.select :pref_pick_int,  pref_pick_integers(@game.week), {:prompt => 'Points Wagered'}, {class: "selectpicker"} %>
         </div>
         <div class="field">
           <%= f.label :pref_pick_team, "Preference Pick" %>

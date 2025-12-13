@@ -9,7 +9,7 @@
     <div class="top-50 position-relative form-inputs">
       <%= f.label :pref_pick_int, "Preference Pick Amount" %>
       <div class="field">
-        <%= f.select :pref_pick_int,  pref_pick_integers, {:prompt => 'Points Wagered'}, {class: "selectpicker pref_pick_integers"} %>
+        <%= f.select :pref_pick_int,  pref_pick_integers(@week), {:prompt => 'Points Wagered'}, {class: "selectpicker pref_pick_integers"} %>
       </div>
       <div class="field">
         <%= f.label :pref_pick_team, "Preference Pick" %>

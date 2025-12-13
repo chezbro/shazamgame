@@ -80,8 +80,13 @@ module GamesHelper
     return region + " " + name if region.present?
   end
 
-  def pref_pick_integers
-    [13,12,11,10,9,8,7,6,5,4,3,2,1]
+  def pref_pick_integers(week = nil)
+    if week && week.available_points.present?
+      week.available_points_array
+    else
+      # Default to 1-13 if no week or no available_points set
+      [13,12,11,10,9,8,7,6,5,4,3,2,1]
+    end
   end
 
   def game_selection_link(game)

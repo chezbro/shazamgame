@@ -10,6 +10,7 @@ class Selection < ActiveRecord::Base
   validates_presence_of :spread_pick_team
   validates :user, presence: true
   validate :pref_pick_int_unique_within_week
+  validate :pref_pick_int_in_available_points
 
   def self.ransackable_attributes(auth_object = nil)
     authorizable_ransackable_attributes
@@ -41,6 +42,20 @@ class Selection < ActiveRecord::Base
     
     if existing_selection
       errors.add(:pref_pick_int, "must be unique. You have already used #{pref_pick_int} for another game this week.")
+    end
+  end
+
+  def pref_pick_int_in_available_points
+    return unless game_id && pref_pick_int
+    
+    game = Game.find_by(id: game_id)
+    return unless game && game.week
+    
+    week = game.week
+    available_points = week.available_points_array
+    
+    unless available_points.include?(pref_pick_int)
+      errors.add(:pref_pick_int, "must be one of the available points for this week: #{available_points.join(', ')}")
     end
   end
 

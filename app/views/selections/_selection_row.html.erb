@@ -3,6 +3,9 @@
     <strong><%= selection.user&.name || 'Unknown User' %></strong>
   </td>
   <td>
+    <% if selection.game.week&.bowl_game? && selection.game.bowl_game_name.present? %>
+      <div><strong><%= selection.game.bowl_game_name %></strong></div>
+    <% end %>
     <div><%= game_home_team_name(selection.game) %> vs <%= game_away_team_name(selection.game) %></div>
     <div class="game-spread">
       Spread: <%= spread_operator(selection.game) + selection.game.spread.to_s %>

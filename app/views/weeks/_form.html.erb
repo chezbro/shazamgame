@@ -3,7 +3,7 @@
 
   </div>
 
-  <%= simple_form_for @week, url: url_for(action: "create", controller: "weeks"), method: "post" do |f| %>
+  <%= simple_form_for @week do |f| %>
     <% if @week.errors.any? %>
       <div class="alert alert-danger">
         <h4><%= pluralize(@week.errors.count, "error") %> prohibited this week from being saved:</h4>
@@ -19,14 +19,35 @@
       <%= f.input :bowl_game, as: :boolean, label: 'Bowl Game Week?' %>
     </div>
     
+    <div class="margin-20-0">
+      <%= f.input :number_of_games, label: 'Number of Games', input_html: { min: 1, max: 13, value: @week.number_of_games || 13 } %>
+      <small class="help-block">Specify how many games this week will have (1-13)</small>
+    </div>
+    
+    <div class="margin-20-0">
+      <label class="control-label">Available Points</label>
+      <div class="available-points-checkboxes" style="margin-top: 10px;">
+        <% available_points_array = @week.available_points.present? ? @week.available_points.split(',').map(&:strip).map(&:to_i) : (1..13).to_a %>
+        <% (1..13).to_a.reverse.each do |point| %>
+          <label class="checkbox-inline" style="margin-right: 15px; font-weight: normal;">
+            <%= check_box_tag "week[available_points_checkboxes][]", point, available_points_array.include?(point), { id: "available_point_#{point}" } %>
+            <%= point %>
+          </label>
+        <% end %>
+      </div>
+      <%= hidden_field_tag "week[available_points]", @week.available_points || (1..13).to_a.join(','), id: "week_available_points_hidden" %>
+      <small class="help-block">Select which point values (1-13) are available for selections in this week</small>
+    </div>
+    
     <%= f.fields_for :games do |ff, index| %>
-      <div class="margin-20-0">
+      <div class="margin-20-0 game-field" data-game-index="<%= ff.options[:child_index] %>">
         <h4>
-          <% if @week.bowl_game? %>
-            <%= ff.select :bowl_game_name, bowl_game_names, { prompt: "Select Bowl Game" }, class: "select-class" %>
-          <% else %>
+          <span class="bowl-game-name" style="<%= 'display: none;' unless @week.bowl_game? %>">
+            <%= ff.text_field :bowl_game_name, placeholder: "Bowl Game Name (optional)", class: "form-control", style: "width: 200px; display: inline-block;" %>
+          </span>
+          <span class="regular-game-number" style="<%= 'display: none;' if @week.bowl_game? %>">
             Game <%= ff.options[:child_index] + 1 %>:
-          <% end %>
+          </span>
         </h4>
         
         <%= ff.select :home_team_id, list_teams, {include_blank: "Select Home Team"}, {class: "select-class"} %>
@@ -36,7 +57,7 @@
         <%= ff.hidden_field :active, value: true %>
       </div>
     <% end %>
-    <%= f.submit "Create New Week", data: { confirm: 'Are you sure you want to create a New Week?' }, class: "btn btn-primary" %>
+    <%= f.submit (@week.new_record? ? "Create New Week" : "Update Week"), data: { confirm: (@week.new_record? ? 'Are you sure you want to create a New Week?' : 'Are you sure you want to update this Week?') }, class: "btn btn-primary" %>
   <% end %>
 </div>
 <div class="col-md-7 col-md-offset-3">

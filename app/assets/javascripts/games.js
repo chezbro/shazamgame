@@ -9,12 +9,6 @@ $(function() {
         
         console.log('Is bowl game?', isBowlGame);
         
-        // Only enforce uniqueness for non-bowl games
-        if (isBowlGame) {
-            console.log('Bowl game - skipping duplicate validation');
-            return;
-        }
-        
         // Get all selected pref pick amounts in this week's table
         var $table = $currentRow.closest('table');
         var $selects = $table.find('.pref_pick_int');
@@ -37,10 +31,18 @@ $(function() {
         console.log('Has duplicates?', hasDuplicates);
         
         if(hasDuplicates) {
-            alert('Error: You cannot use the same preference pick value twice. Please select a unique amount for each game.');
-            // Reset the dropdown that was just changed
-            this.selectedIndex = 0;
-            return false;
+            // Show alert for both bowl games and regular games
+            // (Server-side validation allows duplicates for bowl games, but we still want to warn users)
+            if (isBowlGame) {
+                alert('Warning: You have selected the same preference pick value multiple times. For bowl games, you may use each ranking number twice, but please be aware of your selections.');
+                // Reset the dropdown that was just changed
+                this.selectedIndex = 0;
+            } else {
+                alert('Error: You cannot use the same preference pick value twice. Please select a unique amount for each game.');
+                // Reset the dropdown that was just changed
+                this.selectedIndex = 0;
+                return false;
+            }
         }
   
     }
@@ -55,12 +57,6 @@ $(function() {
         var isBowlGame = $submitBtn.data('bowl-game') === true || $submitBtn.attr('data-bowl-game') === 'true';
         
         console.log('Submit - Is bowl game?', isBowlGame);
-        
-        // Skip validation for bowl games
-        if (isBowlGame) {
-            console.log('Bowl game - allowing submission');
-            return true;
-        }
         
         // Get all selected pref pick amounts in this week's table
         var $table = $form.closest('table');
@@ -84,10 +80,18 @@ $(function() {
         console.log('Submit - Has duplicates?', hasDuplicates);
         
         if(hasDuplicates) {
-            e.preventDefault();
-            e.stopImmediatePropagation();
-            alert('Error: You cannot use the same preference pick value twice. Please ensure each game has a unique preference pick amount.');
-            return false;
+            // Show alert for both bowl games and regular games
+            // (Server-side validation allows duplicates for bowl games, but we still want to warn users)
+            if (isBowlGame) {
+                alert('Warning: You have selected the same preference pick value multiple times. For bowl games, you may use each ranking number twice, but please be aware of your selections.');
+                // Allow submission for bowl games
+                return true;
+            } else {
+                e.preventDefault();
+                e.stopImmediatePropagation();
+                alert('Error: You cannot use the same preference pick value twice. Please ensure each game has a unique preference pick amount.');
+                return false;
+            }
         }
         
         return true;
@@ -101,12 +105,6 @@ $(function() {
         var isBowlGame = $submitBtn.data('bowl-game') === true || $submitBtn.attr('data-bowl-game') === 'true';
         
         console.log('Ajax:before - Is bowl game?', isBowlGame);
-        
-        // Skip validation for bowl games
-        if (isBowlGame) {
-            console.log('Bowl game - allowing AJAX submission');
-            return true;
-        }
         
         // Get all selected pref pick amounts in this week's table
         var $table = $form.closest('table');
@@ -130,8 +128,16 @@ $(function() {
         console.log('Ajax:before - Has duplicates?', hasDuplicates);
         
         if(hasDuplicates) {
-            alert('Error: You cannot use the same preference pick value twice. Please ensure each game has a unique preference pick amount.');
-            return false;
+            // Show alert for both bowl games and regular games
+            // (Server-side validation allows duplicates for bowl games, but we still want to warn users)
+            if (isBowlGame) {
+                alert('Warning: You have selected the same preference pick value multiple times. For bowl games, you may use each ranking number twice, but please be aware of your selections.');
+                // Allow submission for bowl games
+                return true;
+            } else {
+                alert('Error: You cannot use the same preference pick value twice. Please ensure each game has a unique preference pick amount.');
+                return false;
+            }
         }
         
         return true;

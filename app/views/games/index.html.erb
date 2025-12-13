@@ -63,6 +63,9 @@
             <% if !game.hidden? %>
               <tr data-bowl-game="<%= week.bowl_game? ? 'true' : 'false' %>">
                 <td>
+                  <% if week.bowl_game? && game.bowl_game_name.present? %>
+                    <strong><%= game.bowl_game_name %></strong><br>
+                  <% end %>
                   <%= s.label :pref_pick_team, game_home_team_name(game)  %>
                   <%= s.radio_button :pref_pick_team, game.home_team_id  %>
                 </td>
@@ -71,7 +74,7 @@
                   <%= s.radio_button :pref_pick_team, game.away_team_id  %>
                 </td>
                 <td>
-                  <%= s.select( :pref_pick_int, pref_pick_integers, {:include_blank => "Select an Amount"}, { class: "pref_pick_int"} )%>
+                  <%= s.select( :pref_pick_int, pref_pick_integers(week), {:include_blank => "Select an Amount"}, { class: "pref_pick_int"} )%>
                 </td>
                 <td>
                   <%= s.label :spread_pick_team, fave(game) %>
