@@ -96,6 +96,72 @@ class User < ActiveRecord::Base
       points_array.sort{|a,b| b<=>a}.take(5)
   end
 
+  def self.bowl_game_points
+    points_array = []
+    
+    # Get all bowl game weeks from 2025 (created in 2025)
+    bowl_weeks_2025 = Week.where(bowl_game: true).where("created_at >= ?", Date.new(2025, 1, 1))
+    
+    User.all.each do |user|
+      # Calculate total points across all 2025 bowl game weeks
+      total_bowl_points = 0
+      
+      bowl_weeks_2025.each do |week|
+        user.selections.joins(:game).where(games: { week_id: week.id }).each do |selection|
+          game = selection.game
+          next unless game.has_game_been_scored?
+          
+          # Game A points (preference picks)
+          if selection.correct_pref_pick == true
+            total_bowl_points += selection.pref_pick_int
+          end
+          
+          # Game B points (spread picks)
+          if selection.correct_spread_pick == true
+            total_bowl_points += 7
+          end
+        end
+      end
+      
+      points_array << [total_bowl_points, user.username]
+    end
+    
+    points_array.sort{|a,b| b<=>a}.take(5)
+  end
+
+  def self.full_bowl_game_points
+    points_array = []
+    
+    # Get all bowl game weeks from 2025 (created in 2025)
+    bowl_weeks_2025 = Week.where(bowl_game: true).where("created_at >= ?", Date.new(2025, 1, 1))
+    
+    User.all.each do |user|
+      # Calculate total points across all 2025 bowl game weeks
+      total_bowl_points = 0
+      
+      bowl_weeks_2025.each do |week|
+        user.selections.joins(:game).where(games: { week_id: week.id }).each do |selection|
+          game = selection.game
+          next unless game.has_game_been_scored?
+          
+          # Game A points (preference picks)
+          if selection.correct_pref_pick == true
+            total_bowl_points += selection.pref_pick_int
+          end
+          
+          # Game B points (spread picks)
+          if selection.correct_spread_pick == true
+            total_bowl_points += 7
+          end
+        end
+      end
+      
+      points_array << [total_bowl_points, user.username]
+    end
+    
+    points_array.sort{|a,b| b<=>a}
+  end
+
   def self.full_weekly_points
     points_array = []
     

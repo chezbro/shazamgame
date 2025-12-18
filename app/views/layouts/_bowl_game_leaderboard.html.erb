@@ -1,0 +1,48 @@
+<table class="table table-bordered table-striped table-responsive">
+  <thead>
+    <tr>
+      <th>
+        Rank
+      </th>
+      <th>
+        Username
+      </th>
+      <th>
+        Total Points
+      </th>
+    </tr>
+  </thead>
+  <tfoot>
+    <tr>
+      <th class="text-align-center" colspan="3"><a href="/bowl-game-leaders">See Full Leaderboard</a></th>
+    </tr>
+  </tfoot>
+  <tbody>
+      <% if @bowl_game_points.present? %>
+        <% @bowl_game_points.each_with_index do |score, i| %>
+      <tr>
+        <td><%= i+1 %></td>
+        <td>
+          <%= score[1] %>
+        </td>
+        <td>
+          <%= score[0] %>
+        </td>
+    </tr>
+    <% end %>
+  <% else %>
+      <tr>
+        <td>
+          <%= "N/A" %>
+        </td>
+        <td>
+          <%= "N/A" %>
+        </td>
+        <td>
+          <%= "N/A" %>
+        </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+

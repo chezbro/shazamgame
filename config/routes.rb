@@ -37,6 +37,7 @@ Rails.application.routes.draw do
   get    "stats"   => "landings#stats",         as: :stats
   get    "favorite-teams"   => "landings#favorite_teams",         as: :favorite_teams
   get    "last-week"   => "landings#last_week_leaders",         as: :last_week_leaders
+  get    "bowl-game-leaders"   => "landings#bowl_game_leaders",         as: :bowl_game_leaders
   get    "users"   => "landings#users",         as: :users
   get    "player_selections"   => "landings#player_selections",         as: :player_selections
   get    "team_selections"   => "landings#team_selections",         as: :team_selections
